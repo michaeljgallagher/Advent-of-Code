@@ -15,7 +15,7 @@ def password_count(l, r):
     return count
 
 
-# print(password_count(245182, 790573))  # 1099
+print(password_count(245182, 790573))  # 1099
 
 
 def password_count2(l, r):
@@ -36,7 +36,8 @@ def password_count2(l, r):
     return count
 
 
-# print(password_count2(245182, 790573))  # 710
+print(password_count2(245182, 790573))  # 710
+
 
 def has_double(n):
     num = str(n)

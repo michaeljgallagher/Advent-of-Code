@@ -16,26 +16,13 @@ def opcode(lst):
     return lst
 
 
-'''
-print(opcode([1,1,1,4,99,5,6,0,99]))
-print([30,1,1,4,2,5,6,0,99])
-'''
-
-'''
-replace position 1 with the value 12 and replace position 2 with the value 2
-'''
-
+# replace position 1 with the value 12 and replace position 2 with the value 2
 data[1] = 12
 data[2] = 2
 
-'''
-What value is left at position 0 after the program halts?
-'''
-
+# What value is left at position 0 after the program halts?
 opcode(data)
-print(data[0])
-# 3654868
-
+print(data[0])  # 3654868
 
 data = data_copy[:]
 
@@ -51,4 +38,4 @@ def part2():
                 return i, j
 
 
-print(part2())
+print(part2())  # 70, 14 (answer is 7014)

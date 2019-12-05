@@ -10,7 +10,7 @@ def fuel_required(mass):
 total = 0
 for module in data:
     total += fuel_required(module)
-print(total)
+print(total)  # 3358992
 
 
 def fuel2(mass):
@@ -26,5 +26,4 @@ def fuel2(mass):
 total = 0
 for module in data:
     total += fuel2(module)
-print(total)
-# 5035632
+print(total)  # 5035632
