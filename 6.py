@@ -24,11 +24,9 @@ print(count_paths(orbits))  # 142497
 # PART 2
 
 def find_path(origin, orbits):
-    total = 0
     curr = orbits[origin]
     planets = []
     while True:
-        total += 1
         if curr == 'COM':
             break
         planets.append(curr)
