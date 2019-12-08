@@ -74,18 +74,18 @@ for p in permutations(range(5, 10)):
     pointers = [0] * len(p)
     inputs = [[p[i]] for i in range(len(p))]
     inputs[0].append(0)
-    outputs = [0] * len(p)
+    output = 0
     amps = [data[:] for _ in range(len(p))]
     flag = True
     while flag:
         for i in range(len(p)):
-            amps[i], output, pointer = intcode(amps[i], inputs[i], pointers[i])
-            if not output:
-                if outputs[-1] > max_signal:
-                    max_signal = outputs[-1]
+            amps[i], new_output, pointer = intcode(amps[i], inputs[i], pointers[i])
+            if not new_output:
+                if output > max_signal:
+                    max_signal = output
                 flag = False
                 break
-            outputs[i] = output
+            output = new_output
             pointers[i] = pointer
             inputs[(i+1) % len(inputs)].append(output)
 print(max_signal)  # 36497698
