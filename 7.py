@@ -66,4 +66,26 @@ for p in permutations(range(5)):
     for phase in p:
         nxt = intcode(data, [phase, nxt], 0)[1]
     max_signal = max(max_signal, nxt)
-print(max_signal)
+print(max_signal)  # 24625
+
+# Part 2
+max_signal = 0
+for p in permutations(range(5, 10)):
+    pointers = [0] * len(p)
+    inputs = [[p[i]] for i in range(len(p))]
+    inputs[0].append(0)
+    outputs = [0] * len(p)
+    amps = [data[:] for _ in range(len(p))]
+    flag = True
+    while flag:
+        for i in range(len(p)):
+            amps[i], output, pointer = intcode(amps[i], inputs[i], pointers[i])
+            if not output:
+                if outputs[-1] > max_signal:
+                    max_signal = outputs[-1]
+                flag = False
+                break
+            outputs[i] = output
+            pointers[i] = pointer
+            inputs[(i+1) % len(inputs)].append(output)
+print(max_signal)  # 36497698
