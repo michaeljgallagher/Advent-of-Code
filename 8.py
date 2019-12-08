@@ -1,7 +1,7 @@
 from collections import Counter
 
 with open('8.txt', 'r') as data:
-    data = data.read()
+    data = data.read().strip()
 
 
 def find_layers(s, width, height):
