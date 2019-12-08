@@ -11,7 +11,7 @@ def find_layers(s, width, height):
     while pointer < len(s):
         layer = []
         for _ in range(h):
-            layer.append(s[pointer:pointer+w])
+            layer.append(list(s[pointer:pointer+w]))
             pointer += w
         layers.append(layer)
     return layers
@@ -37,4 +37,20 @@ def calc_part1(image, layer):
 
 image = find_layers(data, 25, 6)
 layer = find_min_zeros(image)[1]
-print(calc_part1(image, layer))
+print(calc_part1(image, layer))  # 1224
+
+
+def decode_image(image, width, height):
+    final_image = [['.' for _ in range(width)] for _ in range(height)]
+    for layer in image:
+        for i in range(height):
+            for j in range(width):
+                if layer[i][j] == '1' and final_image[i][j] == '.':
+                    final_image[i][j] = '|'
+                if layer[i][j] == '0' and final_image[i][j] == '.':
+                    final_image[i][j] = ' '
+    for row in final_image:
+        print(''.join(row))
+
+
+decode_image(image, 25, 6)  # EBZUR
