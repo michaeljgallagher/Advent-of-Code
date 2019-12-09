@@ -82,23 +82,23 @@ def intcode(program, inp):
                 pointer += 2
 
             elif cmd == 4:
-                if mode1 == 0:
-                    index = program[pointer + 1]
-                elif mode1 == 1:
+                if mode1 == 1:
                     index = pointer + 1
                 elif mode1 == 2:
                     index = program[pointer + 1] + relative_bound
+                else:
+                    index = program[pointer + 1]
                 output = program[index]
                 print(output)
                 pointer += 2
 
             elif cmd == 9:
-                if mode1 == 0:
-                    index = program[pointer + 1]
-                elif mode1 == 1:
+                if mode1 == 1:
                     index = pointer + 1
                 elif mode1 == 2:
                     index = program[pointer + 1] + relative_bound
+                else:
+                    index = program[pointer + 1]
                 relative_bound += program[index]
                 pointer += 2
 
