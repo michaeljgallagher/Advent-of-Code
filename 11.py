@@ -114,7 +114,6 @@ def intcode(program, inp, pointer=0, relative_bound=0):
             program += [0]*(oob_index - len(program)+1)
 
 
-# Part 1
 def direction(curr, inst):
     if curr == 'U' or curr == 'D':
         if inst:
@@ -137,20 +136,6 @@ def step(point, dir):
     return point[0] + key[dir][0], point[1] + key[dir][1]
 
 
-'''def paint(instructions):
-    points_painted = defaultdict()
-    curr = (0, 0)
-    dir = 'U'
-    for inst in instructions:
-        if inst[0]:
-            points_painted[curr] = '#'
-        else:
-            points_painted[curr] = '.'
-        dir = direction(dir, inst[1])
-        curr = step(curr, dir)
-    return points_painted'''
-
-
 def paint(curr, dir, instructions):
     if instructions[0] == 1:
         points_painted[curr] = '#'
@@ -160,11 +145,6 @@ def paint(curr, dir, instructions):
     curr = step(curr, dir)
     return curr, dir
 
-
-# instructions = intcode(data, 0)[1]
-'''x = [instructions[i] for i in range(0,len(instructions),2)]
-y = [instructions[i] for i in range(1,len(instructions)+1,2)]
-robot = list(zip(x, y))'''
 
 curr = (0, 0)
 dir = 'U'
@@ -183,4 +163,4 @@ while True:
             color = 0
     else:
         color = 0
-print(len(points_painted))
+print(len(points_painted))  # 1985
