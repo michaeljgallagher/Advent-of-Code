@@ -152,7 +152,7 @@ def step(point, dir):
 
 
 def paint(curr, dir, instructions):
-    if instructions[0]:
+    if instructions[0] == 1:
         points_painted[curr] = '#'
     else:
         points_painted[curr] = '.'
@@ -176,8 +176,11 @@ while True:
     if not insts:
         break
     curr, dir = paint(curr, dir, insts)
-    if curr in points_painted.keys() and points_painted[curr] == '#':
-        color = 1
-    elif curr in points_painted.keys() and points_painted[curr] == '.':
+    if curr in points_painted.keys():
+        if points_painted[curr] == '#':
+            color = 1
+        else:
+            color = 0
+    else:
         color = 0
 print(len(points_painted))
