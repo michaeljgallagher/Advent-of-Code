@@ -1,3 +1,5 @@
+import math
+
 with open('10.txt', 'r') as data:
     data = data.read().split('\n')
 
@@ -49,4 +51,42 @@ def best_location(locations):
 
 
 locations = asteroid_locations(data)
-print(best_location(locations))
+#print(best_location(locations))  # [276, (17, 22)]
+
+
+def find_angle(p1, p2):
+    x = p2[0] - p1[0]
+    y = p2[1] - p1[1]
+    theta = math.degrees(math.atan2(y, x))
+    if theta < 0:
+        theta += 360
+    theta += 90  # offset by 90
+    theta %= 360
+    return theta
+
+
+def find_distance(p1, p2):
+    x = p2[0] - p1[0]
+    y = p2[1] - p1[1]
+    return (x**2 + y**2)**.5
+
+
+def append_angles(origin, locations):
+    res = []
+    angles = []
+    for point in locations:
+        if point == origin:
+            continue
+        angle = find_angle(origin, point)
+        if angle in angles:
+            angle += 360  # add 360 if angle repeats
+        angles.append(angle)
+        distance = find_distance(origin, point)
+        res.append((point, angle, distance))
+    return res
+
+
+asteroids = append_angles((17, 22), locations)
+asteroids.sort(key=lambda x: (x[1], x[2]))
+print(asteroids[199])  # 200th hit; ((13, 21), 284.0362434679265, 4.123105625617661)
+print(asteroids[199][0][0]*100 + asteroids[199][0][1])  # 1321
