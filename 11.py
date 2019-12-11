@@ -147,43 +147,27 @@ def paint(curr, dir, instructions):
 
 
 # Part 1
-'''curr = (0, 0)
-dir = 'U'
-color = 0
-pointer = 0
-relative_bound = 0
-while True:
-    data, insts, pointer, relative_bound = intcode(data, color, pointer, relative_bound)
-    if not insts:
-        break
-    curr, dir = paint(curr, dir, insts)
-    if curr in points_painted.keys():
-        if points_painted[curr] == '#':
-            color = 1
+def paint_points(data, curr, dir, color, pointer, relative_bound):
+    while True:
+        data, insts, pointer, relative_bound = intcode(data, color, pointer, relative_bound)
+        if not insts:
+            break
+        curr, dir = paint(curr, dir, insts)
+        if curr in points_painted.keys():
+            if points_painted[curr] == '#':
+                color = 1
+            else:
+                color = 0
         else:
             color = 0
-    else:
-        color = 0
-print(len(points_painted))  # 1985'''
+    return points_painted
+
+
+# print(len(paint_points(data, (0,0), 'U', 0, 0, 0)))  # 1985
+
 
 # Part 2
-curr = (0, 0)
-dir = 'U'
-color = 1
-pointer = 0
-relative_bound = 0
-while True:
-    data, insts, pointer, relative_bound = intcode(data, color, pointer, relative_bound)
-    if not insts:
-        break
-    curr, dir = paint(curr, dir, insts)
-    if curr in points_painted.keys():
-        if points_painted[curr] == '#':
-            color = 1
-        else:
-            color = 0
-    else:
-        color = 0
+paint_points(data, (0,0), 'U', 1, 0, 0)
 
 offset_x = min(points_painted.keys(), key=lambda x: x[0])[0] * -1
 offset_y = min(points_painted.keys(), key=lambda x: x[1])[1] * -1
