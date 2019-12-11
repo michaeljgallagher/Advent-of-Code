@@ -3,6 +3,8 @@ from collections import defaultdict
 with open('11.txt') as data:
     data = list(map(int, data.read().split(',')))
 
+points_painted = defaultdict()
+
 ops = {
         1: lambda x, y: x+y,
         2: lambda x, y: x*y,
@@ -45,9 +47,8 @@ def find_params(program, pointer, relative_bound, mode1, mode2, mode3):
     return p1, p2, p3
 
 
-def intcode(program, inp, pointer=0):
+def intcode(program, inp, pointer=0, relative_bound=0):
     outputs = []
-    relative_bound = 0
 
     while True:
         try:
@@ -56,7 +57,7 @@ def intcode(program, inp, pointer=0):
             p1 = p2 = p3 = 0
 
             if cmd == 99:
-                return program, outputs, pointer
+                return None, None, None, None
 
             if cmd > 100:
                 cmd, mode1, mode2, mode3 = find_modes(cmd)
@@ -91,6 +92,9 @@ def intcode(program, inp, pointer=0):
                 output = program[index]
                 outputs.append(output)
                 pointer += 2
+                if len(outputs) == 2:
+                    out = outputs.copy()
+                    return program, out, pointer, relative_bound
 
             elif cmd == 9:
                 if mode1 == 1:
@@ -133,7 +137,7 @@ def step(point, dir):
     return point[0] + key[dir][0], point[1] + key[dir][1]
 
 
-def paint(instructions):
+'''def paint(instructions):
     points_painted = defaultdict()
     curr = (0, 0)
     dir = 'U'
@@ -144,10 +148,36 @@ def paint(instructions):
             points_painted[curr] = '.'
         dir = direction(dir, inst[1])
         curr = step(curr, dir)
-    return points_painted
+    return points_painted'''
 
 
-instructions = intcode(data, 1)[1]
-x = [instructions[i] for i in range(0,len(instructions),2)]
+def paint(curr, dir, instructions):
+    if instructions[0]:
+        points_painted[curr] = '#'
+    else:
+        points_painted[curr] = '.'
+    dir = direction(dir, instructions[1])
+    curr = step(curr, dir)
+    return curr, dir
+
+
+# instructions = intcode(data, 0)[1]
+'''x = [instructions[i] for i in range(0,len(instructions),2)]
 y = [instructions[i] for i in range(1,len(instructions)+1,2)]
-robot = list(zip(x, y))
+robot = list(zip(x, y))'''
+
+curr = (0, 0)
+dir = 'U'
+color = 0
+pointer = 0
+relative_bound = 0
+while True:
+    data, insts, pointer, relative_bound = intcode(data, color, pointer, relative_bound)
+    if not insts:
+        break
+    curr, dir = paint(curr, dir, insts)
+    if curr in points_painted.keys() and points_painted[curr] == '#':
+        color = 1
+    elif curr in points_painted.keys() and points_painted[curr] == '.':
+        color = 0
+print(len(points_painted))
