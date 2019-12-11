@@ -3,8 +3,6 @@ from collections import defaultdict
 with open('11.txt') as data:
     data = list(map(int, data.read().split(',')))
 
-points_painted = defaultdict()
-
 ops = {
         1: lambda x, y: x+y,
         2: lambda x, y: x*y,
@@ -146,7 +144,6 @@ def paint(curr, dir, instructions):
     return curr, dir
 
 
-# Part 1
 def paint_points(data, curr, dir, color, pointer, relative_bound):
     while True:
         data, insts, pointer, relative_bound = intcode(data, color, pointer, relative_bound)
@@ -163,10 +160,13 @@ def paint_points(data, curr, dir, color, pointer, relative_bound):
     return points_painted
 
 
-# print(len(paint_points(data, (0,0), 'U', 0, 0, 0)))  # 1985
+# Part 1
+points_painted = defaultdict()
+print(len(paint_points(data, (0,0), 'U', 0, 0, 0)))  # 1985
 
 
 # Part 2
+points_painted = defaultdict()
 paint_points(data, (0,0), 'U', 1, 0, 0)
 
 offset_x = min(points_painted.keys(), key=lambda x: x[0])[0] * -1
