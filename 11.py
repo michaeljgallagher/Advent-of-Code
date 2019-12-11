@@ -184,20 +184,13 @@ while True:
             color = 0
     else:
         color = 0
-print(len(points_painted))  # 1985
 
 offset_x = min(points_painted.keys(), key=lambda x: x[0])[0] * -1
 offset_y = min(points_painted.keys(), key=lambda x: x[1])[1] * -1
-
-new_points = defaultdict()
-for point, color in points_painted.items():
-    new_points[(point[0]+offset_x, point[1]+offset_y)] = color
-
-max_x = max(new_points.keys(), key=lambda x: x[0])[0]
-max_y = max(new_points.keys(), key=lambda x: x[1])[1]
+max_x = max(points_painted.keys(), key=lambda x: x[0])[0] + offset_x
+max_y = max(points_painted.keys(), key=lambda x: x[1])[1] + offset_y
 grid = [['.' for _ in range(max_x+1)] for _ in range(max_y+1)]
-for point, color in new_points.items():
-    grid[point[1]][point[0]] = color
-grid = reversed(grid)  # upside down
-for row in grid:
+for point, color in points_painted.items():
+    grid[point[1]+offset_y][point[0]+offset_x] = color
+for row in reversed(grid):  # upside down
     print(''.join(row))  # BLCZCJLZ
