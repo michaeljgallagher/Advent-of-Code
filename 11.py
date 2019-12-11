@@ -146,7 +146,8 @@ def paint(curr, dir, instructions):
     return curr, dir
 
 
-curr = (0, 0)
+# Part 1
+'''curr = (0, 0)
 dir = 'U'
 color = 0
 pointer = 0
@@ -163,4 +164,40 @@ while True:
             color = 0
     else:
         color = 0
+print(len(points_painted))  # 1985'''
+
+# Part 2
+curr = (0, 0)
+dir = 'U'
+color = 1
+pointer = 0
+relative_bound = 0
+while True:
+    data, insts, pointer, relative_bound = intcode(data, color, pointer, relative_bound)
+    if not insts:
+        break
+    curr, dir = paint(curr, dir, insts)
+    if curr in points_painted.keys():
+        if points_painted[curr] == '#':
+            color = 1
+        else:
+            color = 0
+    else:
+        color = 0
 print(len(points_painted))  # 1985
+
+offset_x = min(points_painted.keys(), key=lambda x: x[0])[0] * -1
+offset_y = min(points_painted.keys(), key=lambda x: x[1])[1] * -1
+
+new_points = defaultdict()
+for point, color in points_painted.items():
+    new_points[(point[0]+offset_x, point[1]+offset_y)] = color
+
+max_x = max(new_points.keys(), key=lambda x: x[0])[0]
+max_y = max(new_points.keys(), key=lambda x: x[1])[1]
+grid = [['.' for _ in range(max_x+1)] for _ in range(max_y+1)]
+for point, color in new_points.items():
+    grid[point[1]][point[0]] = color
+grid = reversed(grid)  # upside down
+for row in grid:
+    print(''.join(row))  # BLCZCJLZ
