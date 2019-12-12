@@ -7,7 +7,7 @@
 
 from itertools import combinations
 
-io = [[-3, 10, 11], [0, 0, 0]]
+io = [[-3, 10, -1], [0, 0, 0]]
 europa = [[-12, -10, -5], [0, 0, 0]]
 ganymede = [[-9, 0, 10], [0, 0, 0]]
 callisto = [[7, -5, -3], [0, 0, 0]]
@@ -45,4 +45,4 @@ def total_energy(moon):
 # Part 1
 for i in range(1000):
     time_step()
-print(sum([total_energy(moon) for moon in [io, europa, ganymede, callisto]]))  # 8310
+print(sum([total_energy(moon) for moon in [io, europa, ganymede, callisto]]))  # 10944
