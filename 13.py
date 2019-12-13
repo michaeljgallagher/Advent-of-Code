@@ -76,7 +76,7 @@ def intcode(program, inp):
                     pointer = pointer+3 if p1 else p2
 
             elif cmd == 3:
-                inp = int(input())
+                inp = get_input(outputs)
                 if mode1 == 2:
                     program[program[pointer + 1] + relative_bound] = inp
                 else:
@@ -142,6 +142,23 @@ def print_grid(instructions):
     for row in grid:
         print(''.join(row))
 
+
 # Part 2
+def get_input(insts):
+    ball_x = 0
+    hbar_x = 0
+    for inst in insts:
+        if inst[2] == 4:  # Ball
+            ball_x = inst[0]
+        elif inst[2] == 3:  # Paddle
+            hbar_x = inst[0]
+    if hbar_x < ball_x:
+        return 1  # Move right
+    elif hbar_x > ball_x:
+        return -1  # Move left
+    elif hbar_x == ball_x:
+        return 0  # Don't move
+
 data[0] = 2
-intcode(data, 0)
+insts = intcode(data, 0)
+print_grid(insts)  # 12954
