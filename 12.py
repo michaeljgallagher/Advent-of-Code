@@ -1,5 +1,6 @@
 from itertools import combinations
 import re
+import copy
 
 with open('12.txt', 'r') as data:
     data = data.read().strip().split('\n')
@@ -38,15 +39,43 @@ def time_step(positions, velocities):
     for i in range(4):
         for j in range(3):
             positions[i][j] += velocities[i][j]
+    return positions, velocities
 
 
 def part_one(initial_pos):
-    positions = initial_pos.copy()
+    positions = copy.deepcopy(initial_pos)
     velocities = [[0 for _ in range(3)] for _ in range(4)]
     for _ in range(1000):
-        time_step(positions, velocities)
+        positions, velocities = time_step(positions, velocities)
     return energy(positions, velocities)
 
 
 positions = parse(data)
-print(f"Part one: {part_one(positions)}")  # 10944
+print(f'Part one: {part_one(positions)}')  # 10944
+
+
+def gcd(x, y):
+    while y:
+        x, y = y, x % y
+    return x
+
+
+def lcm(x, y):
+    return (x * y) // gcd(x, y)
+
+
+def part_two(initial_pos):
+    positions = copy.deepcopy(initial_pos)
+    velocities = [[0 for _ in range(3)] for _ in range(4)]
+    cycles = [0, 0, 0]
+    count = 1
+    while not all(cycles):
+        positions, velocities = time_step(positions, velocities)
+        count += 1
+        for i in range(3):
+            if not cycles[i] and [positions[j][i] for j in range(4)] == [initial_pos[j][i] for j in range(4)]:
+                cycles[i] = count
+    return lcm(lcm(cycles[0], cycles[1]), cycles[2])
+
+
+print(f'Part two: {part_two(positions)}')  # 484244804958744
