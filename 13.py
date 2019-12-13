@@ -44,7 +44,6 @@ def find_params(program, pointer, relative_bound, mode1, mode2, mode3):
 
 
 def intcode(program, inp):
-    print(f'Input = {inp}')
     pointer = 0
     output = int
     relative_bound = 0
@@ -77,11 +76,13 @@ def intcode(program, inp):
                     pointer = pointer+3 if p1 else p2
 
             elif cmd == 3:
+                inp = int(input())
                 if mode1 == 2:
                     program[program[pointer + 1] + relative_bound] = inp
                 else:
                     program[program[pointer+1]] = inp
                 pointer += 2
+                print_grid(outputs)
 
             elif cmd == 4:
                 if mode1 == 1:
@@ -122,3 +123,25 @@ for inst in insts:
     if inst[2] == 2:
         count += 1
 print(count)  # 247
+
+
+def print_grid(instructions):
+    score = 0
+    key = {0: ' ',
+           1: '+',
+           2: '#',
+           3: '-',
+           4: 'o'}
+    grid = [[' ' for _ in range(37)] for _ in range(22)]  # found from finding max x, y in part 1
+    for inst in instructions:
+        if inst[0] == -1 and inst[1] == 0:
+            grid[-1][-1] = str(inst[2])
+            score += inst[2]
+        else:
+            grid[inst[1]][inst[0]] = key[inst[2]]
+    for row in grid:
+        print(''.join(row))
+
+# Part 2
+data[0] = 2
+intcode(data, 0)
