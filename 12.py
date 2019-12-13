@@ -1,6 +1,5 @@
 from itertools import combinations
 import re
-import numpy as np
 
 with open('12.txt', 'r') as data:
     data = data.read().strip().split('\n')
@@ -41,8 +40,13 @@ def time_step(positions, velocities):
             positions[i][j] += velocities[i][j]
 
 
+def part_one(initial_pos):
+    positions = initial_pos.copy()
+    velocities = [[0 for _ in range(3)] for _ in range(4)]
+    for _ in range(1000):
+        time_step(positions, velocities)
+    return energy(positions, velocities)
+
+
 positions = parse(data)
-velocities = [[0 for _ in range(3)] for _ in range(4)]
-for _ in range(1000):
-    time_step(positions, velocities)
-print(energy(positions, velocities))  # 10944
+print(f"Part one: {part_one(positions)}")  # 10944
