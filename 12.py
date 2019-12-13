@@ -50,10 +50,6 @@ def part_one(initial_pos):
     return energy(positions, velocities)
 
 
-positions = parse(data)
-print(f'Part one: {part_one(positions)}')  # 10944
-
-
 def gcd(x, y):
     while y:
         x, y = y, x % y
@@ -78,4 +74,6 @@ def part_two(initial_pos):
     return lcm(lcm(cycles[0], cycles[1]), cycles[2])
 
 
+positions = parse(data)
+print(f'Part one: {part_one(positions)}')  # 10944
 print(f'Part two: {part_two(positions)}')  # 484244804958744
