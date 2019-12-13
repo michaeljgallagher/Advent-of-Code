@@ -49,6 +49,7 @@ def intcode(program, inp):
     relative_bound = 0
     outs = []
     outputs = []
+    score = 0
 
     while True:
         try:
@@ -82,7 +83,7 @@ def intcode(program, inp):
                 else:
                     program[program[pointer+1]] = inp
                 pointer += 2
-                print_grid(outputs)
+                # print_grid(outputs)
 
             elif cmd == 4:
                 if mode1 == 1:
@@ -116,17 +117,7 @@ def intcode(program, inp):
             program += [0]*(oob_index - len(program)+1)
 
 
-# Part 1
-insts = intcode(data, 0)
-count = 0
-for inst in insts:
-    if inst[2] == 2:
-        count += 1
-print(count)  # 247
-
-
 def print_grid(instructions):
-    score = 0
     key = {0: ' ',
            1: '+',
            2: '#',
@@ -136,29 +127,40 @@ def print_grid(instructions):
     for inst in instructions:
         if inst[0] == -1 and inst[1] == 0:
             grid[-1][-1] = str(inst[2])
-            score += inst[2]
         else:
             grid[inst[1]][inst[0]] = key[inst[2]]
     for row in grid:
         print(''.join(row))
 
 
-# Part 2
 def get_input(insts):
     ball_x = 0
     hbar_x = 0
     for inst in insts:
-        if inst[2] == 4:  # Ball
+        if inst[2] == 4:
             ball_x = inst[0]
-        elif inst[2] == 3:  # Paddle
+        elif inst[2] == 3:
             hbar_x = inst[0]
     if hbar_x < ball_x:
-        return 1  # Move right
+        return 1
     elif hbar_x > ball_x:
-        return -1  # Move left
+        return -1
     elif hbar_x == ball_x:
-        return 0  # Don't move
+        return 0
 
+
+# Part 1
+insts = intcode(data, 0)
+count = 0
+for inst in insts:
+    if inst[2] == 2:
+        count += 1
+print(f'Part one: {count}')  # 247
+
+# Part 2
 data[0] = 2
 insts = intcode(data, 0)
-print_grid(insts)  # 12954
+for inst in insts:
+    if inst[0] == -1 and inst[1] == 0:
+        score = inst[2]
+print(f'Part two: {score}')  # 12954
