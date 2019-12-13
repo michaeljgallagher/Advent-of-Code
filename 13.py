@@ -49,7 +49,6 @@ def intcode(program, inp):
     relative_bound = 0
     outs = []
     outputs = []
-    score = 0
 
     while True:
         try:
