@@ -1,5 +1,6 @@
 from collections import defaultdict
 import random
+import networkx as nx
 
 with open('15.txt') as data:
     data = list(map(int, data.read().strip().split(',')))
@@ -151,4 +152,18 @@ def display(grid):
 
 # Part 1
 grid = intcode(data, 0)
-display(grid)  # 214, I fucking counted them -_- LOL
+display(grid)
+G = nx.Graph()
+valid = set()
+for k, v in grid.items():
+    if v == '.' or v == 'O':
+        valid.add(k)
+    if v == '!':
+        oxygen = k
+        valid.add(k)
+for x1, y1 in valid:
+    for x2, y2 in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
+        i, j = (x1 + x2, y1 + y2)
+        if (i, j) in valid:
+            G.add_edge((x1, y1), (i, j))
+print(f'Part 1: {nx.shortest_path_length(G, (0, 0), oxygen)}')  # 214
