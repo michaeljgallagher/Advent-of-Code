@@ -151,4 +151,4 @@ def display(grid):
 
 # Part 1
 grid = intcode(data, 0)
-display(grid)
+display(grid)  # 214, I fucking counted them -_- LOL
