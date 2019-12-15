@@ -167,3 +167,6 @@ for x1, y1 in valid:
         if (i, j) in valid:
             G.add_edge((x1, y1), (i, j))
 print(f'Part 1: {nx.shortest_path_length(G, (0, 0), oxygen)}')  # 214
+
+# Part 2
+print(nx.eccentricity(G, v=oxygen))  # 344
