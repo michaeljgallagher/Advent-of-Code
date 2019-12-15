@@ -139,12 +139,13 @@ def display(grid):
         offset_x = abs(min_x)
     if min_y < 0:
         offset_y = abs(min_y)
-    scrn = [[' ' for _ in range(max_x+offset_x+1)] for _ in range(max_y+offset_y+1)]
+    screen = [[' ' for _ in range(max_x+offset_x+1)] for _ in range(max_y+offset_y+1)]
     for coord, val in grid.items():
         x = coord[0]
         y = coord[1]
-        scrn[y+offset_y][x+offset_x] = val
-    for line in scrn:
+        screen[y+offset_y][x+offset_x] = val
+    screen[offset_y][offset_x] = 'O'
+    for line in screen:
         print(''.join(line))
 
 
