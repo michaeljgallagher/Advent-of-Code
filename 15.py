@@ -129,7 +129,6 @@ def intcode(program, inp):
             program += [0]*(oob_index - len(program)+1)
 
 
-# Part 1
 def display(grid):
     max_x = max(x for x, y in grid.keys())
     min_x = min(x for x, y in grid.keys())
@@ -150,22 +149,27 @@ def display(grid):
         print(''.join(line))
 
 
+def make_graph(grid):
+    G = nx.Graph()
+    valid = set()
+    for k, v in grid.items():
+        if v == '.' or v == 'O':
+            valid.add(k)
+        if v == '!':
+            oxygen = k
+            valid.add(k)
+    for x1, y1 in valid:
+        for x2, y2 in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
+            i, j = (x1 + x2, y1 + y2)
+            if (i, j) in valid:
+                G.add_edge((x1, y1), (i, j))
+    return G, oxygen
+
+
 # Part 1
-grid = intcode(data, 0)
+grid = intcode(data[:], 0)
 display(grid)
-G = nx.Graph()
-valid = set()
-for k, v in grid.items():
-    if v == '.' or v == 'O':
-        valid.add(k)
-    if v == '!':
-        oxygen = k
-        valid.add(k)
-for x1, y1 in valid:
-    for x2, y2 in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
-        i, j = (x1 + x2, y1 + y2)
-        if (i, j) in valid:
-            G.add_edge((x1, y1), (i, j))
+G, oxygen = make_graph(grid)
 print(f'Part 1: {nx.shortest_path_length(G, (0, 0), oxygen)}')  # 214
 
 # Part 2
