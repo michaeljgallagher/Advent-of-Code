@@ -43,7 +43,7 @@ def find_params(program, pointer, relative_bound, mode1, mode2, mode3):
     return p1, p2, p3
 
 
-def intcode(program, instructions='_'):
+def intcode(program, instructions=[0]):
     pointer = 0
     output = int
     relative_bound = 0
@@ -77,16 +77,16 @@ def intcode(program, instructions='_'):
                     pointer = pointer+3 if p1 else p2
 
             elif cmd == 3:
-                #inp = insts.pop(0)
-                #inp = ord(inp)
-                inp = ord(insts[0])
-                insts = insts[1:]
+                inp = insts.pop(0)
+                #inp = ord(insts[0])
+                #insts = insts[1:]
                 if mode1 == 2:
                     program[program[pointer + 1] + relative_bound] = inp
                 else:
                     program[program[pointer+1]] = inp
                 pointer += 2
                 # print_grid(outputs)
+                print(inp)
 
             elif cmd == 4:
                 if mode1 == 1:
@@ -102,6 +102,7 @@ def intcode(program, instructions='_'):
                 else:
                     outs += chr(output)
                 pointer += 2
+                print(outs)
 
             elif cmd == 9:
                 if mode1 == 1:
@@ -170,6 +171,8 @@ instructions = 'A,B,A,C,B,C,B,A,C,B\nL,6,R,8,R,12,L,6,L,8\nL,10,L,8,R,12\nL,8,L,
                 'L', ',', '10', ',', 'L', ',', '8', ',', 'R', ',', '12', '\n',
                 'L', ',', '8', ',', 'L', ',', '10', ',', 'L', ',', '6', ',', 'L', ',', '6', '\n',
                 'n', '\n']'''
+
+ints = [65, 44, 66, 44, 65, 44, 67, 44, 66, 44, 67, 44, 66, 44, 65, 44, 67, 44, 66, 10, 76, 44, 54, 44, 82, 44, 56, 44, 82, 44, 49, 50, 44, 76, 44, 54, 44, 76, 44, 56, 10, 76, 44, 49, 48, 44, 76, 44, 56, 44, 82, 44, 49, 50, 10, 76, 44, 56, 44, 76, 44, 49, 48, 44, 76, 44, 54, 44, 76, 44, 54, 10, 121, 10]
 data2 = data[:]
 data2[0] = 2
-part2 = intcode(data2, instructions)
+part2 = intcode(data2, ints)
