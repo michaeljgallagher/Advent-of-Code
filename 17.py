@@ -78,8 +78,6 @@ def intcode(program, instructions=[0]):
 
             elif cmd == 3:
                 inp = insts.pop(0)
-                #inp = ord(insts[0])
-                #insts = insts[1:]
                 if mode1 == 2:
                     program[program[pointer + 1] + relative_bound] = inp
                 else:
