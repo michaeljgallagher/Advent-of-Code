@@ -43,12 +43,13 @@ def find_params(program, pointer, relative_bound, mode1, mode2, mode3):
     return p1, p2, p3
 
 
-def intcode(program, inp):
+def intcode(program, instructions='_'):
     pointer = 0
     output = int
     relative_bound = 0
     outs = ''
     outputs = []
+    insts = instructions
 
     while True:
         try:
@@ -76,7 +77,10 @@ def intcode(program, inp):
                     pointer = pointer+3 if p1 else p2
 
             elif cmd == 3:
-                inp = get_input(outputs)
+                #inp = insts.pop(0)
+                #inp = ord(inp)
+                inp = ord(insts[0])
+                insts = insts[1:]
                 if mode1 == 2:
                     program[program[pointer + 1] + relative_bound] = inp
                 else:
@@ -143,7 +147,29 @@ def part_one(intersections):
 
 
 # Part 1
-grid = intcode(data[:], 0)
+grid = intcode(data[:])
 grid.pop()  # delete blank string
 ints = find_intersections(grid)
 print(f'Part 1: {part_one(ints)}')  # 7780
+
+
+# Part 2
+'''
+(L6 R8 R12 L6 L8) [L10 L8 R12] (L6 R8 R12 L6 L8) {L8 L10 L6 L6} [L10 L8 R12] {L8 L10 L6 L6} [L10 L8 R12] 
+(L6 R8 R12 L6 L8) {L8 L10 L6 L6} [L10 L8 R12]
+
+A = (L6 R8 R12 L6 L8)
+B = [L10 L8 R12]
+C = {L8 L10 L6 L6}
+MAIN = A B A C B C B A C B
+'''
+
+instructions = 'A,B,A,C,B,C,B,A,C,B\nL,6,R,8,R,12,L,6,L,8\nL,10,L,8,R,12\nL,8,L,10,L,6,L,6\nn\n'
+'''instructions = ['A', ',', 'B', ',', 'A', ',', 'C', ',', 'B', ',', 'C', ',', 'B', ',', 'A', ',', 'C', ',', 'B', '\n',
+                'L', ',', '6', ',', 'R', ',', '8', ',', 'R', ',', '12', ',', 'L', ',', '6', ',', 'L', ',', '8', '\n',
+                'L', ',', '10', ',', 'L', ',', '8', ',', 'R', ',', '12', '\n',
+                'L', ',', '8', ',', 'L', ',', '10', ',', 'L', ',', '6', ',', 'L', ',', '6', '\n',
+                'n', '\n']'''
+data2 = data[:]
+data2[0] = 2
+part2 = intcode(data2, instructions)
