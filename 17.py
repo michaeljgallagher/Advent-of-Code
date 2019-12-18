@@ -58,7 +58,7 @@ def intcode(program, instructions=[0]):
             p1 = p2 = p3 = 0
 
             if cmd == 99:
-                return outputs
+                return outputs, output
 
             if cmd > 100:
                 cmd, mode1, mode2, mode3 = find_modes(cmd)
@@ -85,8 +85,6 @@ def intcode(program, instructions=[0]):
                 else:
                     program[program[pointer+1]] = inp
                 pointer += 2
-                # print_grid(outputs)
-                print(inp)
 
             elif cmd == 4:
                 if mode1 == 1:
@@ -102,7 +100,6 @@ def intcode(program, instructions=[0]):
                 else:
                     outs += chr(output)
                 pointer += 2
-                print(outs)
 
             elif cmd == 9:
                 if mode1 == 1:
@@ -148,7 +145,7 @@ def part_one(intersections):
 
 
 # Part 1
-grid = intcode(data[:])
+grid = intcode(data[:])[0]
 grid.pop()  # delete blank string
 ints = find_intersections(grid)
 print(f'Part 1: {part_one(ints)}')  # 7780
@@ -172,7 +169,12 @@ instructions = 'A,B,A,C,B,C,B,A,C,B\nL,6,R,8,R,12,L,6,L,8\nL,10,L,8,R,12\nL,8,L,
                 'L', ',', '8', ',', 'L', ',', '10', ',', 'L', ',', '6', ',', 'L', ',', '6', '\n',
                 'n', '\n']'''
 
-ints = [65, 44, 66, 44, 65, 44, 67, 44, 66, 44, 67, 44, 66, 44, 65, 44, 67, 44, 66, 10, 76, 44, 54, 44, 82, 44, 56, 44, 82, 44, 49, 50, 44, 76, 44, 54, 44, 76, 44, 56, 10, 76, 44, 49, 48, 44, 76, 44, 56, 44, 82, 44, 49, 50, 10, 76, 44, 56, 44, 76, 44, 49, 48, 44, 76, 44, 54, 44, 76, 44, 54, 10, 121, 10]
+ints = [65, 44, 66, 44, 65, 44, 67, 44, 66, 44, 67, 44, 66, 44, 65, 44, 67, 44, 66, 10,
+        76, 44, 54, 44, 82, 44, 56, 44, 82, 44, 49, 50, 44, 76, 44, 54, 44, 76, 44, 56, 10,
+        76, 44, 49, 48, 44, 76, 44, 56, 44, 82, 44, 49, 50, 10,
+        76, 44, 56, 44, 76, 44, 49, 48, 44, 76, 44, 54, 44, 76, 44, 54, 10,
+        121, 10]
 data2 = data[:]
 data2[0] = 2
-part2 = intcode(data2, ints)
+part2 = intcode(data2, ints)[1]
+print(f'Part 2: {part2}')  # 1075882
