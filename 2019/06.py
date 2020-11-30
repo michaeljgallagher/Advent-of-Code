@@ -1,4 +1,4 @@
-with open('6.txt', 'r') as data:
+with open('06.txt', 'r') as data:
     data = [x.split(')') for x in data.read().split('\n')]
 data = data[:-1]
 orbits = {x[1]: x[0] for x in data}

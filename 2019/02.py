@@ -1,4 +1,4 @@
-with open('2.txt', 'r') as file:
+with open('02.txt', 'r') as file:
     data = file.read()
 data = data.split(',')
 data = [int(x) for x in data]

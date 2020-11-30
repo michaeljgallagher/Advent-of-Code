@@ -1,6 +1,6 @@
 from collections import Counter
 
-with open('8.txt', 'r') as data:
+with open('08.txt', 'r') as data:
     data = data.read().strip()
 
 

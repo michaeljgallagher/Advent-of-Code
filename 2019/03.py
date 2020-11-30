@@ -1,4 +1,4 @@
-with open('3.txt', 'r') as file:
+with open('03.txt', 'r') as file:
     data = file.readlines()
 data1 = data[0].split(',')
 data2 = data[1].split(',')

@@ -1,6 +1,6 @@
 from itertools import permutations
 
-with open('7.txt') as data:
+with open('07.txt') as data:
     data = list(map(int, data.read().split(',')))
 
 ops = {

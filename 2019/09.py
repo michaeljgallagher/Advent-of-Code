@@ -1,4 +1,4 @@
-with open('9.txt') as data:
+with open('09.txt') as data:
     data = list(map(int, data.read().split(',')))
 
 ops = {

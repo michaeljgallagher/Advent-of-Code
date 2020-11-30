@@ -1,4 +1,4 @@
-with open('1.txt', 'r') as file:
+with open('01.txt', 'r') as file:
     data = file.readlines()
 data = [int(x) for x in data]
 
