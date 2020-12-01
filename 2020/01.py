@@ -1,7 +1,15 @@
-with open('01.txt', 'r') as file:
-    data = list(map(int, file.read().split('\n')))
+from timer import timer
 
 
+def load_data():
+    with open('01.txt', 'r') as file:
+        data = list(map(int, file.read().split('\n')))
+    return data
+
+data = load_data()
+
+
+@timer
 def part1(data):
     seen = set()
     for v in data:
@@ -10,7 +18,7 @@ def part1(data):
         else:
             seen.add(v)
 
-
+@timer
 def part2(data):
     data.sort()
     n = len(data)
@@ -39,13 +47,15 @@ but where's the fun in that? ¯\_(ツ)_/¯
 
 from itertools import combinations
 
+data = load_data()  #reload data for accurate timing
 
+@timer
 def part1_alternative(data):
     for a, b in combinations(data, 2):
         if a + b == 2020:
             return a * b
 
-
+@timer
 def part2_alternative(data):
     for a, b, c in combinations(data, 3):
         if a + b + c == 2020:
