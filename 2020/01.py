@@ -29,3 +29,28 @@ def part2(data):
 
 print(f'Answer for part 1: {part1(data)}')  # 1018944
 print(f'Answer for part 2: {part2(data)}')  # 8446464
+
+
+'''
+You could also just use itertools.combinations, 
+but where's the fun in that? ¯\_(ツ)_/¯
+'''
+
+
+from itertools import combinations
+
+
+def part1_alternative(data):
+    for a, b in combinations(data, 2):
+        if a + b == 2020:
+            return a * b
+
+
+def part2_alternative(data):
+    for a, b, c in combinations(data, 3):
+        if a + b + c == 2020:
+            return a * b * c
+
+
+print(part1_alternative(data))
+print(part2_alternative(data))
