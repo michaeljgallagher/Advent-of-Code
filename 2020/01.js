@@ -22,9 +22,7 @@ function part2(data) {
         let l = i+1;
         let r = n-1;
         while (l < r) {
-            let a = data[i];
-            let b = data[l];
-            let c = data[r];
+            let a = data[i], b = data[l], c = data[r];
             let cur = a+b+c;
             if (cur===2020) {
                 return a*b*c;
