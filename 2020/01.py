@@ -1,3 +1,31 @@
 with open('01.txt', 'r') as file:
-    data = file.read()
+    data = list(map(int, file.read().split('\n')))
 
+
+def part1(data):
+    seen = set()
+    for v in data:
+        if 2020-v in seen:
+            return v * (2020-v)
+        else:
+            seen.add(v)
+
+
+def part2(data):
+    data.sort()
+    n = len(data)
+    for i in range(n - 2):
+        l, r = i+1, n-1
+        while l < r:
+            a, b, c = data[i], data[l], data[r]
+            cur = a+b+c
+            if cur == 2020:
+                return a * b * c
+            if cur-2020 > 0:
+                r -= 1
+            else:
+                l += 1
+
+
+print(f'Answer for part 1: {part1(data)}')  # 1018944
+print(f'Answer for part 2: {part2(data)}')  # 8446464
