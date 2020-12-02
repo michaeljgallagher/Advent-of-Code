@@ -17,7 +17,7 @@ def part2(data):
     for row in data:
         pos, c, s = row.split()
         i, j = map(int, pos.split('-'))
-        if (s[i-1] == c[0] and s[j-1] != c[0]) or (s[i-1] != c[0] and s[j-1] == c[0]):
+        if (s[i-1] == c[0]) ^ (s[j-1] == c[0]):
             res += 1
     return res
 
