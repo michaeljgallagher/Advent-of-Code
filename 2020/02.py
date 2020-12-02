@@ -1,23 +1,13 @@
-def load_data():
-    with open('02.txt', 'r') as file:
-        data = [x.split(' ') for x in file.read().split('\n')]
-        for i in range(len(data)):
-            cur = data[i][0]
-            t = tuple(map(int, cur.split('-')))
-            data[i][0] = t
-            data[i][1] = data[i][1][0]
-    return data
-
-
-data = load_data()
+with open('02.txt', 'r') as file:
+    data = file.read().split('\n')
 
 
 def part1(data):
     res = 0
     for row in data:
-        bounds, c, s = row
-        a, b = bounds
-        if a <= s.count(c) <= b:
+        bounds, c, s = row.split()
+        a, b = map(int, bounds.split('-'))
+        if a <= s.count(c[0]) <= b:
             res += 1
     return res
 
@@ -25,9 +15,9 @@ def part1(data):
 def part2(data):
     res = 0
     for row in data:
-        pos, c, s = row
-        i, j = pos
-        if (s[i-1] == c and s[j-1] != c) or (s[i-1] != c and s[j-1] == c):
+        pos, c, s = row.split()
+        i, j = map(int, pos.split('-'))
+        if (s[i-1] == c[0] and s[j-1] != c[0]) or (s[i-1] != c[0] and s[j-1] == c[0]):
             res += 1
     return res
 
