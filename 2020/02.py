@@ -1,6 +1,5 @@
 def load_data():
     with open('02.txt', 'r') as file:
-        #data = list(map(int, file.read().split('\n')))
         data = [x.split(' ') for x in file.read().split('\n')]
         for i in range(len(data)):
             cur = data[i][0]
