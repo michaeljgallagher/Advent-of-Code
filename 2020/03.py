@@ -13,7 +13,6 @@ def part1(data, r, d):
     return res
 
 
-
 def part2(data):
     res = 1
     for r, d in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
