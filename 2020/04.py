@@ -17,9 +17,6 @@ def parse_input(data):
     return res
 
 
-PASSPORTS = parse_input(data)
-
-
 def has_valid_fields(passport):
     valid_fields = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
     return valid_fields.issubset(set(passport.keys()))
@@ -78,5 +75,7 @@ def part2(passports):
     return sum(check_all(passport) for passport in passports)
 
 
-print(f'Answer for part 1: {part1(PASSPORTS)}')  # 219
-print(f'Answer for part 2: {part2(PASSPORTS)}')  # 127
+if __name__ == '__main__':
+    PASSPORTS = parse_input(data)
+    print(f'Answer for part 1: {part1(PASSPORTS)}')  # 219
+    print(f'Answer for part 2: {part2(PASSPORTS)}')  # 127
