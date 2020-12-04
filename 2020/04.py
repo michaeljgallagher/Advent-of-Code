@@ -49,8 +49,11 @@ def has_valid_hgt(passport):
 
 def has_valid_hcl(passport):
     hcl = passport['hcl']
-    if hcl[0] != '#': return False
-    return len(hcl) == 7 and all(x in '0123456789abcdef' for x in hcl[1:])
+    return (
+        hcl[0] == '#' and 
+        len(hcl) == 7 and 
+        all(x in '0123456789abcdef' for x in hcl[1:])
+    )
 
 
 def has_valid_ecl(passport):
