@@ -77,5 +77,6 @@ def part1(passports):
 def part2(passports):
     return sum(check_all(passport) for passport in passports)
 
+
 print(f'Answer for part 1: {part1(PASSPORTS)}')  # 219
 print(f'Answer for part 2: {part2(PASSPORTS)}')  # 127
