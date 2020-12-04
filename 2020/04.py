@@ -3,20 +3,16 @@ with open('04.txt', 'r') as file:
 
 
 def parse_input(data):
-    '''
-    build a list of passports
-    '''
     res = []
     passport = {}
     for row in data:
-        cur = row.split(' ')
-        if cur == ['']:
+        if not row:
             res.append(passport)
             passport = {}
         else:
-            for x in cur:
-                    k, v = x.split(':')
-                    passport[k] = v
+            for x in row.split(' '):
+                k, v = x.split(':')
+                passport[k] = v
     if passport: res.append(passport)
     return res
 
@@ -54,7 +50,7 @@ def has_valid_hgt(passport):
 def has_valid_hcl(passport):
     hcl = passport['hcl']
     if hcl[0] != '#': return False
-    return len(hcl) == 7 and all([x in '0123456789abcdefABCDEF' for x in hcl[1:]])
+    return len(hcl) == 7 and all(x in '0123456789abcdef' for x in hcl[1:])
 
 
 def has_valid_ecl(passport):
@@ -72,20 +68,11 @@ def check_all(passport):
 
 
 def part1(passports):
-    res = 0
-    for passport in passports:
-        if has_valid_fields(passport):
-            res += 1
-    return res
+    return sum(has_valid_fields(passport) for passport in passports)
 
 
 def part2(passports):
-    res = 0
-    passport = {}
-    for passport in passports:
-        if check_all(passport):
-            res += 1
-    return res
+    return sum(check_all(passport) for passport in passports)
 
 print(f'Answer for part 1: {part1(PASSPORTS)}')  # 219
 print(f'Answer for part 2: {part2(PASSPORTS)}')  # 127
