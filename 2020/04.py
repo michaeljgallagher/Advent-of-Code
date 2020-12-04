@@ -10,9 +10,7 @@ def parse_input(data):
             res.append(passport)
             passport = {}
         else:
-            for x in row.split(' '):
-                k, v = x.split(':')
-                passport[k] = v
+            passport.update({k:v for k, v in [x.split(':') for x in row.split()]})
     if passport: res.append(passport)
     return res
 
