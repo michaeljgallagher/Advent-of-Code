@@ -35,13 +35,12 @@ def has_valid_eyr(passport):
 
 
 def has_valid_hgt(passport):
-    hgt = passport.get('hgt')
-    if not hgt: return False
-    if not hgt[-2:] in ['cm', 'in']: return False
-    if 150 <= int(hgt[:-2]) <= 193:
-        return hgt[-2:] == 'cm'
-    if 59 <= int(hgt[:-2]) <= 76:
-        return hgt[-2:] == 'in'
+    hgt = passport.get('hgt', '  ')
+    if hgt[-2:] == 'cm':
+        return 150 <= int(hgt[:-2]) <= 193
+    if hgt[-2:] == 'in':
+        return 59 <= int(hgt[:-2]) <= 76
+    return False
 
 
 def has_valid_hcl(passport):
