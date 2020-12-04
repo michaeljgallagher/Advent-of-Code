@@ -1,68 +1,91 @@
 with open('04.txt', 'r') as file:
     data = file.read().split('\n')
 
-# print(data)
-def part1(data):
-    valid = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
-    res = 0
+
+def parse_input(data):
+    '''
+    build a list of passports
+    '''
+    res = []
     passport = {}
     for row in data:
         cur = row.split(' ')
         if cur == ['']:
-            if valid.issubset(set(passport.keys())):
-                res += 1
-            passport = {}
-            #print(passport)
-        else:
-            for x in cur:
-                    k, v = x.split(':')
-                    passport[k] = v
-            #print(passport)
-    return res
-
-
-def checks(passport):
-    valid = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
-    if not (valid.issubset(set(passport.keys()))):
-        return False
-    if not (1920 <= int(passport['byr']) <= 2002):
-        return False
-    if not (2010 <= int(passport['iyr']) <= 2020):
-        return False
-    if not (2020 <= int(passport['eyr']) <= 2030):
-        return False
-    if passport['hgt'][-2:] not in ['in', 'cm']:
-        return False
-    if passport['hgt'][-2:] == 'cm':
-        if not (150 <= int(passport['hgt'][:-2]) <= 193):
-            return False
-    if passport['hgt'][-2:] == 'in':
-        if not (59 <= int(passport['hgt'][:-2]) <= 76):
-            return False
-    if passport['hcl'][0] != '#':
-        return False
-    if not (len(passport['hcl'][1:]) == 6 and all([x in '0123456789abcdefABCDEF' for x in passport['hcl'][1:]])):
-        return False
-    if passport['ecl'] not in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']:
-        return False
-    if not (len(passport['pid']) == 9 and passport['pid'].isdecimal()):
-        return False
-    return True
-
-def part2(data):
-    res = 0
-    passport = {}
-    for row in data:
-        cur = row.split(' ')
-        if cur == ['']:
-            if checks(passport):
-                res += 1
+            res.append(passport)
             passport = {}
         else:
             for x in cur:
                     k, v = x.split(':')
                     passport[k] = v
+    if passport: res.append(passport)
     return res
 
-print(f'Answer for part 1: {part1(data)}')  # 219
-print(f'Answer for part 2: {part2(data)}')  # 127
+
+PASSPORTS = parse_input(data)
+
+
+def has_valid_fields(passport):
+    valid_fields = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
+    return valid_fields.issubset(set(passport.keys()))
+
+
+def has_valid_byr(passport):
+    return 1920 <= int(passport.get('byr', -1)) <= 2002
+
+
+def has_valid_iyr(passport):
+    return 2010 <= int(passport.get('iyr', -1)) <= 2020
+
+
+def has_valid_eyr(passport):
+    return 2020 <= int(passport.get('eyr', -1)) <= 2030
+
+
+def has_valid_hgt(passport):
+    hgt = passport.get('hgt')
+    if not hgt: return False
+    if not hgt[-2:] in ['cm', 'in']: return False
+    if 150 <= int(hgt[:-2]) <= 193:
+        return hgt[-2:] == 'cm'
+    if 59 <= int(hgt[:-2]) <= 76:
+        return hgt[-2:] == 'in'
+
+
+def has_valid_hcl(passport):
+    hcl = passport['hcl']
+    if hcl[0] != '#': return False
+    return len(hcl) == 7 and all([x in '0123456789abcdefABCDEF' for x in hcl[1:]])
+
+
+def has_valid_ecl(passport):
+    return passport['ecl'] in {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'}
+
+
+def has_valid_pid(passport):
+    return len(passport['pid']) == 9 and passport['pid'].isdecimal()
+    
+
+def check_all(passport):
+    checks = [has_valid_fields, has_valid_byr, has_valid_iyr, has_valid_eyr,
+                has_valid_hgt, has_valid_hcl, has_valid_ecl, has_valid_pid]
+    return all(func(passport) for func in checks)
+
+
+def part1(passports):
+    res = 0
+    for passport in passports:
+        if has_valid_fields(passport):
+            res += 1
+    return res
+
+
+def part2(passports):
+    res = 0
+    passport = {}
+    for passport in passports:
+        if check_all(passport):
+            res += 1
+    return res
+
+print(f'Answer for part 1: {part1(PASSPORTS)}')  # 219
+print(f'Answer for part 2: {part2(PASSPORTS)}')  # 127
