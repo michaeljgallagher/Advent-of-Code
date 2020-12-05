@@ -1,6 +1,5 @@
 def convert(boarding_pass):
-    table = str.maketrans('FBLR', '0101')
-    return int(boarding_pass.translate(table), 2)
+    return int(boarding_pass.translate(str.maketrans('FBLR', '0101')), 2)
 
 
 def part_one(seats):
@@ -8,8 +7,7 @@ def part_one(seats):
 
 
 def part_two(seats):
-    lb, ub = min(seats), max(seats)
-    return list((set(range(lb, ub)) - seats))[0]
+    return list((set(range(min(seats), max(seats))) - seats))[0]
 
 
 if __name__ == '__main__':
