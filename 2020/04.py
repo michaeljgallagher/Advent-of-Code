@@ -5,10 +5,7 @@ with open('04.txt', 'r') as file:
 
 
 def parse_input(data):
-    res = []
-    for row in data:
-        res.append({k:v for k, v in [x.split(':') for x in row.split()]})
-    return res
+    return [{k:v for k, v in [x.split(':') for x in row.split()]} for row in data]
 
 
 def has_valid_fields(passport):
