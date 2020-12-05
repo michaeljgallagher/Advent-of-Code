@@ -1,3 +1,6 @@
+import re
+
+
 with open('04.txt', 'r') as file:
     data = file.read().split('\n')
 
@@ -33,21 +36,13 @@ def has_valid_eyr(passport):
 
 
 def has_valid_hgt(passport):
-    hgt = passport.get('hgt', '  ')
-    if hgt[-2:] == 'cm':
-        return 150 <= int(hgt[:-2]) <= 193
-    if hgt[-2:] == 'in':
-        return 59 <= int(hgt[:-2]) <= 76
-    return False
+    hgt = passport.get('hgt', ' ')
+    return re.match(r"1([5-8][\d]|9[0-3])cm|(59|6[\d]|7[0-6])in", hgt)
 
 
 def has_valid_hcl(passport):
-    hcl = passport['hcl']
-    return (
-        hcl[0] == '#' and 
-        len(hcl) == 7 and 
-        all(x in '0123456789abcdef' for x in hcl[1:])
-    )
+    hcl = passport.get('hcl', ' ')
+    return re.match(r"#[0-9a-f]{6}", hcl)
 
 
 def has_valid_ecl(passport):
