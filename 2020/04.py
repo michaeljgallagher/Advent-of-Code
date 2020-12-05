@@ -1,9 +1,5 @@
 import re
 
-with open('04.txt', 'r') as file:
-    data = file.read().split('\n\n')
-
-
 def parse_input(data):
     return [{k:v for k, v in [x.split(':') for x in row.split()]} for row in data]
 
@@ -58,6 +54,10 @@ def part2(passports):
 
 
 if __name__ == '__main__':
-    PASSPORTS = parse_input(data)
-    print(f'Answer for part 1: {part1(PASSPORTS)}')  # 219
-    print(f'Answer for part 2: {part2(PASSPORTS)}')  # 127
+    with open('04.txt', 'r') as file:
+        data = file.read().split('\n\n')
+
+    passports = parse_input(data)
+
+    print(f'Part 1: {part1(passports)}')  # 219
+    print(f'Part 2: {part2(passports)}')  # 127
