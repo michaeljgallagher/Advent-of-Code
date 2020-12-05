@@ -1,20 +1,13 @@
 import re
 
-
 with open('04.txt', 'r') as file:
-    data = file.read().split('\n')
+    data = file.read().split('\n\n')
 
 
 def parse_input(data):
     res = []
-    passport = {}
     for row in data:
-        if not row:
-            res.append(passport)
-            passport = {}
-        else:
-            passport.update({k:v for k, v in [x.split(':') for x in row.split()]})
-    if passport: res.append(passport)
+        res.append({k:v for k, v in [x.split(':') for x in row.split()]})
     return res
 
 
