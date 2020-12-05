@@ -2,35 +2,13 @@ with open('05.txt', 'r') as file:
     data = file.read().split('\n')
 
 
-def find_row(boarding_pass):
-    l, r = 0, 127
-    for i in range(7):
-            m = (l+r+1) // 2
-            if boarding_pass[i] == 'F':
-                r = m-1
-            else:
-                l = m
-    return l
-
-
-def find_col(boarding_pass):
-    l, r = 0, 7
-    for i in range(7, 10):
-            m = (l+r+1) // 2
-            if boarding_pass[i] == 'L':
-                r = m-1
-            else:
-                l = m
-    return l
+def convert(boarding_pass):
+    table = boarding_pass.maketrans('FBLR', '0101')
+    return int(boarding_pass.translate(table), 2)
 
 
 def find_seats(data):
-    seats = set()
-    for boarding_pass in data:
-        row = find_row(boarding_pass)
-        col = find_col(boarding_pass)
-        seats.add((row * 8) + col)
-    return seats
+    return set(convert(boarding_pass) for boarding_pass in data)
 
 
 def part_one(seats):
