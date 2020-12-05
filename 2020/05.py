@@ -3,7 +3,7 @@ with open('05.txt', 'r') as file:
 
 
 def convert(boarding_pass):
-    table = boarding_pass.maketrans('FBLR', '0101')
+    table = str.maketrans('FBLR', '0101')
     return int(boarding_pass.translate(table), 2)
 
 
