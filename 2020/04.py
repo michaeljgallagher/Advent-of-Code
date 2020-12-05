@@ -23,12 +23,12 @@ def has_valid_eyr(passport):
 
 def has_valid_hgt(passport):
     hgt = passport.get('hgt', ' ')
-    return bool(re.match(r"1([5-8][\d]|9[0-3])cm|(59|6[\d]|7[0-6])in", hgt))
+    return bool(re.match(r'1([5-8][\d]|9[0-3])cm|(59|6[\d]|7[0-6])in', hgt))
 
 
 def has_valid_hcl(passport):
     hcl = passport.get('hcl', ' ')
-    return bool(re.match(r"#[0-9a-f]{6}", hcl))
+    return bool(re.match(r'#[0-9a-f]{6}', hcl))
 
 
 def has_valid_ecl(passport):
