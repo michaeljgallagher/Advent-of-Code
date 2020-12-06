@@ -5,13 +5,7 @@ with open('06.txt', 'r') as file:
 
 
 def part_one(data):
-    res = 0
-    for line in data:
-        cur = set()
-        for s in line.split():
-            cur |= set(s)
-        res += len(cur)
-    return res
+    return sum(len(set(c for c in group if c !='\n')) for group in data)
 
 
 def part_two(data):
@@ -24,6 +18,5 @@ def part_two(data):
     return res
 
 
-if __name__ == '__main__':
-    print(f'Part 1: {part_one(data)}')  # 6775
-    print(f'Part 2: {part_two(data)}')  # 3356
+print(f'Part 1: {part_one(data)}')  # 6775
+print(f'Part 2: {part_two(data)}')  # 3356
