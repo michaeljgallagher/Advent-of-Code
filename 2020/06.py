@@ -10,9 +10,9 @@ def part_one(data):
 
 def part_two(data):
     res = 0
-    for line in data:
+    for group in data:
         cur = set(letters)
-        for s in line.split():
+        for s in group.split():
             cur &= set(s)
         res += len(cur)
     return res
