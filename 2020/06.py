@@ -1,4 +1,4 @@
-from collections import Counter
+from string import ascii_lowercase as letters
 
 with open('06.txt', 'r') as file:
     data = file.read().split('\n\n')
@@ -17,11 +17,10 @@ def part_one(data):
 def part_two(data):
     res = 0
     for line in data:
-        cur = Counter()
-        n = len(line.split())
+        cur = set(letters)
         for s in line.split():
-            cur += Counter(s)
-        res += sum(v==n for k, v in cur.items())
+            cur &= set(s)
+        res += len(cur)
     return res
 
 
