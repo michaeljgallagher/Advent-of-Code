@@ -1,17 +1,17 @@
 from collections import defaultdict, deque
+import re
 
 with open('07.txt', 'r') as file:
-    data = file.read().split('\n')
+    data = file.read()
 
 
 def parse_input(data):
     '''
     {bag_color: {bag_color, amount}}
     '''
-    rules = [[y.strip() for y in x.split('contain')] for x in data]
-    graph = {' '.join(x[0].split()[:-1]): x[1:] for x in rules}
-    for k, v in graph.items():
-        graph[k] = {' '.join(s[2:].split()[:-1]) : int(s[0]) for s in v[0].split(', ') if s != 'no other bags.'}
+    bags = re.findall(r'([a-z]+ [a-z]+) bags contain (.+)', data)
+    pattern = re.compile(r'(\d+) ([a-z]+ [a-z]+) bag')
+    graph = {bag: {nested_bag: int(v) for v, nested_bag in pattern.findall(nested_bags)} for bag, nested_bags in bags}
     return graph
 
 
@@ -35,11 +35,11 @@ def part_one(rev):
 
 
 def part_two(graph):
-    def dfs(graph, bag):
+    def dfs(bag):
         if not graph[bag]:
             return 1
-        return 1 + sum((v * dfs(graph, k)) for k, v in graph[bag].items())
-    return dfs(graph, 'shiny gold') - 1  #remove one for 'shiny gold'
+        return 1 + sum((v * dfs(k)) for k, v in graph[bag].items())
+    return dfs('shiny gold') - 1  #remove one for 'shiny gold'
 
 
 graph = parse_input(data)
