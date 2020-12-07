@@ -36,7 +36,7 @@ def part_two(graph):
         if not graph[bag]:
             return 1
         return 1 + sum((v * dfs(k)) for k, v in graph[bag].items())
-    return dfs('shiny gold') - 1  #remove one for 'shiny gold'
+    return dfs('shiny gold') - 1  # remove one for 'shiny gold'
 
 
 graph = parse_input(data)
