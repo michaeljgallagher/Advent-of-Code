@@ -25,8 +25,8 @@ def part_one(rev):
     stack = ['shiny gold']
     while stack:
         cur = stack.pop()
-        seen.add(cur)
         stack += rev[cur]
+        seen.add(cur)
     return len(seen) - 1  # remove one for 'shiny gold'
 
 
