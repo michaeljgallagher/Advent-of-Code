@@ -22,11 +22,11 @@ def create_reverse_graph(graph):
 
 def part_one(rev):
     seen = set()
-    def dfs(bag):
-        seen.add(bag)
-        for nested_bag in rev[bag]:
-            dfs(nested_bag)
-    dfs('shiny gold')
+    stack = ['shiny gold']
+    while stack:
+        cur = stack.pop()
+        seen.add(cur)
+        stack += rev[cur]
     return len(seen) - 1  # remove one for 'shiny gold'
 
 
