@@ -39,15 +39,15 @@ def part_one(rev):
         if cur not in seen:
             q += deque(rev[cur])
             seen.add(cur)
-    return len(seen)-1  # remove one for 'shiny gold'
+    return len(seen) - 1  # remove one for 'shiny gold'
 
 
-def part_two(d):
-    def dfs(d, bag):
-        if not d[bag]:
+def part_two(graph):
+    def dfs(graph, bag):
+        if not graph[bag]:
             return 1
-        return 1 + sum((v * dfs(d, k)) for k, v in d[bag].items())
-    return dfs(d, 'shiny gold') - 1  #remove one for 'shiny gold'
+        return 1 + sum((v * dfs(graph, k)) for k, v in graph[bag].items())
+    return dfs(graph, 'shiny gold') - 1  #remove one for 'shiny gold'
 
 
 graph = parse_input(data)
