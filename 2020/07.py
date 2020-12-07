@@ -6,7 +6,6 @@ with open('07.txt', 'r') as file:
 
 def parse_input(data):
     '''
-    construct a graph
     {bag_color: {bag_color, amount}}
     '''
     rules = [[y.strip() for y in x.split('contain')] for x in data]
