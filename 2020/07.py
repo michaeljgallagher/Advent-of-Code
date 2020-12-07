@@ -6,9 +6,6 @@ with open('07.txt', 'r') as file:
 
 
 def parse_input(data):
-    '''
-    {bag_color: {bag_color, amount}}
-    '''
     bags = re.findall(r'([a-z]+ [a-z]+) bags contain (.+)', data)
     pattern = re.compile(r'(\d+) ([a-z]+ [a-z]+) bag')
     graph = {bag: {nested_bag: int(v) for v, nested_bag in pattern.findall(nested_bags)} for bag, nested_bags in bags}
