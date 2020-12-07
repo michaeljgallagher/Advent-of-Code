@@ -32,8 +32,6 @@ def part_one(rev):
 
 def part_two(graph):
     def dfs(bag):
-        if not graph[bag]:
-            return 1
         return 1 + sum((v * dfs(k)) for k, v in graph[bag].items())
     return dfs('shiny gold') - 1  # remove one for 'shiny gold'
 
