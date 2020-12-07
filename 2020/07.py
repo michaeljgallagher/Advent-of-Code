@@ -23,7 +23,6 @@ def create_reverse_graph(graph):
 def part_one(rev):
     seen = set()
     def dfs(bag):
-        if not bag: return
         seen.add(bag)
         for nested_bag in rev[bag]:
             dfs(nested_bag)
