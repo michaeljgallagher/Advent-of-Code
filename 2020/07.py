@@ -12,14 +12,7 @@ def parse_input(data):
     rules = [[y.strip() for y in x.split('contain')] for x in data]
     graph = {' '.join(x[0].split()[:-1]): x[1:] for x in rules}
     for k, v in graph.items():
-        new = {}
-        cur = v[0].split(', ')
-        for s in cur:
-            if s == 'no other bags.': continue
-            key = (' '.join(s[2:].split()[:-1]))
-            val = int(s[0])
-            new[key] = val
-        graph[k] = new
+        graph[k] = {' '.join(s[2:].split()[:-1]) : int(s[0]) for s in v[0].split(', ') if s != 'no other bags.'}
     return graph
 
 
