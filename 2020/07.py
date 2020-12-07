@@ -21,8 +21,8 @@ def create_reverse_graph(graph):
 
 
 def part_one(rev):
-    q = deque(rev['shiny gold'])
-    seen = set(['shiny gold'])
+    q = deque(['shiny gold'])
+    seen = set()
     while q:
         cur = q.popleft()
         if cur not in seen:
