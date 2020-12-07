@@ -21,13 +21,13 @@ def create_reverse_graph(graph):
 
 
 def part_one(rev):
-    q = deque(['shiny gold'])
     seen = set()
-    while q:
-        cur = q.popleft()
-        if cur not in seen:
-            q += deque(rev[cur])
-            seen.add(cur)
+    def dfs(bag):
+        if not bag: return
+        seen.add(bag)
+        for nested_bag in rev[bag]:
+            dfs(nested_bag)
+    dfs('shiny gold')
     return len(seen) - 1  # remove one for 'shiny gold'
 
 
