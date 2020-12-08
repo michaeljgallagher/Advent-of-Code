@@ -1,12 +1,10 @@
+from copy import deepcopy
+
 with open('08.txt', 'r') as file:
     data = file.read()
 
 def parse_input(data):
-    d = data.split('\n')
-    res = [line.split(' ') for line in d]
-    for i, v in enumerate(res):
-        res[i] = [v[0], int(v[1])]
-    return res
+    return [[line.split(' ')[0], int(line.split(' ')[1])] for line in data.split('\n')]
 
 
 def part_one(data):
@@ -16,16 +14,13 @@ def part_one(data):
         seen.add(idx)
         op, val = data[idx]
         if op == 'jmp':
-            idx += val
+            idx += val - 1
         elif op == 'acc':
             res += val
-            idx += 1
-        else:
-            idx += 1
+        idx += 1
     return res, idx
 
 
-from copy import deepcopy
 def part_two(data):
     for i, v in enumerate(data):
         copy = deepcopy(data)
@@ -34,9 +29,6 @@ def part_two(data):
             res, idx = part_one(copy)
             if idx >= len(copy):
                 return res
-
-
-
 
 
 data = parse_input(data)
