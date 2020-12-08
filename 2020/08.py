@@ -18,11 +18,12 @@ def part_two(data):
     swap = {'jmp': 'nop', 'nop': 'jmp'}
     for i, v in enumerate(data):
         copy = deepcopy(data)
-        if v[0] in ('jmp', 'nop'):
-            copy[i][0] = swap[v[0]]
+        op, val = v
+        if op in ('jmp', 'nop'):
+            copy[i][0] = swap[op]
             bc = BootCode(copy)
             bc.run()
-            if bc.idx >= bc.length:
+            if not bc.halt:
                 return bc.accum
 
 
