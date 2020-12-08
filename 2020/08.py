@@ -31,9 +31,9 @@ def part_two(data):
         copy = deepcopy(data)
         if v[0] in ('jmp', 'nop'):
             copy[i][0] = 'jmp' if v[0] == 'nop' else 'nop'
-        res, idx = part_one(copy)
-        if idx >= len(copy):
-            return res
+            res, idx = part_one(copy)
+            if idx >= len(copy):
+                return res
 
 
 
