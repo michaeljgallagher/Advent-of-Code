@@ -15,7 +15,6 @@ def part_one(data):
             if target - x in cur:
                 i += 1
                 found = True
-                continue
         if not found:
             return target
         
