@@ -12,7 +12,6 @@ def part_one(data):
     return bc.run()[0]
 
 
-
 def part_two(data):
     bc = BootCode(data)
     return bc.repair()

@@ -29,24 +29,24 @@ class BootCode:
 
     def repair(self):
         swap = {'jmp': 'nop', 'nop': 'jmp'}
-        cycles = list(self.run()[1])
-        while cycles:
-            cur = cycles.pop()
+        cycle = list(self.run()[1])
+        while cycle:
+            cur = cycle.pop()
             op, val = self.instructions[cur]
             if op in ('jmp', 'nop'):
                 self.instructions[cur] = [swap[op], val]
-            res, cycle = self.run()
-            if not cycle:
+            res, seen = self.run()
+            if not seen:
                 return res
             self.instructions[cur] = [op, val]
     
     def run(self):
         self.reset()
-        cycles = set()
+        cycle = set()
         while True:
             if self.idx == len(self.instructions):
                 return self.accum, None
-            if self.idx in cycles:
-                return self.accum, cycles
-            cycles.add(self.idx)
+            if self.idx in cycle:
+                return self.accum, cycle
+            cycle.add(self.idx)
             self.step()
