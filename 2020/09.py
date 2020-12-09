@@ -34,8 +34,6 @@ def part_two(data):
         j += 1
 
 
-
-
 data = parse_input(data)
 
 print(f'Part 1: {part_one(data)}')  # 552655238
