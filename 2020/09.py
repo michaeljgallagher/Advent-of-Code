@@ -6,28 +6,25 @@ def parse_input(data):
 
 
 def part_one(data):
+    preamble = set(data[:25])
     i = 0
     while True:
-        found = False
-        cur = set(data[i:i+25])
-        target = data[i+25]
-        for x in data[i:i+25]:
-            if target - x in cur:
-                i += 1
-                found = True
-        if not found:
-            return target
-        
+        cur = data[i+25]
+        if not any((cur - x) in preamble for x in preamble):
+            return cur
+        preamble.remove(data[i])
+        preamble.add(data[i+25])
+        i += 1
 
+        
 def part_two(data):
-    cur = data[0]
-    i = 0
-    j = 1
-    while j <= len(data):
-        while cur > 552655238 and i < j:
+    cur, target = 0, 552655238
+    i, j = 0, 0
+    while j < len(data):
+        while cur > target and i < j:
             cur -= data[i]
             i += 1
-        if cur == 552655238:
+        if cur == target:
             return min(data[i:j]) + max(data[i:j])
         if j < len(data):
             cur += data[j]
@@ -35,6 +32,5 @@ def part_two(data):
 
 
 data = parse_input(data)
-
 print(f'Part 1: {part_one(data)}')  # 552655238
 print(f'Part 2: {part_two(data)}')  # 70672245
