@@ -1,8 +1,8 @@
 with open('09.txt', 'r') as file:
-    data = list(map(int, file.read().split('\n')))
+    data = file.read()
 
 def parse_input(data):
-    list(map(int, file.read().split('\n')))
+    return list(map(int, data.split('\n')))
 
 
 def part_one(data):
@@ -15,20 +15,29 @@ def part_one(data):
             if target - x in cur:
                 i += 1
                 found = True
+                continue
         if not found:
             return target
         
+
 def part_two(data):
-    i, j = 0, 1
-    for i, v in enumerate(data):
-        res = v
-        n = 1
-        while res < 552655238:
-            res += data[i + n]
-            n += 1
-        if res ==552655238:
-            return min(data[i:i+n]) + max(data[i:i+n])
-#print(data)
+    cur = data[0]
+    i = 0
+    j = 1
+    while j <= len(data):
+        while cur > 552655238 and i < j:
+            cur -= data[i]
+            i += 1
+        if cur == 552655238:
+            return min(data[i:j]) + max(data[i:j])
+        if j < len(data):
+            cur += data[j]
+        j += 1
+
+
+
+
+data = parse_input(data)
 
 print(f'Part 1: {part_one(data)}')  # 552655238
 print(f'Part 2: {part_two(data)}')  # 70672245
