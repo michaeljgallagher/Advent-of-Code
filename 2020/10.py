@@ -4,13 +4,14 @@ with open('10.txt', 'r') as file:
     data = file.read()
 
 def parse_input(data):
-    return [0] + sorted(list(map(int, data.split('\n'))))
+    jolts = sorted(list(map(int, data.split('\n'))))
+    return [0] + jolts + [jolts[-1] + 3]
 
 
 def part_one(data):
     diff = [data[i+1] - data[i] for i in range(len(data)-1)]
     a = diff.count(1)
-    b = diff.count(3) + 1  # add a 3 for the built-in adapter
+    b = diff.count(3)
     return a * b
 
 
@@ -18,7 +19,6 @@ def make_graph(data):
     graph = {}
     for i, x in enumerate(data):
         graph[x] = [y for y in data[i+1:i+4] if 0 < y-x <= 3]
-    graph[max(data)] = [max(data)+3]
     return graph
 
 
@@ -26,7 +26,7 @@ def part_two(data):
     graph = make_graph(data)
     @lru_cache(None)
     def dfs(node):
-        if node not in graph.keys():
+        if not graph[node]:
             return 1
         return sum(dfs(nnode) for nnode in graph[node])
     return dfs(0)
