@@ -4,20 +4,18 @@ with open('10.txt', 'r') as file:
     data = file.read()
 
 def parse_input(data):
-    return sorted(list(map(int, data.split('\n'))))
+    return [0] + sorted(list(map(int, data.split('\n'))))
 
 
 def part_one(data):
-    data = [0] + data
     diff = [data[i+1] - data[i] for i in range(len(data)-1)]
     a = diff.count(1)
-    b = diff.count(3) + 1  # add a 3 for the wall outlet
+    b = diff.count(3) + 1  # add a 3 for the built-in adapter
     return a * b
 
 
 def make_graph(data):
     graph = {}
-    data = [0] + data
     for i, x in enumerate(data):
         graph[x] = [y for y in data[i+1:i+4] if 0 < y-x <= 3]
     graph[max(data)] = [max(data)+3]
