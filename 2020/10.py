@@ -34,14 +34,10 @@ def part_two(data):
 
 
 def part_two_alt(data):
-    '''
-    O(n) space, O(n) time (with an already sorted list)
-    '''
-    dp = [0] * (data[-1] + 1)  # initialize dp array, with indices from 0 to max
-    dp[0] = 1  # 0 (the outlet) starts at 1 (only 1 way to get to it)
+    dp = {0: 1}
     for x in data[1:]:
-        dp[x] = dp[x-1] + dp[x-2] + dp[x-3]  # ways to get to x is sum of ways of 3 joltages before it
-    return dp[-1]
+        dp[x] = dp.get(x-1, 0) + dp.get(x-2, 0) + dp.get(x-3, 0)
+    return dp[data[-1]]
 
 
 data = parse_input(data)
