@@ -16,12 +16,12 @@ def part_one(data):
 
 
 def make_graph(data):
-    res = {}
+    graph = {}
     data = [0] + data
-    for x in data:
-        res[x] = [i for i in data if 0 < i-x <= 3]
-    res[max(data)] = [max(data)+3]
-    return res
+    for i, x in enumerate(data):
+        graph[x] = [y for y in data[i+1:i+4] if 0 < y-x <= 3]
+    graph[max(data)] = [max(data)+3]
+    return graph
 
 
 def part_two(data):
@@ -30,11 +30,7 @@ def part_two(data):
     def dfs(node):
         if node not in graph.keys():
             return 1
-        options = graph[node]
-        cur = 0
-        for new_node in options:
-            cur += dfs(new_node)
-        return cur
+        return sum(dfs(nnode) for nnode in graph[node])
     return dfs(0)
 
 
