@@ -11,7 +11,7 @@ def part_one(data):
     data = [0] + data
     diff = [data[i+1] - data[i] for i in range(len(data)-1)]
     a = diff.count(1)
-    b = diff.count(3) + 1  # add 3 for the wall outlet
+    b = diff.count(3) + 1  # add a 3 for the wall outlet
     return a * b
 
 
