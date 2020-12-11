@@ -4,17 +4,17 @@ with open('11.txt', 'r') as file:
 def parse_input(data):
     return [list(line) for line in data.split('\n')]
 
-data = parse_input(data)
-N, M = len(data), len(data[0])
+GRID = parse_input(data)
+N, M = len(GRID), len(GRID[0])
 
 
-def get_state(data):
+def get_state():
     occupied, empty = set(), set()
     for i in range(N):
         for j in range(M):
-            if data[i][j] == '#':
+            if GRID[i][j] == '#':
                 occupied.add((i, j))
-            if data[i][j] == 'L':
+            if GRID[i][j] == 'L':
                 empty.add((i, j))
     return occupied, empty
 
@@ -28,8 +28,8 @@ def check_seat_one(seat_pos, occupied):
     return count
 
 
-def part_one(data):
-    occupied, empty = get_state(data)
+def part_one():
+    occupied, empty = get_state()
     while True:
         occupy = set()
         deoccupy = set()
@@ -48,12 +48,12 @@ def part_one(data):
     return len(occupied)
 
 
-def check_seat_two(seat_pos, occupied, data):
+def check_seat_two(seat_pos, occupied):
     x, y = seat_pos
     count = 0
     for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
         cur_x, cur_y = x+dx, y+dy
-        while 0 <= cur_x < N and 0 <= cur_y < M and data[cur_x][cur_y] == '.':
+        while 0 <= cur_x < N and 0 <= cur_y < M and GRID[cur_x][cur_y] == '.':
             cur_x += dx
             cur_y += dy
         if (cur_x, cur_y) in occupied:
@@ -61,16 +61,16 @@ def check_seat_two(seat_pos, occupied, data):
     return count
 
 
-def part_two(data):
-    occupied, empty = get_state(data)
+def part_two():
+    occupied, empty = get_state()
     while True:
         occupy = set()
         deoccupy = set()
         for seat in empty:
-            if check_seat_two(seat, occupied, data) == 0:
+            if check_seat_two(seat, occupied) == 0:
                 occupy.add(seat)
         for seat in occupied:
-            if check_seat_two(seat, occupied, data) >= 5:
+            if check_seat_two(seat, occupied) >= 5:
                 deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
@@ -81,5 +81,5 @@ def part_two(data):
     return len(occupied)
 
 
-print(f'Part 1: {part_one(data)}')  # 2472
-print(f'Part 2: {part_two(data)}')  # 2197
+print(f'Part 1: {part_one()}')  # 2472
+print(f'Part 2: {part_two()}')  # 2197
