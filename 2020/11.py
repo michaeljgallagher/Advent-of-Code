@@ -32,8 +32,7 @@ def check_seat_one(seat_pos, occupied):
 def part_one():
     occupied, empty = OCC.copy(), EMP.copy()
     while True:
-        occupy = set()
-        deoccupy = set()
+        occupy, deoccupy = set(), set()
         for seat in empty:
             if check_seat_one(seat, occupied) == 0:
                 occupy.add(seat)
@@ -63,8 +62,7 @@ def check_seat_two(seat_pos, occupied):
 def part_two():
     occupied, empty = OCC.copy(), EMP.copy()
     while True:
-        occupy = set()
-        deoccupy = set()
+        occupy, deoccupy = set(), set()
         for seat in empty:
             if check_seat_two(seat, occupied) == 0:
                 occupy.add(seat)
