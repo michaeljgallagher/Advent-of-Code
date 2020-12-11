@@ -40,16 +40,15 @@ def check_seat(seat, occupied, neighbors):
     return count
 
 
-def part_one():
+def run_cycles(neighbors, allowed=4):
     occupied, empty = SEATS.copy(), set()
-    neighbors = find_neighbors_one()
     while True:
         occupy, deoccupy = set(), set()
         for seat in empty:
             if check_seat(seat, occupied, neighbors) == 0:
                 occupy.add(seat)
         for seat in occupied:
-            if check_seat(seat, occupied, neighbors) >= 4:
+            if check_seat(seat, occupied, neighbors) >= allowed:
                 deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
@@ -72,22 +71,12 @@ def find_neighbors_two():
     return res
 
 
+def part_one():
+    return run_cycles(find_neighbors_one(), 4)
+
+
 def part_two():
-    occupied, empty = SEATS.copy(), set()
-    neighbors = find_neighbors_two()
-    while True:
-        occupy, deoccupy = set(), set()
-        for seat in empty:
-            if check_seat(seat, occupied, neighbors) == 0:
-                occupy.add(seat)
-        for seat in occupied:
-            if check_seat(seat, occupied, neighbors) >= 5:
-                deoccupy.add(seat)
-        if not occupy and not deoccupy:
-            break
-        occupied = (occupied - deoccupy) | occupy
-        empty = (empty - occupy) | deoccupy
-    return len(occupied)
+    return run_cycles(find_neighbors_two(), 5)
 
 
 print(f'Part 1: {part_one()}')  # 2472
