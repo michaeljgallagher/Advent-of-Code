@@ -22,6 +22,14 @@ N, M = len(GRID), len(GRID[0])
 SEATS = find_seats()
 
 
+def check_seat(seat, occupied, neighbors):
+    count = 0
+    for neighbor in neighbors[seat]:
+        if neighbor in occupied:
+            count += 1
+    return count
+
+
 def find_neighbors_one():
     res = defaultdict(list)
     for seat in SEATS:
@@ -32,12 +40,18 @@ def find_neighbors_one():
     return res
 
 
-def check_seat(seat, occupied, neighbors):
-    count = 0
-    for neighbor in neighbors[seat]:
-        if neighbor in occupied:
-            count += 1
-    return count
+def find_neighbors_two():
+    res = defaultdict(list)
+    for seat in SEATS:
+        x, y = seat
+        for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
+            cur_x, cur_y = x+dx, y+dy
+            while 0 <= cur_x < N and 0 <= cur_y < M and GRID[cur_x][cur_y] == '.':
+                cur_x += dx
+                cur_y += dy
+            if (cur_x, cur_y) in SEATS:
+                res[seat].append((cur_x, cur_y))
+    return res
 
 
 def run_cycles(neighbors, allowed=4):
@@ -55,20 +69,6 @@ def run_cycles(neighbors, allowed=4):
         occupied = (occupied - deoccupy) | occupy
         empty = (empty - occupy) | deoccupy
     return len(occupied)
-
-
-def find_neighbors_two():
-    res = defaultdict(list)
-    for seat in SEATS:
-        x, y = seat
-        for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
-            cur_x, cur_y = x+dx, y+dy
-            while 0 <= cur_x < N and 0 <= cur_y < M and GRID[cur_x][cur_y] == '.':
-                cur_x += dx
-                cur_y += dy
-            if (cur_x, cur_y) in SEATS:
-                res[seat].append((cur_x, cur_y))
-    return res
 
 
 def part_one():
