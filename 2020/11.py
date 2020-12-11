@@ -7,8 +7,6 @@ def parse_input(data):
 data = parse_input(data)
 N, M = len(data), len(data[0])
 
-from tools import timer
-
 
 def get_state(data):
     occupied, empty = set(), set()
@@ -29,7 +27,7 @@ def check_seat_one(seat_pos, occupied):
             count += 1
     return count
 
-@timer
+
 def part_one(data):
     occupied, empty = get_state(data)
     while True:
@@ -63,7 +61,6 @@ def check_seat_two(seat_pos, occupied, data):
     return count
 
 
-@timer
 def part_two(data):
     occupied, empty = get_state(data)
     while True:
