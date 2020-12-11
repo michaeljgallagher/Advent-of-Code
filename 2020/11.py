@@ -4,75 +4,85 @@ with open('11.txt', 'r') as file:
 def parse_input(data):
     return [list(line) for line in data.split('\n')]
 
+data = parse_input(data)
+N, M = len(data), len(data[0])
 
-def check_seat(seat_pos, cur_seating):
+from tools import timer
+
+
+def get_state(data):
+    occupied, empty = set(), set()
+    for i in range(N):
+        for j in range(M):
+            if data[i][j] == '#':
+                occupied.add((i, j))
+            if data[i][j] == 'L':
+                empty.add((i, j))
+    return occupied, empty
+
+
+def check_seat_one(seat_pos, occupied):
     x, y = seat_pos
     count = 0
     for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
-        if x+dx not in range(len(cur_seating)) or y+dy not in range(len(cur_seating[0])):
-            continue
-        if cur_seating[x+dx][y+dy] == '#':
+        if (x+dx, y+dy) in occupied:
             count += 1
     return count
 
-
-def part_one(cur_seating):
-    res = 0
+@timer
+def part_one(data):
+    occupied, empty = get_state(data)
     while True:
         occupy = set()
         deoccupy = set()
-        for i in range(len(cur_seating)):
-            for j in range(len(cur_seating[0])):
-                if cur_seating[i][j] == 'L' and check_seat((i, j), cur_seating) == 0:
-                    occupy.add((i, j))
-                if cur_seating[i][j] == '#' and check_seat((i, j), cur_seating) >= 4:
-                    deoccupy.add((i, j))
+        for seat in empty:
+            if check_seat_one(seat, occupied) == 0:
+                occupy.add(seat)
+        for seat in occupied:
+            if check_seat_one(seat, occupied) >= 4:
+                deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
-        for x, y in occupy:
-            cur_seating[x][y] = '#'
-        for x, y in deoccupy:
-            cur_seating[x][y] = 'L'
-        res += (len(occupy) - len(deoccupy))
-    return res
+        occupied -= deoccupy
+        occupied |= occupy
+        empty -= occupy
+        empty |= deoccupy
+    return len(occupied)
 
 
-def check_seat_2(seat_pos, cur_seating):
+def check_seat_two(seat_pos, occupied, data):
     x, y = seat_pos
     count = 0
     for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
         cur_x, cur_y = x+dx, y+dy
-        while cur_x in range(len(cur_seating)) and cur_y in range(len(cur_seating[0])) and cur_seating[cur_x][cur_y] == '.':
+        while 0 <= cur_x < N and 0 <= cur_y < M and data[cur_x][cur_y] == '.':
             cur_x += dx
             cur_y += dy
-        if cur_x not in range(len(cur_seating)) or cur_y not in range(len(cur_seating[0])):
-            continue
-        if cur_seating[cur_x][cur_y] == '#':
+        if (cur_x, cur_y) in occupied:
             count += 1
     return count
 
 
-def part_two(cur_seating):
-    res = 0
+@timer
+def part_two(data):
+    occupied, empty = get_state(data)
     while True:
         occupy = set()
         deoccupy = set()
-        for i in range(len(cur_seating)):
-            for j in range(len(cur_seating[0])):
-                if cur_seating[i][j] == 'L' and check_seat_2((i, j), cur_seating) == 0:
-                    occupy.add((i, j))
-                if cur_seating[i][j] == '#' and check_seat_2((i, j), cur_seating) >= 5:
-                    deoccupy.add((i, j))
+        for seat in empty:
+            if check_seat_two(seat, occupied, data) == 0:
+                occupy.add(seat)
+        for seat in occupied:
+            if check_seat_two(seat, occupied, data) >= 5:
+                deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
-        for x, y in occupy:
-            cur_seating[x][y] = '#'
-        for x, y in deoccupy:
-            cur_seating[x][y] = 'L'
-        res += (len(occupy) - len(deoccupy))
-    return res
+        occupied -= deoccupy
+        occupied |= occupy
+        empty -= occupy
+        empty |= deoccupy
+    return len(occupied)
 
 
-data = parse_input(data)
-# print(f'Part 1: {part_one(data)}')  # 2472
+print(f'Part 1: {part_one(data)}')  # 2472
 print(f'Part 2: {part_two(data)}')  # 2197
