@@ -4,10 +4,6 @@ with open('11.txt', 'r') as file:
 def parse_input(data):
     return [list(line) for line in data.split('\n')]
 
-GRID = parse_input(data)
-N, M = len(GRID), len(GRID[0])
-
-
 def get_state():
     occupied, empty = set(), set()
     for i in range(N):
@@ -17,6 +13,11 @@ def get_state():
             if GRID[i][j] == 'L':
                 empty.add((i, j))
     return occupied, empty
+
+
+GRID = parse_input(data)
+N, M = len(GRID), len(GRID[0])
+OCC, EMP = get_state()
 
 
 def check_seat_one(seat_pos, occupied):
@@ -29,7 +30,7 @@ def check_seat_one(seat_pos, occupied):
 
 
 def part_one():
-    occupied, empty = get_state()
+    occupied, empty = OCC.copy(), EMP.copy()
     while True:
         occupy = set()
         deoccupy = set()
@@ -41,10 +42,8 @@ def part_one():
                 deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
-        occupied -= deoccupy
-        occupied |= occupy
-        empty -= occupy
-        empty |= deoccupy
+        occupied = (occupied - deoccupy) | occupy
+        empty = (empty - occupy) | deoccupy
     return len(occupied)
 
 
@@ -62,7 +61,7 @@ def check_seat_two(seat_pos, occupied):
 
 
 def part_two():
-    occupied, empty = get_state()
+    occupied, empty = OCC.copy(), EMP.copy()
     while True:
         occupy = set()
         deoccupy = set()
@@ -74,10 +73,8 @@ def part_two():
                 deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
-        occupied -= deoccupy
-        occupied |= occupy
-        empty -= occupy
-        empty |= deoccupy
+        occupied = (occupied - deoccupy) | occupy
+        empty = (empty - occupy) | deoccupy
     return len(occupied)
 
 
