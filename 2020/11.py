@@ -1,43 +1,55 @@
+from collections import defaultdict
+
 with open('11.txt', 'r') as file:
     data = file.read()
+
 
 def parse_input(data):
     return [list(line) for line in data.split('\n')]
 
-def get_state():
-    occupied, empty = set(), set()
+
+def find_seats():
+    seats = set()
     for i in range(N):
         for j in range(M):
-            if GRID[i][j] == '#':
-                occupied.add((i, j))
             if GRID[i][j] == 'L':
-                empty.add((i, j))
-    return occupied, empty
+                seats.add((i, j))
+    return seats
 
 
 GRID = parse_input(data)
 N, M = len(GRID), len(GRID[0])
-OCC, EMP = get_state()
+SEATS = find_seats()
 
 
-def check_seat_one(seat_pos, occupied):
-    x, y = seat_pos
+def find_neighbors_one():
+    res = defaultdict(list)
+    for seat in SEATS:
+        x, y = seat
+        for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
+            if (x+dx, y+dy) in SEATS:
+                res[seat].append((x+dx, y+dy))
+    return res
+
+
+def check_seat(seat, occupied, neighbors):
     count = 0
-    for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
-        if (x+dx, y+dy) in occupied:
+    for neighbor in neighbors[seat]:
+        if neighbor in occupied:
             count += 1
     return count
 
 
 def part_one():
-    occupied, empty = OCC.copy(), EMP.copy()
+    occupied, empty = SEATS.copy(), set()
+    neighbors = find_neighbors_one()
     while True:
         occupy, deoccupy = set(), set()
         for seat in empty:
-            if check_seat_one(seat, occupied) == 0:
+            if check_seat(seat, occupied, neighbors) == 0:
                 occupy.add(seat)
         for seat in occupied:
-            if check_seat_one(seat, occupied) >= 4:
+            if check_seat(seat, occupied, neighbors) >= 4:
                 deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
@@ -46,28 +58,30 @@ def part_one():
     return len(occupied)
 
 
-def check_seat_two(seat_pos, occupied):
-    x, y = seat_pos
-    count = 0
-    for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
-        cur_x, cur_y = x+dx, y+dy
-        while 0 <= cur_x < N and 0 <= cur_y < M and GRID[cur_x][cur_y] == '.':
-            cur_x += dx
-            cur_y += dy
-        if (cur_x, cur_y) in occupied:
-            count += 1
-    return count
+def find_neighbors_two():
+    res = defaultdict(list)
+    for seat in SEATS:
+        x, y = seat
+        for dx, dy in [(1,0), (1,1), (0,1), (-1,0), (-1,1), (0,-1), (-1,-1), (1,-1)]:
+            cur_x, cur_y = x+dx, y+dy
+            while 0 <= cur_x < N and 0 <= cur_y < M and GRID[cur_x][cur_y] == '.':
+                cur_x += dx
+                cur_y += dy
+            if (cur_x, cur_y) in SEATS:
+                res[seat].append((cur_x, cur_y))
+    return res
 
 
 def part_two():
-    occupied, empty = OCC.copy(), EMP.copy()
+    occupied, empty = SEATS.copy(), set()
+    neighbors = find_neighbors_two()
     while True:
         occupy, deoccupy = set(), set()
         for seat in empty:
-            if check_seat_two(seat, occupied) == 0:
+            if check_seat(seat, occupied, neighbors) == 0:
                 occupy.add(seat)
         for seat in occupied:
-            if check_seat_two(seat, occupied) >= 5:
+            if check_seat(seat, occupied, neighbors) >= 5:
                 deoccupy.add(seat)
         if not occupy and not deoccupy:
             break
