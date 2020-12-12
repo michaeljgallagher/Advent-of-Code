@@ -8,57 +8,40 @@ def parse_input(data):
     res = re.findall(r'([A-Z]+)(\d+)', data)
     return [(s, int(x)) for s, x in res]
 
-
-CARDINAL = {
-    0: 'E',
-    90: 'S',
-    180: 'W',
-    270: 'N'
-}
-
 DIRS = {
-    'N': (0, 1),
-    'E': (1, 0),
-    'S': (0, -1),
-    'W': (-1, 0),
-    'R': 1,
-    'L': -1
+    'N': 0 + 1j,
+    'E': 1 + 0j,
+    'S': 0 + -1j,
+    'W': -1 + 0j,
+    'R': 0 - 1j,
+    'L': 0 + 1j,
 }
 
 
 def part_one(instr):
-    x, y = 0, 0
-    deg = 0
+    pos = 0 + 0j
+    direction = 1 + 0j  # EAST
     for d, n in instr:
         if d in 'RL':
-            deg = (deg + DIRS[d]*n) % 360
-        if d in 'NESW':
-            x += DIRS[d][0] * n
-            y += DIRS[d][1] * n
-        if d == 'F':
-            x += DIRS[CARDINAL[deg]][0] * n
-            y += DIRS[CARDINAL[deg]][1] * n
-    return abs(x) + abs(y)
+            direction *= DIRS[d] ** (n // 90)
+        elif d in 'ENWS':
+            pos += DIRS[d] * n
+        else:  # d == 'F'
+            pos += direction * n
+    return abs(int(pos.real)) + abs(int(pos.imag))
 
 
 def part_two(instr):
-    way_x, way_y = 10, 1
-    x, y = 0, 0
+    way = 10 + 1j
+    pos = 0 + 0j
     for d, n in instr:
         if d in 'RL':
-            if n == 180:
-                way_x, way_y = -way_x, -way_y
-            if (d == 'R' and n == 90) or (d == 'L' and n == 270):
-                way_x, way_y = way_y, -way_x
-            if (d == 'R' and n == 270) or (d == 'L' and n == 90):
-                way_x, way_y = -way_y, way_x
-        if d in 'NESW':
-            way_x += DIRS[d][0] * n
-            way_y += DIRS[d][1] * n
-        if d == 'F':
-            x += way_x * n
-            y += way_y * n
-    return abs(x) + abs(y)
+            way *= DIRS[d] ** (n // 90)
+        elif d in 'ENWS':
+            way += DIRS[d] * n
+        else:  # d == 'F'
+            pos += way * n
+    return abs(int(pos.real)) + abs(int(pos.imag))
 
 
 instr = parse_input(data)
