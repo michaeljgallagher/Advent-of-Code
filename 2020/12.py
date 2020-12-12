@@ -21,7 +21,6 @@ DIRS = {
     'E': (1, 0),
     'S': (0, -1),
     'W': (-1, 0),
-    'F': 1,
     'R': 1,
     'L': -1
 }
@@ -39,7 +38,6 @@ def part_one(instr):
         if d == 'F':
             x += DIRS[CARDINAL[deg]][0] * n
             y += DIRS[CARDINAL[deg]][1] * n
-
     return abs(x) + abs(y)
 
 
@@ -60,8 +58,8 @@ def part_two(instr):
         if d == 'F':
             x += way_x * n
             y += way_y * n
-
     return abs(x) + abs(y)
+
 
 instr = parse_input(data)
 print(f'Part 1: {part_one(instr)}')  # 882
