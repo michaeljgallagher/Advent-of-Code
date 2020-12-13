@@ -36,7 +36,6 @@ def chinese_remainder(nums, mods):
     return total % product
 
 
-
 def part_two(data):
     buses = [x for x in data if type(x) is int]
     mods = [-i%v for i, v in enumerate(data) if v!='x']
