@@ -24,15 +24,9 @@ def bitmask(mask, num):
 
 def bitmask_two(mask, num):
     num = bin(num)[2:].zfill(36)
-    new, res, count = '', [], 0
-    for i, v in enumerate(mask):
-        if v == 'X':
-            new += "{}"
-            count += 1
-        elif v == '1' or num[i] == '1':
-            new += '1'
-        else:
-            new += '0'
+    res = []
+    count = mask.count('X')
+    new = ''.join('{}' if v=='X' else '1' if v=='1' else num[i] for i, v in enumerate(mask))
     for n in range(2**count):
         n = bin(n)[2:].zfill(count)
         res.append(new.format(*n))
@@ -40,7 +34,7 @@ def bitmask_two(mask, num):
 
 
 def part_one(data):
-    res = defaultdict(int)
+    res = {}
     for mask, ints in data.items():
         for k, v in ints:
             res[k] = bitmask(mask, v)
@@ -48,7 +42,7 @@ def part_one(data):
 
 
 def part_two(data):
-    res = defaultdict(int)
+    res = {}
     for mask, ints in data.items():
         for k, v in ints:
             for addr in bitmask_two(mask, k):
