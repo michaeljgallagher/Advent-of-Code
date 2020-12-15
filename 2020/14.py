@@ -7,6 +7,7 @@ with open('14.txt', 'r') as file:
 
 def parse_input(data):
     res = defaultdict(list)
+    mask = None
     for line in data.split('\n'):
         if line[:4] == 'mask':
             mask = line[-36:]
