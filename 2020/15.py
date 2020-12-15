@@ -5,13 +5,9 @@ def brute_force(data, end=2020):
     seen = {v: k+1 for k, v in enumerate(data)}
     cur = data[-1]
     while i < end:
-        if cur not in seen:
-            seen[cur] = i
-            cur = 0
-        else:
-            prev = cur
-            cur = i - seen[prev]
-            seen[prev] = i
+        prev = cur
+        cur = i - seen.get(cur, i)
+        seen[prev] = i
         i += 1
     return cur
 
