@@ -1,10 +1,10 @@
 data = [12,1,16,3,11,0]
 
 def brute_force(data, end=2020):
-    i = len(data)
-    seen = {v: k+1 for k, v in enumerate(data)}
+    i = len(data) - 1
+    seen = {v: k for k, v in enumerate(data)}
     cur = data[-1]
-    while i < end:
+    while i < end - 1:
         prev = cur
         cur = i - seen.get(cur, i)
         seen[prev] = i
