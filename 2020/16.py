@@ -44,19 +44,23 @@ def check_ticket_two(ticket, rules):
     return res
 
 
-def part_two(tickets, rules, union):
+def part_two(my_ticket, tickets, rules, union):
     valid = [ticket for ticket in tickets if check_ticket(ticket, union)]
+
     cur = check_ticket_two(my_ticket, rules)
     for ticket in valid:
         cur = [x&y for x, y in zip(cur, check_ticket_two(ticket, rules))]
+    
     res = [(i, v) for i, v in enumerate(cur)]
     res.sort(key=lambda x: len(x[1]), reverse=True)
     for i, v in enumerate(res[:-1]):
         res[i] = (v[0], v[1] - res[i+1][1])
+
     order = {list(v)[0]: k for k, v in res}
     ans = [my_ticket[order[i]] for i in range(6)]
+    
     return reduce(lambda x, y: x*y, ans)
 
 
 print(f'Part 1: {part_one(tickets, union)}')  # 25059
-print(f'Part 2: {part_two(tickets, rules, union)}')  # 3253972369789
+print(f'Part 2: {part_two(my_ticket, tickets, rules, union)}')  # 3253972369789
