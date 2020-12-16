@@ -35,7 +35,7 @@ def check_ticket(ticket, union):
     return all(n in union for n in ticket)
 
 
-def check_ticket_two(ticket, rules):
+def find_valid_fields(ticket, rules):
     res = [set() for _ in range(len(ticket))]
     for i, v in enumerate(ticket):
         for j, valid_range in rules.items():
@@ -47,19 +47,18 @@ def check_ticket_two(ticket, rules):
 def part_two(my_ticket, tickets, rules, union):
     valid = [ticket for ticket in tickets if check_ticket(ticket, union)]
 
-    cur = check_ticket_two(my_ticket, rules)
+    fields = find_valid_fields(my_ticket, rules)
     for ticket in valid:
-        cur = [x&y for x, y in zip(cur, check_ticket_two(ticket, rules))]
+        fields = [x&y for x, y in zip(fields, find_valid_fields(ticket, rules))]
     
-    res = [(i, v) for i, v in enumerate(cur)]
+    res = [(i, v) for i, v in enumerate(fields)]
     res.sort(key=lambda x: len(x[1]), reverse=True)
     for i, v in enumerate(res[:-1]):
         res[i] = (v[0], v[1] - res[i+1][1])
 
-    order = {list(v)[0]: k for k, v in res}
-    ans = [my_ticket[order[i]] for i in range(6)]
+    key = {list(v)[0]: k for k, v in res}
     
-    return reduce(lambda x, y: x*y, ans)
+    return reduce(lambda x, y: x*y, [my_ticket[key[i]] for i in range(6)])
 
 
 print(f'Part 1: {part_one(tickets, union)}')  # 25059
