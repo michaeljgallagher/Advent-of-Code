@@ -22,7 +22,7 @@ def find_active(data, dim=3):
     return active
 
 
-def find_all_neighbors(active, dim=3):
+def find_neighbors(active, dim=3):
     neighbors = defaultdict(int)
     for cube in active:
         for delta in product([-1, 0, 1], repeat=dim):
@@ -35,7 +35,7 @@ def find_all_neighbors(active, dim=3):
 
 def run_cycle(active, dim=3):
     new_active = set()
-    neighbors = find_all_neighbors(active, dim)
+    neighbors = find_neighbors(active, dim)
     for k, v in neighbors.items():
         if v == 3:
             new_active.add(k)
