@@ -24,9 +24,7 @@ def find_active(data, dim=3):
 def find_neighbors(active, dim=3):
     neighbors = defaultdict(int)
     for cube in active:
-        for delta in product([-1, 0, 1], repeat=dim):
-            if all(x == 0 for x in delta):
-                continue
+        for delta in filter(any, product([-1, 0, 1], repeat=dim)):
             cur = tuple(x+dx for x, dx in zip(cube, delta))
             neighbors[cur] += 1
     return neighbors
