@@ -24,18 +24,11 @@ class N:
         return N(self.n + other.n)
 
 
-def eval_line(line):
+def eval_line(line, swap=False):
     for i in range(10):
         line = line.replace(f'{i}', f'N({i})')
     line = line.replace('*', '-')
-    return eval(line, {'N': N}).n
-
-
-def eval_line_two(line):
-    for i in range(10):
-        line = line.replace(f'{i}', f'N({i})')
-    line = line.replace('*', '-')
-    line = line.replace('+', '*')
+    if swap: line = line.replace('+', '*')
     return eval(line, {'N': N}).n
 
 
@@ -44,7 +37,7 @@ def part_one(data):
 
 
 def part_two(data):
-    return sum(eval_line_two(line) for line in data)
+    return sum(eval_line(line, swap=True) for line in data)
 
 
 print(f'Part 1: {part_one(data)}')  # 131076645626
