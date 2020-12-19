@@ -35,11 +35,6 @@ def recur(rules, n, cur):
     return res
 
 
-# print(recur(rules, 0, messages[0]))
-""" for message in messages:
-    print(recur(rules, 0, message), len(message)) """
-
-
 def part_one(rules, messages):
     return sum(1 if len(message) in recur(rules, 0, message) else 0 for message in messages)
 
@@ -48,6 +43,7 @@ def part_two(rules, messages):
     rules[8] = [[42], [42, 8]]
     rules[11] = [[42, 31], [42, 11, 31]]
     return sum(1 if len(message) in recur(rules, 0, message) else 0 for message in messages)
+
 
 print(f'Part 1: {part_one(rules, messages)}')  # 239
 print(f'Part 2: {part_two(rules, messages)}')  # 405
