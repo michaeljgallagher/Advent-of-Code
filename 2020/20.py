@@ -3,7 +3,7 @@ with open('20.txt', 'r') as file:
 
 
 def transpose(tile):
-    return list(''.join(row) for row in zip(*tile))
+    return [''.join(row) for row in zip(*tile)]
 
 
 def reverse_tile(tile):
