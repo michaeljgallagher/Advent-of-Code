@@ -1,5 +1,6 @@
 import re
 from collections import defaultdict
+from tools import hk
 
 with open('21.txt', 'r') as file:
     data = file.read()
@@ -36,14 +37,16 @@ def make_allergen_mapping(ingredients, allergens):
                 res[allergen] = set(ingredients[i])
             else:
                 res[allergen] &= set(ingredients[i])
-    return res
+    res = hk(res)
+    return {v: u for u, v in res.items()}
 
 
 alg_map = make_allergen_mapping(ingredients, allergens)
+print(alg_map)
 
 
 def part_one(ing_count, alg_map):
-    alg_set = set(alg for v in alg_map.values() for alg in v)
+    alg_set = set(alg_map.values())
     res = 0
     for ing in list(ing_count):
         if ing not in alg_set:
@@ -51,18 +54,7 @@ def part_one(ing_count, alg_map):
     return res
 
 
-def part_two():
-    # created the rest of the mapping by hand
-    alg_map = {
-        'wheat': 'nckqzsg',
-        'eggs': 'xxscc',
-        'fish': 'mjmqst',
-        'nuts': 'gzxnc',
-        'peanuts': 'vvqj',
-        'shellfish': 'gbcjqbm',
-        'soy': 'dllbjr',
-        'sesame': 'trnnvn'
-        }
+def part_two(alg_map):
     res = []
     for ing in sorted(list(alg_map)):
         res.append(alg_map[ing])
@@ -70,4 +62,4 @@ def part_two():
 
 
 print(f'Part 1: {part_one(ing_count, alg_map)}')  # 1958
-print(f'Part 2: {part_two()}')  # xxscc,mjmqst,gzxnc,vvqj,trnnvn,gbcjqbm,dllbjr,nckqzsg
+print(f'Part 2: {part_two(alg_map)}')  # xxscc,mjmqst,gzxnc,vvqj,trnnvn,gbcjqbm,dllbjr,nckqzsg
