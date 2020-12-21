@@ -15,8 +15,6 @@ def parse_input(data):
 
 
 ingredients, allergens = parse_input(data)
-wordset = set(ing for row in ingredients for ing in row)
-alleset = set(allergen for row in allergens for allergen in row)
 
 
 def count_ings(ingredients):
@@ -42,7 +40,6 @@ def make_allergen_mapping(ingredients, allergens):
 
 
 alg_map = make_allergen_mapping(ingredients, allergens)
-# print(alg_map)
 
 
 def part_one(ing_count, alg_map):
