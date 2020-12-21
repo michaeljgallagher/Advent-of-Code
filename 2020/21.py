@@ -42,7 +42,6 @@ def make_allergen_mapping(ingredients, allergens):
 
 
 alg_map = make_allergen_mapping(ingredients, allergens)
-print(alg_map)
 
 
 def part_one(ing_count, alg_map):
