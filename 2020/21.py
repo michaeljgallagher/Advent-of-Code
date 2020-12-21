@@ -1,6 +1,5 @@
 import re
 from collections import defaultdict
-from tools import hk
 
 with open('21.txt', 'r') as file:
     data = file.read()
@@ -30,15 +29,23 @@ ing_count = count_ings(ingredients)
 
 
 def make_allergen_mapping(ingredients, allergens):
-    res = defaultdict(set)
+    possible = defaultdict(set)
     for i in range(len(ingredients)):
         for allergen in allergens[i]:
-            if not res[allergen]:
-                res[allergen] = set(ingredients[i])
+            if not possible[allergen]:
+                possible[allergen] = set(ingredients[i])
             else:
-                res[allergen] &= set(ingredients[i])
-    res = hk(res)
-    return {v: u for u, v in res.items()}
+                possible[allergen] &= set(ingredients[i])
+    used = set()
+    res = {}
+    while len(used) < len(possible):
+        for alg, ing in possible.items():
+            if len(ing - used) == 1:
+                cur = list(ing-used)[0]
+                res[alg] = cur
+                used.add(cur)
+                break
+    return res
 
 
 alg_map = make_allergen_mapping(ingredients, allergens)
