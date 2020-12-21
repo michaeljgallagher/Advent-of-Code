@@ -1,5 +1,5 @@
 import re
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 with open('21.txt', 'r') as file:
     data = file.read()
@@ -18,10 +18,9 @@ ingredients, allergens = parse_input(data)
 
 
 def count_ings(ingredients):
-    res = defaultdict(int)
+    res = Counter()
     for row in ingredients:
-        for ing in row:
-            res[ing] += 1
+        res += Counter(row)
     return res
 
 
@@ -53,18 +52,11 @@ alg_map = make_allergen_mapping(ingredients, allergens)
 
 def part_one(ing_count, alg_map):
     alg_set = set(alg_map.values())
-    res = 0
-    for ing in list(ing_count):
-        if ing not in alg_set:
-            res += ing_count[ing]
-    return res
+    return sum(ing_count[ing] for ing in ing_count if ing not in alg_set)
 
 
 def part_two(alg_map):
-    res = []
-    for ing in sorted(list(alg_map)):
-        res.append(alg_map[ing])
-    return ','.join(res)
+    return ','.join(alg_map[ing] for ing in sorted(list(alg_map)))
 
 
 print(f'Part 1: {part_one(ing_count, alg_map)}')  # 1958
