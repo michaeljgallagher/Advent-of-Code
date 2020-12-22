@@ -18,11 +18,7 @@ def part_one(p1, p2):
         else:
             p2 += deque([c2, c1])
     winner = p1 or p2
-    res = 0
-    for i in range(1, len(winner)+1):
-        cur = winner.pop()
-        res += (i * cur)
-    return res
+    return sum((len(winner) - i) * v for i, v in enumerate(winner))
 
 
 def part_two(p1, p2):
@@ -44,11 +40,7 @@ def part_two(p1, p2):
         return (1, p1) if p1 else (0, p2)
     
     winner = recurse(p1, p2, set())[1]
-    res = 0
-    for i in range(1, len(winner)+1):
-        cur = winner.pop()
-        res += (i * cur)
-    return res
+    return sum((len(winner) - i) * v for i, v in enumerate(winner))
 
 p1, p2 = parse_input(data)
 print(f'Part 1: {part_one(p1, p2)}')  # 33473
