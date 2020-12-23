@@ -6,7 +6,7 @@ class Node:
         self.nxt = None
 
 
-def part_one(inp):
+def build_ll(inp, pt2=False):
     inp = list(map(int, str(inp)))
 
     nodes = {}
@@ -18,21 +18,34 @@ def part_one(inp):
             prev.nxt = cur
         prev = cur
         nodes[x] = cur
+    
+    if pt2:
+        for x in range(10, 1000001):
+            cur = Node(x)
+            prev.nxt = cur
+            prev = cur
+            nodes[x] = cur
 
     head = nodes[inp[0]]
     prev.nxt = head
 
+    return head, nodes
+
+
+def play_game(head, nodes, steps):
+    maxx = len(nodes)
     cur = head
-    for _ in range(100):
+
+    for _ in range(steps):
         val = cur.val
         a = cur.nxt
         b = a.nxt
         c = b.nxt
         cur.nxt = c.nxt
-        dest = val-1 if val!=1 else 9
+        dest = val-1 if val!=1 else maxx
         while dest in (a.val, b.val, c.val):
             dest -= 1
-            if dest == 0: dest = 9
+            if dest == 0: dest = maxx
         dest_node = nodes[dest]
         c.nxt = dest_node.nxt
         dest_node.nxt = a
@@ -40,7 +53,13 @@ def part_one(inp):
     
     while cur.val != 1:
         cur = cur.nxt
+    
+    return cur
 
+
+def part_one(inp):
+    head, nodes = build_ll(inp)
+    cur = play_game(head, nodes, 100)
     res = []
     cur = cur.nxt
     while cur.val != 1:
@@ -49,48 +68,9 @@ def part_one(inp):
     return ''.join(res)
 
 
-
 def part_two(inp):
-    inp = list(map(int, str(inp)))
-
-    nodes = {}
-    prev = None
-
-    for x in inp:
-        cur = Node(x)
-        if prev:
-            prev.nxt = cur
-        prev = cur
-        nodes[x] = cur
-    
-    for x in range(10, 1000001):
-        cur = Node(x)
-        prev.nxt = cur
-        prev = cur
-        nodes[x] = cur
-
-    head = nodes[inp[0]]
-    prev.nxt = head
-
-    cur = head
-    for _ in range(10000000):
-        val = cur.val
-        a = cur.nxt
-        b = a.nxt
-        c = b.nxt
-        cur.nxt = c.nxt
-        dest = val-1 if val!=1 else 1000000
-        while dest in (a.val, b.val, c.val):
-            dest -= 1
-            if dest == 0: dest = 1000000
-        dest_node = nodes[dest]
-        c.nxt = dest_node.nxt
-        dest_node.nxt = a
-        cur = cur.nxt
-
-    while cur.val != 1:
-        cur = cur.nxt
-    
+    head, nodes = build_ll(inp, pt2=True)
+    cur = play_game(head, nodes, 10000000)
     return cur.nxt.val * cur.nxt.nxt.val
 
 
