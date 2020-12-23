@@ -42,10 +42,9 @@ def play_game(head, nodes, steps):
         b = a.nxt
         c = b.nxt
         cur.nxt = c.nxt
-        dest = val-1 if val!=1 else maxx
+        dest = val-1 or maxx
         while dest in (a.val, b.val, c.val):
-            dest -= 1
-            if dest == 0: dest = maxx
+            dest = dest-1 or maxx
         dest_node = nodes[dest]
         c.nxt = dest_node.nxt
         dest_node.nxt = a
