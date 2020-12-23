@@ -50,10 +50,7 @@ def play_game(head, nodes, steps):
         dest_node.nxt = a
         cur = cur.nxt
     
-    while cur.val != 1:
-        cur = cur.nxt
-    
-    return cur
+    return nodes[1]
 
 
 def part_one(inp):
