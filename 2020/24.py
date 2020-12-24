@@ -48,7 +48,7 @@ def step(tiles):
     new_black = set()
     neighbors = find_neighbors(tiles)
     for k, v in neighbors.items():
-        if (v == 2 and k not in tiles) or (k in tiles and 1 <= v <= 2):
+        if v == 2 or (k in tiles and v == 1):
             new_black.add(k)
     return new_black
 
