@@ -21,8 +21,8 @@ DIRS = {
 }
 
 
-def parse_line(line):
-    res = defaultdict(int)
+def calc_tile(line):
+    res = 0 + 0j
     i = 0
     while i < len(line):
         if line[i] in {'n', 's'}:
@@ -31,15 +31,7 @@ def parse_line(line):
         else:
             cur = line[i]
             i += 1
-        res[cur] += 1
-    return res
-
-
-def calc_tile(line):
-    res = 0 + 0j
-    ops = parse_line(line)
-    for dir in ops:
-        res += (DIRS[dir]) * ops[dir]
+        res += DIRS[cur]
     return res
 
 
