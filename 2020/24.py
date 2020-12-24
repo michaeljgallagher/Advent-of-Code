@@ -1,15 +1,7 @@
 from collections import defaultdict
 
 with open('24.txt', 'r') as file:
-    data = file.read()
-
-
-def parse_input(data):
-    return data.split('\n')
-
-
-data = parse_input(data)
-
+    data = file.read().split('\n')
 
 DIRS = {
     'nw': 0 - 1j,
