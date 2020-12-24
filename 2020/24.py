@@ -27,12 +27,11 @@ def parse_line(line):
     while i < len(line):
         if line[i] in {'n', 's'}:
             cur = line[i:i+2]
-            res[cur] += 1
             i += 2
         else:
             cur = line[i]
-            res[cur] += 1
             i += 1
+        res[cur] += 1
     return res
 
 
@@ -49,7 +48,7 @@ def find_black(data):
     for line in data:
         pos = calc_tile(line)
         res[pos] ^= 1
-    return {k for k,v in res.items() if v==1}
+    return {k for k, v in res.items() if v == 1}
 
 
 def find_neighbors(tiles):
@@ -65,7 +64,7 @@ def step(tiles):
     new_black = set()
     neighbors = find_neighbors(tiles)
     for k, v in neighbors.items():
-        if (v == 2 and k not in tiles) or (k in tiles and 1<=v<=2):
+        if (v == 2 and k not in tiles) or (k in tiles and 1 <= v <= 2):
             new_black.add(k)
     return new_black
 
