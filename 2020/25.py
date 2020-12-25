@@ -9,7 +9,7 @@ def parse_data(data):
 key1, key2 = parse_data(data)
 
 
-def find_loops(key):
+def find_loop_size(key):
     res = 0
     cur = 1
     while cur != key:
@@ -18,15 +18,15 @@ def find_loops(key):
     return res
 
 
-def transform(key, loop):
+def transform(key, loop_size):
     cur = 1
-    for _ in range(loop):
+    for _ in range(loop_size):
         cur = (cur * key) % 20201227
     return cur
 
 
 def part_one(key1, key2):
-    return transform(key2, find_loops(key1))
+    return transform(key2, find_loop_size(key1))
 
 
 print(f'Part 1: {part_one(key1, key2)}')  # 10548634
