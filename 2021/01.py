@@ -1,5 +1,3 @@
-from itertools import accumulate
-
 with open('01.txt', 'r') as file:
     raw_data = file.read()
 
