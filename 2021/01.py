@@ -9,18 +9,16 @@ def parse_input(raw_data):
 data = parse_input(raw_data)
 
 
+def compare(n, arr):
+    return sum(arr[i] > arr[i - n] for i in range(n, len(arr)))
+
+
 def part_one(data):
-    return sum(data[i] > data[i - 1] for i in range(1, len(data)))
+    return compare(1, data)
 
 
 def part_two(data):
-    cur = prev = sum(data[:3])
-    res = 0
-    for i in range(3, len(data)):
-        cur += data[i] - data[i - 3]
-        res += cur > prev
-        prev = cur
-    return res
+    return compare(3, data)
 
 
 print(f'Part 1: {part_one(data)}')  # 1446
