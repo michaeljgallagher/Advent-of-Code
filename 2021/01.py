@@ -3,7 +3,7 @@ with open('01.txt', 'r') as file:
 
 
 def parse_input(raw_data):
-    return list(map(int, raw_data.split("\n")))
+    return list(map(int, raw_data.split('\n')))
 
 
 data = parse_input(raw_data)
