@@ -24,5 +24,6 @@ def part_two(data):
         prev = cur
     return res
 
+
 print(f'Part 1: {part_one(data)}')  # 1446
 print(f'Part 2: {part_two(data)}')  # 1486
