@@ -18,23 +18,18 @@ def part_one(data):
 
 
 def part_two(data):
-    i = 0
-    cur = data[:]
-    while len(cur) > 1:
-        col = [''.join(x) for x in zip(*cur)][i]
-        keep = '1' if col.count('1') >= col.count('0') else '0'
-        cur = [num for num in cur if num[i] == keep]
-        i += 1
-    oxygen_rating = int(cur[0], 2)
+    def calc_rating(data, bit=1):
+        i = 0
+        cur = data[:]
+        while len(cur) > 1:
+            col = [''.join(x) for x in zip(*cur)][i]
+            keep = bit if col.count('1') >= col.count('0') else 1 - bit
+            cur = [num for num in cur if num[i] == str(keep)]
+            i += 1
+        return int(cur[0], 2)
 
-    i = 0
-    cur = data[:]
-    while len(cur) > 1:
-        col = [''.join(x) for x in zip(*cur)][i]
-        keep = '0' if col.count('1') >= col.count('0') else '1'
-        cur = [num for num in cur if num[i] == keep]
-        i += 1
-    co2_rating = int(cur[0], 2)
+    oxygen_rating = calc_rating(data, 1)
+    co2_rating = calc_rating(data, 0)
 
     return oxygen_rating * co2_rating
 
