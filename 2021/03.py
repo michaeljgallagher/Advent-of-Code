@@ -22,7 +22,7 @@ def part_two(data):
         i = 0
         cur = data[:]
         while len(cur) > 1:
-            col = [''.join(x) for x in zip(*cur)][i]
+            col = ''.join(list(zip(*cur))[i])
             keep = bit if col.count('1') >= col.count('0') else 1 - bit
             cur = [num for num in cur if num[i] == str(keep)]
             i += 1
