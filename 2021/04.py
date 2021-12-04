@@ -3,18 +3,15 @@ with open('04.txt', 'r') as file:
 
 
 def parse_input(raw_data):
-    data = raw_data.split('\n')
-    bingo_numbers = list(map(int, data[0].split(',')))
-    cards = []
-    card = []
-    for row in data[2:]:
-        if row == '':
-            cards.append(card)
-            card = []
-        else:
-            card.append(list(map(int, row.split())))
-    if card:
-        cards.append(card)
+    bingo_numbers, *cards = raw_data.split('\n\n')
+    bingo_numbers = list(map(int, bingo_numbers.split(',')))
+    cards = [
+        [
+            list(map(int, row.split()))
+            for row in card.split('\n')
+        ]
+        for card in cards
+    ]
     return bingo_numbers, cards
 
 
