@@ -13,7 +13,7 @@ def parse_input(raw_data):
 data = parse_input(raw_data)
 
 
-def part_one(data):
+def straight_lines(data):
     points = Counter()
     for x1, y1, x2, y2 in data:
         if x1 == x2:
@@ -27,8 +27,8 @@ def part_one(data):
     return points
 
 
-def part_two(data):
-    points = part_one(data)
+def diagonal_lines(data):
+    points = Counter()
     for x1, y1, x2, y2 in data:
         if x1 != x2 and y1 != y2:
             while x1 != x2:
@@ -39,5 +39,15 @@ def part_two(data):
     return points
 
 
-print(f'Part 1: {sum(v > 1 for v in part_one(data).values())}')  # 7438
-print(f'Part 2: {sum(v > 1 for v in part_two(data).values())}')  # 21406
+def part_one(data):
+    points = straight_lines(data)
+    return sum(v > 1 for v in points.values())
+
+
+def part_two(data):
+    points = straight_lines(data) + diagonal_lines(data)
+    return sum(v > 1 for v in points.values())
+
+
+print(f'Part 1: {part_one(data)}')  # 7438
+print(f'Part 2: {part_two(data)}')  # 21406
