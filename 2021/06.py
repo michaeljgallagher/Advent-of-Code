@@ -18,7 +18,7 @@ def step(cur):
             res[6] += v
             res[8] += v
         else:
-            res[k-1] += v
+            res[k - 1] += v
     return res
 
 
