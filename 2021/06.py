@@ -13,11 +13,12 @@ data = parse_input(raw_data)
 
 def step(cur):
     res = Counter()
-    for i in range(6):
-        res[i] = cur[i+1]
-    res[6] = cur[0] + cur[7]
-    res[7] = cur[8]
-    res[8] = cur[0]
+    for k, v in cur.items():
+        if k == 0:
+            res[6] += v
+            res[8] += v
+        else:
+            res[k-1] += v
     return res
 
 
