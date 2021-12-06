@@ -8,33 +8,20 @@ def parse_input(raw_data):
     return list(map(int, raw_data.split(',')))
 
 
-data = parse_input(raw_data)
-
-
-def step(cur):
-    res = Counter()
-    for k, v in cur.items():
-        if k == 0:
-            res[6] += v
-            res[8] += v
-        else:
-            res[k - 1] += v
-    return res
-
-
-def part_one(data):
-    fish = Counter(data)
-    for _ in range(80):
-        fish = step(fish)
+def solve(days):
+    fish = Counter(parse_input(raw_data))
+    for i in range(days):
+        fish[(i + 7) % 9] += fish[i % 9]
     return sum(fish.values())
 
 
-def part_two(data):
-    fish = Counter(data)
-    for _ in range(256):
-        fish = step(fish)
-    return sum(fish.values())
+def part_one():
+    return solve(80)
 
 
-print(f'Part 1: {part_one(data)}')  # 391888
-print(f'Part 2: {part_two(data)}')  # 1754597645339
+def part_two():
+    return solve(256)
+
+
+print(f'Part 1: {part_one()}')  # 391888
+print(f'Part 2: {part_two()}')  # 1754597645339
