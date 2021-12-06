@@ -1,18 +1,19 @@
-from collections import Counter
-
 with open('06.txt', 'r') as file:
     raw_data = file.read()
 
 
 def parse_input(raw_data):
-    return list(map(int, raw_data.split(',')))
+    res = [0] * 9
+    for i in map(int, raw_data.split(',')):
+        res[i] += 1
+    return res
 
 
 def solve(days):
-    fish = Counter(parse_input(raw_data))
+    fish = parse_input(raw_data)
     for i in range(days):
         fish[(i + 7) % 9] += fish[i % 9]
-    return sum(fish.values())
+    return sum(fish)
 
 
 def part_one():
