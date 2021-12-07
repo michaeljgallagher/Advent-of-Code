@@ -7,7 +7,6 @@ def parse_input(raw_data):
 
 
 data = parse_input(raw_data)
-print(len(data))
 
 
 def part_one(data):
@@ -26,5 +25,5 @@ def part_two(data):
     return res
 
 
-print(f'Part 1: {part_one(data)}')  # 
-print(f'Part 2: {part_two(data)}')  # 
+print(f'Part 1: {part_one(data)}')  # 335330
+print(f'Part 2: {part_two(data)}')  # 92439766
