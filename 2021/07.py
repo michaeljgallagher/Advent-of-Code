@@ -11,7 +11,7 @@ data = parse_input(raw_data)
 
 def part_one(data):
     res = float("inf")
-    for i in range(max(data)):
+    for i in range(max(data) + 1):
         res = min(res, sum(abs(x - i) for x in data))
     return res
 
@@ -21,7 +21,7 @@ def part_two(data):
         return (n * (n + 1)) // 2
 
     res = float("inf")
-    for i in range(max(data)):
+    for i in range(max(data) + 1):
         res = min(res, sum(gauss(abs(x - i)) for x in data))
     return res
 
