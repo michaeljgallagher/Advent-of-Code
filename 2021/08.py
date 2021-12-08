@@ -36,16 +36,15 @@ def decode(line):
     }
 
     for pattern in left.split() + right.split():
-        length = len(pattern)
         cur = set(pattern)
-        if length == 6:
+        if len(pattern) == 6:
             if len(cur - key[4]) == 2:
                 key[9] = cur
             elif len(cur - key[1]) == 4:
                 key[0] = cur
             else:
                 key[6] = cur
-        if length == 5:
+        if len(pattern) == 5:
             if len(cur - key[1]) == 3:
                 key[3] = cur
             elif len(cur - key[4]) == 2:
