@@ -10,14 +10,14 @@ def parse_input(raw_data):
     return res
 
 
+data = parse_input(raw_data)
+
 MAP = {
     2: 1,
     4: 4,
     3: 7,
     7: 8
 }
-
-data = parse_input(raw_data)
 
 
 def part_one(data):
