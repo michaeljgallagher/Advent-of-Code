@@ -22,10 +22,8 @@ data = parse_input(raw_data)
 
 def part_one(data):
     res = 0
-    for left, right in data:
-        for x in right.split():
-            if len(x) in MAP:
-                res += 1
+    for _, right in data:
+        res += sum(len(x) in MAP for x in right.split())
     return res
 
 
