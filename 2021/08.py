@@ -34,9 +34,10 @@ def decode(line):
         for signal in left.split() + right.split()
         if len(signal) in MAP
     }
-    for signal in left.split() + right.split():
-        length = len(signal)
-        cur = set(signal)
+
+    for pattern in left.split() + right.split():
+        length = len(pattern)
+        cur = set(pattern)
         if length == 6:
             if len(cur - key[4]) == 2:
                 key[9] = cur
@@ -54,7 +55,7 @@ def decode(line):
     return key
 
 
-def rev_key(key):
+def signal_to_num(key):
     res = {}
     for k, v in key.items():
         nk = ''.join(sorted(v))
@@ -67,11 +68,11 @@ def part_two(data):
     for line in data:
         _, right = line
         key = decode(line)
-        rk = rev_key(key)
+        convert = signal_to_num(key)
         cur = 0
-        for signal in right.split():
-            sig = ''.join(sorted(signal))
-            cur = cur * 10 + rk[sig]
+        for pattern in right.split():
+            sig = ''.join(sorted(pattern))
+            cur = cur * 10 + convert[sig]
         res += cur
     return res
 
