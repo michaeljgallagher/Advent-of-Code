@@ -45,7 +45,12 @@ def flood_fill(i, j):
         ci, cj = q.popleft()
         res += 1
         for ni, nj in ((ci + 1, cj), (ci - 1, cj), (ci, cj + 1), (ci, cj - 1)):
-            if 0 <= ni < N and 0 <= nj < M and data[ni][nj] != 9 and (ni, nj) not in seen:
+            if (
+                0 <= ni < N and
+                0 <= nj < M and
+                data[ni][nj] != 9 and
+                (ni, nj) not in seen
+            ):
                 q.append((ni, nj))
                 seen.add((ni, nj))
     return res
