@@ -51,8 +51,7 @@ def find_remaining_stack(line):
 def calc_score(stack):
     res = 0
     while stack:
-        res *= 5
-        res += POINTS[stack.pop()]
+        res = res * 5 + POINTS[stack.pop()]
     return res
 
 
