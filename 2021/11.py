@@ -34,26 +34,24 @@ def step(grid):
     flashed = set()
     for i in range(N):
         for j in range(M):
-            if (i, j) not in flashed:
-                grid[i][j] += 1
-                if grid[i][j] == 10:
-                    flash(i, j, grid, flashed)
-    return flashed
+            grid[i][j] += int((i, j) not in flashed)
+            if grid[i][j] == 10:
+                flash(i, j, grid, flashed)
+    return len(flashed)
 
 
 def part_one():
     grid = [row[:] for row in DATA]
     res = 0
     for _ in range(100):
-        res += len(step(grid))
+        res += step(grid)
     return res
 
 
 def part_two():
     grid = [row[:] for row in DATA]
     for i in count(1):
-        flashed = step(grid)
-        if len(flashed) == N * M:
+        if step(grid) == N * M:
             return i
 
 
