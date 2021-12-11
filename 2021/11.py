@@ -1,4 +1,4 @@
-from itertools import product
+from itertools import count, product
 
 with open("11.txt", "r") as file:
     raw_data = file.read()
@@ -15,8 +15,8 @@ DATA = parse_input(raw_data)
 N, M = len(DATA), len(DATA[0])
 
 
-def flash(i, j, flashed):
-    DATA[i][j] = 0
+def flash(i, j, grid, flashed):
+    grid[i][j] = 0
     flashed.add((i, j))
     for di, dj in filter(any, product([-1, 0, 1], repeat=2)):
         ni, nj = i + di, j + dj
@@ -25,40 +25,37 @@ def flash(i, j, flashed):
             0 <= nj < M and
             (ni, nj) not in flashed
         ):
-            DATA[ni][nj] += 1
-            if DATA[ni][nj] == 10:
-                flash(ni, nj, flashed)
+            grid[ni][nj] += 1
+            if grid[ni][nj] == 10:
+                flash(ni, nj, grid, flashed)
 
 
-def step():
+def step(grid):
     flashed = set()
     for i in range(N):
         for j in range(M):
             if (i, j) not in flashed:
-                DATA[i][j] += 1
-                if DATA[i][j] == 10:
-                    flash(i, j, flashed)
+                grid[i][j] += 1
+                if grid[i][j] == 10:
+                    flash(i, j, grid, flashed)
     return flashed
 
 
 def part_one():
+    grid = [row[:] for row in DATA]
     res = 0
     for _ in range(100):
-        res += len(step())
+        res += len(step(grid))
     return res
 
 
 def part_two():
-    res = 0
-    while True:
-        res += 1
-        flashed = step()
+    grid = [row[:] for row in DATA]
+    for i in count(1):
+        flashed = step(grid)
         if len(flashed) == N * M:
-            return res
+            return i
 
 
 print(f"Part 1: {part_one()}")  # 1688
-
-DATA = parse_input(raw_data)
-
 print(f"Part 2: {part_two()}")  # 403
