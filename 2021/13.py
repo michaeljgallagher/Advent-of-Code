@@ -39,8 +39,7 @@ def part_one():
 def part_two():
     points = set(POINTS)
     for fold in FOLDS:
-        axis, line = fold
-        points = make_fold(axis, line, points)
+        points = make_fold(*fold, points)
 
     max_x, max_y = max(x for x, _ in points), max(y for _, y in points)
 
