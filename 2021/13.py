@@ -39,10 +39,6 @@ def make_fold(axis, line, points):
 def part_one():
     axis, line = FOLDS[0]
     points = set(POINTS)
-    # if axis == 'x':
-    #     res = parse_x(line, points)
-    # else:
-    #     res = parse_y(line, points)
     res = make_fold(axis, line, points)
     return len(res)
 
