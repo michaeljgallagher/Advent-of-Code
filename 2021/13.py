@@ -1,17 +1,19 @@
+import re
+
 with open('13.txt', 'r') as file:
     raw_data = file.read()
 
 
 def parse_input(raw_data):
-    a, b = raw_data.split('\n\n')
-    nums = []
-    for row in a.split('\n'):
-        nums.append(tuple(map(int, row.split(','))))
-    folds = []
-    for row in b.split("\n"):
-        x, y = row[11:].split('=')
-        folds.append((x, int(y)))
-    return nums, folds
+    points = [
+        (int(x), int(y))
+        for x, y in re.findall(r'(\d+),(\d+)', raw_data)
+    ]
+    folds = [
+        (axis, int(n))
+        for axis, n in re.findall(r'fold along ([xy])=(\d+)', raw_data)
+    ]
+    return points, folds
 
 
 POINTS, FOLDS = parse_input(raw_data)
