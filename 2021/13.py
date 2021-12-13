@@ -31,10 +31,7 @@ def make_fold(axis, line, points):
 
 
 def part_one():
-    axis, line = FOLDS[0]
-    points = set(POINTS)
-    res = make_fold(axis, line, points)
-    return len(res)
+    return len(make_fold(*FOLDS[0], set(POINTS)))
 
 
 def part_two():
@@ -42,11 +39,13 @@ def part_two():
     for fold in FOLDS:
         axis, line = fold
         points = make_fold(axis, line, points)
-    X = max(x for x, _ in points)
-    Y = max(y for _, y in points)
-    grid = [[' ' for _ in range(X+1)] for _ in range(Y+1)]
+
+    max_x, max_y = max(x for x, _ in points), max(y for _, y in points)
+
+    grid = [[' ' for _ in range(max_x + 1)] for _ in range(max_y + 1)]
     for j, i in points:
         grid[i][j] = '#'
+
     for row in grid:
         print(''.join(row))
 
