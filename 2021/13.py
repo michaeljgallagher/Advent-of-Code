@@ -21,14 +21,12 @@ POINTS, FOLDS = parse_input(raw_data)
 
 def make_fold(axis, line, points):
     res = set()
-    if axis == 'x':
-        for x, y in points:
-            nx = 2 * line - x if x > line else x
-            res.add((nx, y))
-    else:
-        for x, y in points:
-            ny = 2 * line - y if y > line else y
-            res.add((x, ny))
+    for x, y in points:
+        if axis == 'x':
+            x = 2 * line - x if x > line else x
+        else:  # axis == 'y'
+            y = 2 * line - y if y > line else y
+        res.add((x, y))
     return res
 
 
