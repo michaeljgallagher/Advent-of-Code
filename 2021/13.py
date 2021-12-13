@@ -23,9 +23,9 @@ def make_fold(axis, line, points):
     res = set()
     for x, y in points:
         if axis == 'x':
-            x = 2 * line - x if x > line else x
+            x = line - abs(x - line)
         else:  # axis == 'y'
-            y = 2 * line - y if y > line else y
+            y = line - abs(y - line)
         res.add((x, y))
     return res
 
