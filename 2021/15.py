@@ -42,10 +42,8 @@ def part_two():
     for i in range(r):
         for j in range(c):
             dist = i // N + j // M
-            cur = CAVERN[i % N][j % M]
-            cur = (cur + dist) % 9
-            if cur == 0:
-                cur = 9
+            cur = CAVERN[i % N][j % M] + dist
+            cur = cur % 9 or cur
             expanded[i][j] = cur
     return dijkstra(expanded)
 
