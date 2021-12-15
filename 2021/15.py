@@ -26,7 +26,7 @@ def dijkstra(graph):
         for ni, nj in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
             if 0 <= ni < r and 0 <= nj < c:
                 ncost = cost + graph[ni][nj]
-                if costs.get((ni, nj), float("inf")) <= ncost:
+                if costs.get((ni, nj), float('inf')) <= ncost:
                     continue
                 costs[(ni, nj)] = ncost
                 heapq.heappush(heap, (ncost, ni, nj))
