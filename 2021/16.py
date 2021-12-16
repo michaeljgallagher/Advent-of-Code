@@ -10,6 +10,15 @@ def parse_input(raw_data):
 
 DATA = parse_input(raw_data)
 VERSIONS = []
+OPS = {
+    0: sum,
+    1: lambda iter: reduce(lambda x, y: x * y, iter),
+    2: min,
+    3: max,
+    5: lambda x: int(x[0] > x[1]),
+    6: lambda x: int(x[0] < x[1]),
+    7: lambda x: int(x[0] == x[1])
+}
 
 
 def parse_literal(packet, i):
@@ -31,7 +40,6 @@ def parse_packet(packet, i):
 
     values = []
     len_type_id = packet[i + 6]
-    val = 0
     if len_type_id == '0':
         total_len = int(packet[i + 7 : i + 22], 2)
         ni = i + 22
@@ -45,22 +53,7 @@ def parse_packet(packet, i):
             ni, val = parse_packet(packet, ni)
             values.append(val)
 
-    if type_id == 0:
-        val = sum(values)
-    elif type_id == 1:
-        val = reduce(lambda x, y: x * y, values)
-    elif type_id == 2:
-        val = min(values)
-    elif type_id == 3:
-        val = max(values)
-    elif type_id == 5:
-        val = int(values[0] > values[1])
-    elif type_id == 6:
-        val = int(values[0] < values[1])
-    elif type_id == 7:
-        val = int(values[0] == values[1])
-
-    return ni, val
+    return ni, OPS[type_id](values)
 
 
 def part_one():
