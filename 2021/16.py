@@ -15,12 +15,11 @@ VERSIONS = []
 def parse_literal(packet, i):
     ni = i
     res = []
-    while packet[ni] == '1':
+    while True:
         res.append(packet[ni + 1 : ni + 5])
+        if packet[ni] == '0':
+            return ni + 5, int(''.join(res), 2)
         ni += 5
-    res.append(packet[ni + 1 : ni + 5])
-    ni += 5
-    return ni, int(''.join(res), 2)
 
 
 def parse_packet(packet, i):
