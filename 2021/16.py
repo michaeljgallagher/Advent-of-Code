@@ -12,53 +12,53 @@ DATA = parse_input(raw_data)
 VERSIONS = []
 
 
-def parse_literal(s, i):
+def parse_literal(packet, i):
     ni = i
     res = []
-    while s[ni] == '1':
-        res.append(s[ni + 1 : ni + 5])
+    while packet[ni] == '1':
+        res.append(packet[ni + 1 : ni + 5])
         ni += 5
-    res.append(s[ni + 1 : ni + 5])
+    res.append(packet[ni + 1 : ni + 5])
     ni += 5
     return ni, int(''.join(res), 2)
 
 
-def parse_packet(s, i):
-    version, tid = int(s[i : i + 3], 2), int(s[i + 3 : i + 6], 2)
+def parse_packet(packet, i):
+    version, type_id = int(packet[i : i + 3], 2), int(packet[i + 3 : i + 6], 2)
     VERSIONS.append(version)
-    if tid == 4:
-        ni, val = parse_literal(s, i + 6)
+    if type_id == 4:
+        ni, val = parse_literal(packet, i + 6)
         return ni, val
 
     values = []
-    ltid = s[i + 6]
+    len_type_id = packet[i + 6]
     val = 0
-    if ltid == '0':
-        total_len = int(s[i + 7 : i + 22], 2)
+    if len_type_id == '0':
+        total_len = int(packet[i + 7 : i + 22], 2)
         ni = i + 22
         while ni < i + 22 + total_len:
-            ni, val = parse_packet(s, ni)
+            ni, val = parse_packet(packet, ni)
             values.append(val)
-    else:  # ltid == '1'
-        packets = int(s[i + 7 : i + 18], 2)
+    else:
+        packets = int(packet[i + 7 : i + 18], 2)
         ni = i + 18
         for _ in range(packets):
-            ni, val = parse_packet(s, ni)
+            ni, val = parse_packet(packet, ni)
             values.append(val)
 
-    if tid == 0:
+    if type_id == 0:
         val = sum(values)
-    elif tid == 1:
+    elif type_id == 1:
         val = reduce(lambda x, y: x * y, values)
-    elif tid == 2:
+    elif type_id == 2:
         val = min(values)
-    elif tid == 3:
+    elif type_id == 3:
         val = max(values)
-    elif tid == 5:
+    elif type_id == 5:
         val = int(values[0] > values[1])
-    elif tid == 6:
+    elif type_id == 6:
         val = int(values[0] < values[1])
-    elif tid == 7:
+    elif type_id == 7:
         val = int(values[0] == values[1])
 
     return ni, val
