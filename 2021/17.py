@@ -32,13 +32,7 @@ def run_steps(dx, dy):
 
 
 def part_one():
-    res = 0
-    for i in range(MAX_X + 1):
-        for j in range(-MIN_Y):
-            hit, max_height = run_steps(i, j)
-            if hit:
-                res = max(res, max_height)
-    return res
+    return MIN_Y * (MIN_Y + 1) // 2
 
 
 def part_two():
