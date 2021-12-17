@@ -22,13 +22,11 @@ def step(x, y, dx, dy):
 
 def run_steps(dx, dy):
     x, y = 0, 0
-    res = 0
     while y >= MIN_Y:
         x, y, dx, dy = step(x, y, dx, dy)
-        res = max(res, y)
         if MIN_X <= x <= MAX_X and MIN_Y <= y <= MAX_Y:
-            return True, res
-    return False, 0
+            return True
+    return False
 
 
 def part_one():
@@ -39,8 +37,7 @@ def part_two():
     res = 0
     for i in range(MAX_X + 1):
         for j in range(MIN_Y, -MIN_Y):
-            hit, _ = run_steps(i, j)
-            res += hit
+            res += run_steps(i, j)
     return res
 
 
