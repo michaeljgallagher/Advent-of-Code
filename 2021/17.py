@@ -34,11 +34,11 @@ def part_one():
 
 
 def part_two():
-    res = 0
-    for i in range(MAX_X + 1):
-        for j in range(MIN_Y, -MIN_Y):
-            res += run_steps(i, j)
-    return res
+    return sum(
+        run_steps(x, y)
+        for x in range(MAX_X + 1)
+        for y in range(MIN_Y, -MIN_Y)
+    )
 
 
 print(f'Part 1: {part_one()}')  # 8256
