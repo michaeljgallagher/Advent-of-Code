@@ -9,7 +9,6 @@ def parse_input(raw_data):
 
 
 DATA = parse_input(raw_data)
-print(DATA)
 
 
 def add_left(a, b):
@@ -70,10 +69,6 @@ def magnitude(x):
     if type(x) == int:
         return x
     return 3 * magnitude(x[0]) + 2 * magnitude(x[1])
-
-
-# print(add_snails([[[[4,3],4],4],[7,[[8,4],9]]], [1,1]))
-# print(magnitude([[[[5,0],[7,4]],[5,5]],[6,6]]))
 
 
 def part_one():
