@@ -25,9 +25,9 @@ def get_surrounding(i, j, image, default=0):
     return res
 
 
-def get_output_pixel(a):
+def get_output_pixel(b):
     idx = 0
-    for n in a:
+    for n in b:
         idx <<= 1
         idx += n
     return KEY[idx]
@@ -39,8 +39,8 @@ def calc_image(image, default=0):
     for i in range(-3, N+3):
         cur = []
         for j in range(-3, M+3):
-            s = get_surrounding(i, j, image, default)
-            cur.append(get_output_pixel(s))
+            b = get_surrounding(i, j, image, default)
+            cur.append(get_output_pixel(b))
         res.append(cur)
     return res
 
