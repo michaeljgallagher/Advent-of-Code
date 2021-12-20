@@ -5,14 +5,15 @@ with open('20.txt', 'r') as file:
 
 
 def parse_input(raw_data):
-    enhancement_algo, image = raw_data.split('\n\n')
-    return enhancement_algo, [[x for x in line] for line in image.split('\n')]
+    key, image = raw_data.split('\n\n')
+    key = [int(x == '#') for x in key]
+    return key, [[int(x == '#') for x in line] for line in image.split('\n')]
 
 
-enhancement_algo, IMAGE = parse_input(raw_data)
+KEY, IMAGE = parse_input(raw_data)
 
 
-def get_surrounding(i, j, image, default='.'):
+def get_surrounding(i, j, image, default=0):
     N, M = len(image), len(image[0])
     res = []
     for di, dj in product((-1, 0, 1), repeat=2):
@@ -21,15 +22,18 @@ def get_surrounding(i, j, image, default='.'):
             res.append(image[ni][nj])
         else:
             res.append(default)
-    return ''.join(res)
+    return res
 
 
-def get_output_pixel(s):
-    idx = int(s.translate(str.maketrans('.#', '01')), 2)
-    return enhancement_algo[idx]
+def get_output_pixel(a):
+    idx = 0
+    for n in a:
+        idx <<= 1
+        idx += n
+    return KEY[idx]
 
 
-def calc_image(image, default='.'):
+def calc_image(image, default=0):
     N, M = len(image), len(image[0])
     res = []
     for i in range(-3, N+3):
@@ -44,17 +48,15 @@ def calc_image(image, default='.'):
 def part_one():
     image = [[x for x in row] for row in IMAGE]
     for i in range(2):
-        default = '#' if i & 1 else '.'
-        image = calc_image(image, default)
-    return sum(sum(x == '#' for x in row) for row in image)
+        image = calc_image(image, i & 1)
+    return sum(sum(row) for row in image)
 
 
 def part_two():
     image = [[x for x in row] for row in IMAGE]
     for i in range(50):
-        default = '#' if i & 1 else '.'
-        image = calc_image(image, default)
-    return sum(sum(x == '#' for x in row) for row in image)
+        image = calc_image(image, i & 1)
+    return sum(sum(row) for row in image)
 
 
 print(f'Part 1: {part_one()}')  # 5354
