@@ -1,7 +1,7 @@
+import re
 from collections import deque
 from functools import lru_cache
 from itertools import product
-import re
 
 with open('21.txt', 'r') as file:
     raw_data = file.read()
