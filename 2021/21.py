@@ -24,9 +24,7 @@ def part_one(pos_one, pos_two):
         move = sum(list(q)[:3])
         q.rotate(-3)
         rolls += 3
-        pos[turn] = (pos[turn] + move) % 10
-        if pos[turn] == 0:
-            pos[turn] = 10
+        pos[turn] = (pos[turn] + move - 1) % 10 + 1
         score[turn] += pos[turn]
         turn = 1 - turn
     return min(score) * rolls
@@ -40,9 +38,7 @@ def part_two(pos_one, pos_two):
         wins = [0, 0]
         for rolls in product((1, 2, 3), repeat=3):
             move = sum(rolls)
-            cur_pos[turn] = (pos[turn] + move) % 10
-            if cur_pos[turn] == 0:
-                cur_pos[turn] = 10
+            cur_pos[turn] = (pos[turn] + move - 1) % 10 + 1
             cur_scores[turn] = scores[turn] + cur_pos[turn]
             if cur_scores[turn] >= 21:
                 wins[turn] += 1
