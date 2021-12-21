@@ -38,8 +38,8 @@ def part_two(pos_one, pos_two):
     def recur(pos, scores=(0, 0), turn=0):
         cur_pos, cur_scores = list(pos), list(scores)
         wins = [0, 0]
-        for a, b, c in product((1, 2, 3), repeat=3):
-            move = a + b + c
+        for rolls in product((1, 2, 3), repeat=3):
+            move = sum(rolls)
             cur_pos[turn] = (pos[turn] + move) % 10
             if cur_pos[turn] == 0:
                 cur_pos[turn] = 10
