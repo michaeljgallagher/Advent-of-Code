@@ -52,7 +52,7 @@ def part_two(steps):
     for step in steps:
         state, cur = step[0], step[1:]
         new = Counter()
-        for cube in cubes.copy():
+        for cube in cubes:
             intsct = intersect(cur, cube)
             if intsct:
                 new[intsct] -= cubes[cube]
