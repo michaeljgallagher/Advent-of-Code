@@ -33,6 +33,28 @@ def intersect(cube_a, cube_b):
     return False
 
 
+def toggle_cubes(step, cubes):
+    state, cur = step[0], step[1:]
+    new = Counter()
+    for cube in cubes:
+        intsct = intersect(cur, cube)
+        if intsct:
+            new[intsct] -= cubes[cube]
+    if state:
+        cubes[cur] = 1
+    cubes.update(new)
+    return cubes
+
+
+def calc_toggled(cubes):
+    res = 0
+    for k, v in cubes.items():
+        x0, x1, y0, y1, z0, z1 = k
+        size = (x1 + 1 - x0) * (y1 + 1 - y0) * (z1 + 1 - z0)
+        res += size * v
+    return res
+
+
 def part_one(steps):
     cubes = Counter()
     for step in steps:
@@ -40,40 +62,15 @@ def part_one(steps):
         cur = intersect(cur, (-50, 50, -50, 50, -50, 50))
         if not cur:
             continue
-        new = Counter()
-        for cube in cubes:
-            intsct = intersect(cur, cube)
-            if intsct:
-                new[intsct] -= cubes[cube]
-        if state:
-            cubes[cur] = 1
-        cubes.update(new)
-    res = 0
-    for k, v in cubes.items():
-        x0, x1, y0, y1, z0, z1 = k
-        size = (x1 + 1 - x0) * (y1 + 1 - y0) * (z1 + 1 - z0)
-        res += size * v
-    return res
+        cubes = toggle_cubes((state, *cur), cubes)
+    return calc_toggled(cubes)
 
 
 def part_two(steps):
     cubes = Counter()
     for step in steps:
-        state, cur = step[0], step[1:]
-        new = Counter()
-        for cube in cubes:
-            intsct = intersect(cur, cube)
-            if intsct:
-                new[intsct] -= cubes[cube]
-        if state:
-            cubes[cur] = 1
-        cubes.update(new)
-    res = 0
-    for k, v in cubes.items():
-        x0, x1, y0, y1, z0, z1 = k
-        size = (x1 + 1 - x0) * (y1 + 1 - y0) * (z1 + 1 - z0)
-        res += size * v
-    return res
+        cubes = toggle_cubes(step, cubes)
+    return calc_toggled(cubes)
 
 
 print(f'Part 1: {part_one(DATA)}')  # 607657
