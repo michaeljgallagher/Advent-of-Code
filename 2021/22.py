@@ -34,17 +34,26 @@ def intersect(cube_a, cube_b):
 
 
 def part_one(steps):
-    cubes = {}
+    cubes = Counter()
     for step in steps:
         state, cur = step[0], step[1:]
-        intsct = intersect(cur, (-50, 50, -50, 50, -50, 50))
-        if intsct:
-            nx0, nx1, ny0, ny1, nz0, nz1 = intsct
-            for x in range(nx0, nx1+1):
-                for y in range(ny0, ny1+1):
-                    for z in range(nz0, nz1+1):
-                        cubes[(x, y, z)] = state
-    return sum(v for v in cubes.values())
+        cur = intersect(cur, (-50, 50, -50, 50, -50, 50))
+        if not cur:
+            continue
+        new = Counter()
+        for cube in cubes:
+            intsct = intersect(cur, cube)
+            if intsct:
+                new[intsct] -= cubes[cube]
+        if state:
+            cubes[cur] = 1
+        cubes.update(new)
+    res = 0
+    for k, v in cubes.items():
+        x0, x1, y0, y1, z0, z1 = k
+        size = (x1 + 1 - x0) * (y1 + 1 - y0) * (z1 + 1 - z0)
+        res += size * v
+    return res
 
 
 def part_two(steps):
