@@ -35,12 +35,12 @@ def move_south(arr):
     return arr, bool(moves)
 
 
-def part_one(graph):
+def part_one(arr):
     res = 0
     moved = True
     while moved:
-        graph, east = move_east(graph)
-        graph, south = move_south(graph)
+        arr, east = move_east(arr)
+        arr, south = move_south(arr)
         moved = east or south
         res += 1
     return res
