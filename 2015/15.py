@@ -1,5 +1,5 @@
-from math import prod
 import re
+from math import prod
 
 with open("15.txt", "r") as file:
     data = file.read().strip().split("\n")
