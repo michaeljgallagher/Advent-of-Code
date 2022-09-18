@@ -31,8 +31,8 @@ SUES = parse_input(data)
 
 def check_sue_1(i, tape, sues):
     sue = sues[i]
-    check = Counter({k: tape[k] for k in tape.keys() & sue.keys()})
-    return check == sue
+    same = Counter({k: tape[k] for k in tape.keys() & sue.keys()})
+    return same == sue
 
 
 def check_sue_2(i, tape, sues):
