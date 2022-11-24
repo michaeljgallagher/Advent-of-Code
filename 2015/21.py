@@ -45,8 +45,8 @@ def defend(armor, rings, boss_dmg):
     return max(1, boss_dmg - armor - sum(rings))
 
 
-def part_one():
-    boss_hp, boss_damage, boss_armor = map(int, re.findall(r"(\d+)", data))
+def part_one(data):
+    boss_hp, boss_damage, boss_armor = get_boss_stats(data)
     return min(
         weapon[0] + armor[0] + sum(r[0] for r in rings)
         for weapon, armor, rings in product(WEAPONS, ARMOR, combinations(RINGS, 2))
@@ -55,8 +55,8 @@ def part_one():
     )
 
 
-def part_two():
-    boss_hp, boss_damage, boss_armor = map(int, re.findall(r"(\d+)", data))
+def part_two(data):
+    boss_hp, boss_damage, boss_armor = get_boss_stats(data)
     return max(
         weapon[0] + armor[0] + sum(r[0] for r in rings)
         for weapon, armor, rings in product(WEAPONS, ARMOR, combinations(RINGS, 2))
@@ -65,5 +65,5 @@ def part_two():
     )
 
 
-print(f"Part 1: {part_one()}")  # 91
-print(f"Part 2: {part_two()}")  # 158
+print(f"Part 1: {part_one(data)}")  # 91
+print(f"Part 2: {part_two(data)}")  # 158
