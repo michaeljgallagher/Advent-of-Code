@@ -12,10 +12,7 @@ class Knot:
         for i in range(length >> 1):
             a = (self.pos + i) % self.size
             b = (self.pos + length - 1 - i) % self.size
-            self.state[a], self.state[b] = (
-                self.state[b],
-                self.state[a],
-            )
+            self.state[a], self.state[b] = (self.state[b], self.state[a])
         self.pos = (self.pos + length + self.skip) % self.size
         self.skip += 1
 
