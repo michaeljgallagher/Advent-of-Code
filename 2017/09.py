@@ -9,19 +9,16 @@ def clean_garbage(s):
     i = 0
     while i < len(s):
         if s[i] == "!":
-            i += 2
+            i += 1
         elif s[i] == "<" and not garbage:
             garbage = True
-            i += 1
         elif s[i] == ">" and garbage:
             garbage = False
-            i += 1
         elif garbage:
             removed += 1
-            i += 1
         else:
             cleaned += s[i]
-            i += 1
+        i += 1
     return cleaned, removed
 
 
