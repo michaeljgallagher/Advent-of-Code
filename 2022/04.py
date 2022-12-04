@@ -4,22 +4,29 @@ with open("04.txt", "r") as file:
     data = file.read().strip()
 
 PAIRS = [
-    (
-        set(range(int(a), int(b) + 1)),
-        set(range(int(c), int(d) + 1)),
-    )
-    for a, b, c, d in re.findall(
+    tuple(map(int, g))
+    for g in re.findall(
         r"(\d+)-(\d+),(\d+)-(\d+)", data
     )
 ]
 
 
 def part_one():
-    return sum(len(x | y) == max(len(x), len(y)) for x, y in PAIRS)
+    return sum(
+        (a <= c and b >= d)
+        or (a >= c and b <= d)
+        for a, b, c, d in PAIRS
+    )
 
 
 def part_two():
-    return sum(len(x & y) > 0 for x, y in PAIRS)
+    return sum(
+        (a <= c and b >= c)
+        or (a <= d and b >= d)
+        or (c <= a and d >= a)
+        or (c <= b and d >= b)
+        for a, b, c, d in PAIRS
+    )
 
 
 print(f"Part 1: {part_one()}")  # 567
