@@ -21,8 +21,6 @@ def is_visible(i, j):
 
 
 def scenic_score(i, j):
-    if (i, j) in ((0, 0), (0, M - 1), (N - 1, 0), (N - 1, M - 1)):
-        return 0
     res = 1
     for di, dj in ((-1, 0), (1, 0), (0, -1), (0, 1)):
         ni, nj = i + di, j + dj
