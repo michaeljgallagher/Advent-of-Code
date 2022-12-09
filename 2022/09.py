@@ -8,22 +8,19 @@ STEPS = [(x, int(y)) for x, y in re.findall(r"(\w) (\d+)", data)]
 DIRS = {
     "U": -1j,
     "D": 1j,
-    "L": -1 + 0j,
-    "R": 1 + 0j,
+    "L": -1,
+    "R": 1,
 }
 
 
 def update(rope, i, dir):
+    sgn = lambda x: complex(
+        (x.real > 0) - (x.real < 0), (x.imag > 0) - (x.imag < 0)
+    )
     head, tail = rope[i - 1], rope[i]
-    dpos = tail - head
-    if dpos.real == 0 or dpos.imag == 0:
-        if abs(dpos.real) > 1:
-            rope[i] += 1 if dpos.real < 0 else -1 if dpos.real > 0 else 0
-        if abs(dpos.imag) > 1:
-            rope[i] += 1j if dpos.imag < 0 else -1j if dpos.imag > 0 else 0
-    elif (abs(dpos.real), abs(dpos.imag)) != (1, 1):
-        rope[i] += 1 if dpos.real < 0 else -1 if dpos.real > 0 else 0
-        rope[i] += 1j if dpos.imag < 0 else -1j if dpos.imag > 0 else 0
+    dpos = head - tail
+    if abs(dpos) > abs(1 + 1j):
+        rope[i] += sgn(dpos)
     return rope
 
 
