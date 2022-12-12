@@ -19,10 +19,9 @@ def parse_grid(data):
     return grid, start, end, a_list
 
 
-def bfs(grid, start, end):
-    q = deque()
-    q.append((start, 0))
+def bfs(grid, starts, end):
     seen = set()
+    q = deque([(start, 0) for start in starts])
     while q:
         pos, dist = q.popleft()
         if pos == end:
@@ -48,11 +47,11 @@ GRID, START, END, A_LIST = parse_grid(data)
 
 
 def part_one():
-    return bfs(GRID, START, END)
+    return bfs(GRID, [START], END)
 
 
 def part_two():
-    return min(bfs(GRID, a, END) for a in A_LIST)
+    return bfs(GRID, A_LIST, END)
 
 
 print(f"Part 1: {part_one()}")  # 339
