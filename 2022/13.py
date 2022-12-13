@@ -1,3 +1,4 @@
+from ast import literal_eval
 from math import prod
 
 with open("13.txt", "r") as file:
@@ -8,10 +9,8 @@ def parse_input(data):
     res = []
     for pair in data.split("\n\n"):
         a, b = pair.split("\n")
-        a, b = eval(a), eval(b)
-        res.append([a, b])
+        res.append([literal_eval(a), literal_eval(b)])
     return res
-
 
 PACKETS = parse_input(data)
 
