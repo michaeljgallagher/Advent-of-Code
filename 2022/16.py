@@ -17,10 +17,10 @@ def parse_input(data):
             g[u, v] = 1
     for k, i, j in product(valves, valves, valves):
         g[i, j] = min(g[i, j], g[i, k] + g[k, j])
-    return valves, flows, g
+    return flows, g
 
 
-VALVES, FLOWS, G = parse_input(data)
+FLOWS, G = parse_input(data)
 
 
 @cache
