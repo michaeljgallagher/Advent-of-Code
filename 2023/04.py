@@ -18,8 +18,7 @@ def part_one(data):
 def part_two(data):
     copies = defaultdict(lambda: 1)
     for i, game in enumerate(data):
-        n = num_winners(game)
-        for di in range(1, n + 1):
+        for di in range(1, num_winners(game) + 1):
             copies[i + di] += copies[i]
     return sum(copies.values())
 
