@@ -10,20 +10,7 @@ MAPS = [
 ]
 
 
-def seed_location(cur, i=0):
-    if i == len(MAPS):
-        return cur
-    for dst, src, offset in MAPS[i]:
-        if src <= cur < src + offset:
-            return seed_location(dst + cur - src, i + 1)
-    return seed_location(cur, i + 1)
-
-
-def part_one():
-    return min(seed_location(seed) for seed in SEEDS)
-
-
-def dfs_part_two(cur, i=0):
+def solve(cur, i=0):
     if i == len(MAPS):
         return cur
     res = []
@@ -41,12 +28,16 @@ def dfs_part_two(cur, i=0):
             if r[0] < r[1]:
                 nranges.append(r)
         ranges = nranges
-    return dfs_part_two(res + ranges, i + 1)
+    return solve(res + ranges, i + 1)
+
+
+def part_one():
+    return min(min(solve([(seed, seed + 1)]))[0] for seed in SEEDS)
 
 
 def part_two():
     return min(
-        min(dfs_part_two([(start, start + offset)]))[0]
+        min(solve([(start, start + offset)]))[0]
         for start, offset in batched(SEEDS, n=2)
     )
 
