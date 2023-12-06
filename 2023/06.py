@@ -7,34 +7,25 @@ with open("06.txt", "r") as file:
 RACES = list(zip(*(map(int, re.findall(r"(\d+)", x)) for x in data.split("\n"))))
 
 
-def is_winner(hold, time, dist):
-    return hold * (time - hold) > dist
-
-
-def bsl(time, dist):
-    lo, hi = 0, time
-    while lo < hi:
-        mid = lo + (hi - lo >> 1)
-        if is_winner(mid, time, dist):
-            hi = mid
-        else:
-            lo = mid + 1
-    return lo
-
-
-def bsr(time, dist):
+def binary_search(time, dist, left=True):
     lo, hi = 0, time
     while lo <= hi:
         mid = lo + (hi - lo >> 1)
-        if is_winner(mid, time, dist):
-            lo = mid + 1
+        if mid * (time - mid) > dist:
+            if left:
+                hi = mid - 1
+            else:
+                lo = mid + 1
         else:
-            hi = mid - 1
-    return hi
+            if left:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return lo if left else hi
 
 
 def num_winners(time, dist):
-    return bsr(time, dist) - bsl(time, dist) + 1
+    return binary_search(time, dist, False) - binary_search(time, dist) + 1
 
 
 def part_one():
@@ -42,8 +33,7 @@ def part_one():
 
 
 def part_two():
-    t, d = (int("".join(str(x) for x in race)) for race in zip(*RACES))
-    return num_winners(t, d)
+    return num_winners(*(int("".join(str(x) for x in race)) for race in zip(*RACES)))
 
 
 print(f"Part 1: {part_one()}")  # 140220
