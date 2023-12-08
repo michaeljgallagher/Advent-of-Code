@@ -27,9 +27,9 @@ def part_one():
 
 
 def part_two():
-    starts = [u for u in G if u[-1] == "A"]
-    ends = [u for u in G if u[-1] == "Z"]
-    return lcm(*(solve(u, *ends) for u in starts))
+    us = [u for u in G if u[-1] == "A"]
+    vs = [u for u in G if u[-1] == "Z"]
+    return lcm(*(solve(u, *vs) for u in us))
 
 
 print(f"Part 1: {part_one()}")  # 18827
