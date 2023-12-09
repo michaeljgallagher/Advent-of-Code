@@ -7,18 +7,10 @@ ROWS = [[int(x) for x in row.split(" ")] for row in data.split("\n")]
 
 
 def solve(row):
-    if len(set(row)) == 1:
-        return row[0]
-    return row[-1] + solve([b - a for a, b in pairwise(row)])
+    return row[-1] + (
+        0 if len(set(row)) == 1 else solve([b - a for a, b in pairwise(row)])
+    )
 
 
-def part_one():
-    return sum(solve(row) for row in ROWS)
-
-
-def part_two():
-    return sum(solve(row[::-1]) for row in ROWS)
-
-
-print(f"Part 1: {part_one()}")  # 1743490457
-print(f"Part 2: {part_two()}")  # 1053
+print(f"Part 1: {sum(solve(row) for row in ROWS)}")  # 1743490457
+print(f"Part 2: {sum(solve(row[::-1]) for row in ROWS)}")  # 1053
