@@ -61,6 +61,8 @@ def part_one():
 
 
 def part_two():
+    # https://en.wikipedia.org/wiki/Pick%27s_theorem
+    # https://en.wikipedia.org/wiki/Shoelace_formula
     return shoelace_area(find_path()) - part_one() + 1
 
 
