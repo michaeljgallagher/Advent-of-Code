@@ -36,7 +36,7 @@ def find_path():
     i, j = START
     res = [(i, j)]
     while True:
-        dir = MOVES[(cur, dir)]
+        dir = MOVES[cur, dir]
         di, dj = dir
         i, j = i + di, j + dj
         if (i, j) == START:
