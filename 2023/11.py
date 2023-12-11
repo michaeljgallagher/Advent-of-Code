@@ -1,3 +1,5 @@
+from itertools import combinations
+
 with open("11.txt", "r") as file:
     data = file.read().strip()
 
@@ -14,21 +16,21 @@ def locate_galaxies(grid, expand=2):
     galaxies = []
     di = 0
     for i, row in enumerate(grid):
-        if i in empty_rows:
-            di += expand - 1
+        di += (expand - 1) * (i in empty_rows)
         dj = 0
         for j, c in enumerate(row):
-            if j in empty_cols:
-                dj += expand - 1
+            dj += (expand - 1) * (j in empty_cols)
             if c == "#":
                 galaxies.append((i + di, j + dj))
     return galaxies
 
 
 def solve(pt2=False):
-    galaxies = locate_galaxies(GRID, expand=1000000 if pt2 else 2)
     return sum(
-        dist(u, v) for i, u in enumerate(galaxies[:-1]) for v in galaxies[i + 1 :]
+        dist(u, v)
+        for u, v in combinations(
+            locate_galaxies(GRID, expand=1000000 if pt2 else 2), r=2
+        )
     )
 
 
