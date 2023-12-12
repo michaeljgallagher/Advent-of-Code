@@ -30,10 +30,12 @@ def part_one():
 
 
 def part_two():
-    unfolded = [
-        ("?".join(seq for _ in range(5)), tuple(nums * 5)) for seq, nums in RECORDS
-    ]
-    return sum(dp(0, 0, 0, seq, nums) for seq, nums in unfolded)
+    return sum(
+        dp(0, 0, 0, seq, nums)
+        for seq, nums in (
+            ("?".join(seq for _ in range(5)), tuple(nums * 5)) for seq, nums in RECORDS
+        )
+    )
 
 
 print(f"Part 1: {part_one()}")  # 7670
