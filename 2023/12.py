@@ -11,27 +11,28 @@ RECORDS = [
 
 
 @cache
-def dp(i, j, cur, seq, nums):
-    if i == len(seq):
-        return (j == len(nums) - 1 and nums[j] == cur) or (j == len(nums) and cur == 0)
+def dp(seq, nums):
+    if not seq:
+        return nums == ()
+    if not nums:
+        return "#" not in seq
     res = 0
-    if seq[i] in "#?":
-        res += dp(i + 1, j, cur + 1, seq, nums)
-    if seq[i] in ".?":
-        if cur == 0:
-            res += dp(i + 1, j, 0, seq, nums)
-        elif cur > 0 and j < len(nums) and nums[j] == cur:
-            res += dp(i + 1, j + 1, 0, seq, nums)
+    if seq[0] in ".?":
+        res += dp(seq[1:], nums)
+    if seq[0] in "#?":
+        n, r = len(seq), nums[0]
+        if r <= n and "." not in seq[:r] and (r == n or seq[r] != "#"):
+            res += dp(seq[r + 1 :], nums[1:])
     return res
 
 
 def part_one():
-    return sum(dp(0, 0, 0, seq, nums) for seq, nums in RECORDS)
+    return sum(dp(seq, nums) for seq, nums in RECORDS)
 
 
 def part_two():
     return sum(
-        dp(0, 0, 0, seq, nums)
+        dp(seq, nums)
         for seq, nums in (
             ("?".join(seq for _ in range(5)), tuple(nums * 5)) for seq, nums in RECORDS
         )
