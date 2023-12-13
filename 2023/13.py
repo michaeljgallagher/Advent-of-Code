@@ -1,5 +1,3 @@
-from itertools import zip_longest
-
 with open("13.txt", "r") as file:
     data = file.read().strip()
 
