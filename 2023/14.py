@@ -68,7 +68,7 @@ def cycle(rocks, grid):
 
 
 def find_cycle(rocks, grid):
-    seen = {"\n".join("".join(row) for row in grid): 0}
+    seen = {}
     for i in count(start=1):
         rocks, grid = cycle(rocks, grid)
         cur = "\n".join("".join(row) for row in grid)
