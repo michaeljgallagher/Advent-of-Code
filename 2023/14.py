@@ -16,34 +16,34 @@ def get_state(data):
 
 
 def tilt_north(i, j, grid):
+    grid[i][j] = "."
     while i > 0 and grid[i - 1][j] == ".":
-        grid[i][j] = "."
-        grid[i - 1][j] = "O"
         i -= 1
+    grid[i][j] = "O"
     return i, j
 
 
 def tilt_west(i, j, grid):
+    grid[i][j] = "."
     while j > 0 and grid[i][j - 1] == ".":
-        grid[i][j] = "."
-        grid[i][j - 1] = "O"
         j -= 1
+    grid[i][j] = "O"
     return i, j
 
 
 def tilt_south(i, j, grid):
+    grid[i][j] = "."
     while i < len(grid) - 1 and grid[i + 1][j] == ".":
-        grid[i][j] = "."
-        grid[i + 1][j] = "O"
         i += 1
+    grid[i][j] = "O"
     return i, j
 
 
 def tilt_east(i, j, grid):
+    grid[i][j] = "."
     while j < len(grid[0]) - 1 and grid[i][j + 1] == ".":
-        grid[i][j] = "."
-        grid[i][j + 1] = "O"
         j += 1
+    grid[i][j] = "O"
     return i, j
 
 
