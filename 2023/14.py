@@ -15,34 +15,21 @@ def get_state(data):
     return rocks, grid
 
 
-def tilt_north(i, j, grid):
+def tilt(i, j, di, dj, grid):
+    n, m = len(grid), len(grid[0])
     grid[i][j] = "."
-    while i > 0 and grid[i - 1][j] == ".":
-        i -= 1
-    grid[i][j] = "O"
-    return i, j
-
-
-def tilt_west(i, j, grid):
-    grid[i][j] = "."
-    while j > 0 and grid[i][j - 1] == ".":
-        j -= 1
-    grid[i][j] = "O"
-    return i, j
-
-
-def tilt_south(i, j, grid):
-    grid[i][j] = "."
-    while i < len(grid) - 1 and grid[i + 1][j] == ".":
-        i += 1
-    grid[i][j] = "O"
-    return i, j
-
-
-def tilt_east(i, j, grid):
-    grid[i][j] = "."
-    while j < len(grid[0]) - 1 and grid[i][j + 1] == ".":
-        j += 1
+    if di == -1:
+        while i > 0 and grid[i - 1][j] == ".":
+            i -= 1
+    elif di == 1:
+        while i < n - 1 and grid[i + 1][j] == ".":
+            i += 1
+    elif dj == -1:
+        while j > 0 and grid[i][j - 1] == ".":
+            j -= 1
+    else:
+        while j < m - 1 and grid[i][j + 1] == ".":
+            j += 1
     grid[i][j] = "O"
     return i, j
 
@@ -58,10 +45,10 @@ def cycle(rocks, grid):
         lambda x: -x[1],
         lambda x: x[0],
     ]
-    for k, f in enumerate((tilt_north, tilt_west, tilt_south, tilt_east)):
+    for k, (di, dj) in enumerate(((-1, 0), (0, -1), (1, 0), (0, 1))):
         nrocks = []
         for i, j in rocks:
-            ni, nj = f(i, j, grid)
+            ni, nj = tilt(i, j, di, dj, grid)
             nrocks.append((ni, nj))
         rocks = sorted(nrocks, key=keys[k])
     return rocks, grid
@@ -80,7 +67,7 @@ def find_cycle(rocks, grid):
 def part_one():
     rocks, grid = get_state(data)
     for i, j in rocks:
-        tilt_north(i, j, grid)
+        tilt(i, j, -1, 0, grid)
     return calc_load(grid)
 
 
