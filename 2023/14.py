@@ -63,7 +63,7 @@ def cycle(rocks, grid):
         for i, j in rocks:
             ni, nj = f(i, j, grid)
             nrocks.append((ni, nj))
-        rocks = sorted(nrocks, key=keys[k % 4])
+        rocks = sorted(nrocks, key=keys[k])
     return rocks, grid
 
 
