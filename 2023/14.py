@@ -3,11 +3,6 @@ from itertools import count
 with open("14.txt", "r") as file:
     data = file.read().strip()
 
-grid = [list(row) for row in data.split("\n")]
-rocks = [
-    (i, j) for j in range(len(grid[0])) for i in range(len(grid)) if grid[i][j] == "O"
-]
-
 
 def tilt_north(i, j, grid):
     while i > 0 and grid[i - 1][j] == ".":
