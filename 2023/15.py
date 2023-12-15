@@ -5,19 +5,15 @@ with open("15.txt", "r") as file:
 def hash(s):
     res = 0
     for c in s:
-        res += ord(c)
-        res *= 17
-        res %= 256
+        res = (res + ord(c)) * 17 % 256
     return res
 
 
 def find_index(label, box):
-    i = 0
-    while i < len(box):
-        if box[i][0] == label:
-            break
-        i += 1
-    return i
+    for i, (lab, _) in enumerate(box):
+        if lab == label:
+            return i
+    return len(box)
 
 
 def hashmap(s, boxes):
