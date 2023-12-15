@@ -4,23 +4,20 @@ with open("15.txt", "r") as file:
     data = file.read().strip()
 
 
-def h(s):
+def hash(s):
     return reduce(lambda x, y: (x + ord(y)) * 17 % 256, s, 0)
 
 
 def hashmap(s, boxes):
-    if "-" in s:
-        label, _ = s.split("-")
-        k = h(label)
-        boxes[k].pop(label, 0)
-    else:
-        label, focal_len = s.split("=")
-        k = h(label)
-        boxes[k][label] = focal_len
+    match s.replace("-", "").split("="):
+        case [label]:
+            boxes[hash(label)].pop(label, 0)
+        case [label, focal_len]:
+            boxes[hash(label)][label] = focal_len
 
 
 def part_one():
-    return sum(h(s) for s in data.split(","))
+    return sum(hash(s) for s in data.split(","))
 
 
 def part_two():
