@@ -11,9 +11,9 @@ def hash(s):
 def hashmap(s, boxes):
     match s.replace("-", "").split("="):
         case [label]:
-            boxes[hash(label)].pop(label, 0)
+            boxes[hash(label)].pop(label, None)
         case [label, focal_len]:
-            boxes[hash(label)][label] = focal_len
+            boxes[hash(label)][label] = int(focal_len)
 
 
 def part_one():
@@ -25,7 +25,7 @@ def part_two():
     for s in data.split(","):
         hashmap(s, boxes)
     return sum(
-        i * j * int(focal_len)
+        i * j * focal_len
         for i, box in enumerate(boxes, start=1)
         for j, (label, focal_len) in enumerate(box.items(), start=1)
     )
