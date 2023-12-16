@@ -1,4 +1,5 @@
 from collections import deque
+from functools import reduce
 
 with open("16.txt", "r") as file:
     data = file.read().strip()
@@ -37,15 +38,13 @@ def part_one():
 
 def part_two():
     n, m = len(GRID), len(GRID[0])
-    res = 0
-    for i, j, di, dj in (
+    starts = (
         [(x, 0, 0, 1) for x in range(n)]
         + [(x, m - 1, 0, -1) for x in range(n)]
         + [(0, x, 1, 0) for x in range(m)]
         + [(n - 1, x, -1, 0) for x in range(m)]
-    ):
-        res = max(res, solve(GRID, i, j, di, dj))
-    return res
+    )
+    return reduce(lambda res, start: max(res, solve(GRID, *start)), starts, 0)
 
 
 print(f"Part 1: {part_one()}")  # 7074
