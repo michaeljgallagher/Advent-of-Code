@@ -3,7 +3,8 @@ from collections import deque
 with open("16.txt", "r") as file:
     data = file.read().strip()
 
-dirs = {
+GRID = data.split("\n")
+DIRS = {
     "/": [1j, -1j],
     "\\": [-1j, 1j],
 }
@@ -20,7 +21,7 @@ def solve(grid, i, j, d):
         seen.add((i, j, d))
         cur = grid[i][j]
         if cur in ("/", "\\"):
-            nd = d * dirs[cur][bool(d.real)]
+            nd = d * DIRS[cur][bool(d.real)]
             di, dj = int(nd.real), int(nd.imag)
             q.append((i + di, j + dj, nd))
         elif (cur == "|" and d.imag) or (cur == "-" and d.real):
@@ -37,13 +38,11 @@ def solve(grid, i, j, d):
 
 
 def part_one():
-    grid = data.split("\n")
-    return solve(grid, 0, 0, 1j)
+    return solve(GRID, 0, 0, 1j)
 
 
 def part_two():
-    grid = data.split("\n")
-    n, m = len(grid), len(grid[0])
+    n, m = len(GRID), len(GRID[0])
     res = 0
     for i, j, d in (
         [(x, 0, 1j) for x in range(n)]
@@ -51,7 +50,7 @@ def part_two():
         + [(0, x, 1) for x in range(m)]
         + [(n - 1, x, -1) for x in range(m)]
     ):
-        res = max(res, solve(grid, i, j, d))
+        res = max(res, solve(GRID, i, j, d))
     return res
 
 
