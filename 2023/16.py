@@ -4,54 +4,47 @@ with open("16.txt", "r") as file:
     data = file.read().strip()
 
 GRID = data.split("\n")
-DIRS = {
-    "/": [1j, -1j],
-    "\\": [-1j, 1j],
-}
 
 
-def solve(grid, i, j, d):
+def solve(grid, i, j, di, dj):
     n, m = len(grid), len(grid[0])
-    q = deque([(i, j, d)])
+    q = deque([(i, j, di, dj)])
     seen = set()
     while q:
-        i, j, d = q.popleft()
-        if 0 > i or i >= n or 0 > j or j >= m or (i, j, d) in seen:
+        i, j, di, dj = q.popleft()
+        if 0 > i or i >= n or 0 > j or j >= m or (i, j, di, dj) in seen:
             continue
-        seen.add((i, j, d))
+        seen.add((i, j, di, dj))
         match grid[i][j]:
             case "/":
-                nd = -d.imag - d.real * 1j
-                q.append((i + int(nd.real), j + int(nd.imag), nd))
+                q.append((i - dj, j - di, -dj, -di))
             case "\\":
-                nd = d.imag + d.real * 1j
-                q.append((i + int(nd.real), j + int(nd.imag), nd))
-            case "|" if d.imag:
-                for nd in [d * 1j, d * -1j]:
-                    q.append((i + int(nd.real), j + int(nd.imag), nd))
-            case "-" if d.real:
-                for nd in [d * 1j, d * -1j]:
-                    q.append((i + int(nd.real), j + int(nd.imag), nd))
+                q.append((i + dj, j + di, dj, di))
+            case "|" if dj:
+                q.append((i + 1, j, 1, 0))
+                q.append((i - 1, j, -1, 0))
+            case "-" if di:
+                q.append((i, j + 1, 0, 1))
+                q.append((i, j - 1, 0, -1))
             case _:
-                di, dj = int(d.real), int(d.imag)
-                q.append((i + di, j + dj, d))
-    return len(set((i, j) for i, j, _ in seen))
+                q.append((i + di, j + dj, di, dj))
+    return len(set((i, j) for i, j, _, _ in seen))
 
 
 def part_one():
-    return solve(GRID, 0, 0, 1j)
+    return solve(GRID, 0, 0, 0, 1)
 
 
 def part_two():
     n, m = len(GRID), len(GRID[0])
     res = 0
-    for i, j, d in (
-        [(x, 0, 1j) for x in range(n)]
-        + [(x, m - 1, -1j) for x in range(n)]
-        + [(0, x, 1) for x in range(m)]
-        + [(n - 1, x, -1) for x in range(m)]
+    for i, j, di, dj in (
+        [(x, 0, 0, 1) for x in range(n)]
+        + [(x, m - 1, 0, -1) for x in range(n)]
+        + [(0, x, 1, 0) for x in range(m)]
+        + [(n - 1, x, -1, 0) for x in range(m)]
     ):
-        res = max(res, solve(GRID, i, j, d))
+        res = max(res, solve(GRID, i, j, di, dj))
     return res
 
 
