@@ -19,21 +19,22 @@ def solve(grid, i, j, d):
         if 0 > i or i >= n or 0 > j or j >= m or (i, j, d) in seen:
             continue
         seen.add((i, j, d))
-        cur = grid[i][j]
-        if cur in ("/", "\\"):
-            nd = d * DIRS[cur][bool(d.real)]
-            di, dj = int(nd.real), int(nd.imag)
-            q.append((i + di, j + dj, nd))
-        elif (cur == "|" and d.imag) or (cur == "-" and d.real):
-            nd = d * 1j
-            di, dj = int(nd.real), int(nd.imag)
-            q.append((i + di, j + dj, nd))
-            nd = d * -1j
-            di, dj = int(nd.real), int(nd.imag)
-            q.append((i + di, j + dj, nd))
-        else:
-            di, dj = int(d.real), int(d.imag)
-            q.append((i + di, j + dj, d))
+        match grid[i][j]:
+            case "/":
+                nd = -d.imag - d.real * 1j
+                q.append((i + int(nd.real), j + int(nd.imag), nd))
+            case "\\":
+                nd = d.imag + d.real * 1j
+                q.append((i + int(nd.real), j + int(nd.imag), nd))
+            case "|" if d.imag:
+                for nd in [d * 1j, d * -1j]:
+                    q.append((i + int(nd.real), j + int(nd.imag), nd))
+            case "-" if d.real:
+                for nd in [d * 1j, d * -1j]:
+                    q.append((i + int(nd.real), j + int(nd.imag), nd))
+            case _:
+                di, dj = int(d.real), int(d.imag)
+                q.append((i + di, j + dj, d))
     return len(set((i, j) for i, j, _ in seen))
 
 
