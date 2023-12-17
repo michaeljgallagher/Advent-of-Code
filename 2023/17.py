@@ -1,6 +1,6 @@
-import math
 from collections import defaultdict
 from heapq import heappop, heappush
+from math import inf
 
 with open("17.txt", "r") as file:
     data = file.read().strip()
@@ -10,7 +10,7 @@ GRID = data.split("\n")
 
 def dijkstra(grid, lo, hi):
     n, m = len(grid), len(grid[0])
-    dists = defaultdict(lambda: math.inf)
+    dists = defaultdict(lambda: inf)
     heap = [(0, (0, 0, (0, 1))), (0, (0, 0, (1, 0)))]
     while heap:
         cost, (i, j, d) = heappop(heap)
