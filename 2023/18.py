@@ -16,25 +16,23 @@ def shoelace_area(points):
     return abs(res) >> 1
 
 
-def solve(pt2=False):
+def solve(plan, pt2=False):
     dirs = (
         [(0, 1), (1, 0), (0, -1), (-1, 0)]
         if pt2
         else {"U": (-1, 0), "D": (1, 0), "R": (0, 1), "L": (0, -1)}
     )
-    i, j = 0, 0
-    points = []
-    perim = 0
-    for d, n, color in PLAN:
+    points, perim = [], 0
+    i = j = 0
+    for d, n, color in plan:
         if pt2:
             n, d = int(color[:5], 16), int(color[-1])
         perim += n
         di, dj = dirs[d]
-        i += n * di
-        j += n * dj
+        i, j = i + n * di, j + n * dj
         points.append((i, j))
     return shoelace_area(points) + (perim >> 1) + 1
 
 
-print(f"Part 1: {solve()}")  # 47675
-print(f"Part 2: {solve(True)}")  # 122103860427465
+print(f"Part 1: {solve(PLAN)}")  # 47675
+print(f"Part 2: {solve(PLAN, True)}")  # 122103860427465
