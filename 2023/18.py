@@ -17,7 +17,7 @@ def shoelace_area(points):
 
 
 def solve(pt2=False):
-    dirs = dirs = (
+    dirs = (
         [(0, 1), (1, 0), (0, -1), (-1, 0)]
         if pt2
         else {"U": (-1, 0), "D": (1, 0), "R": (0, 1), "L": (0, -1)}
