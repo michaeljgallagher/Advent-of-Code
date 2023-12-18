@@ -3,10 +3,7 @@ import re
 with open("18.txt", "r") as file:
     data = file.read().strip()
 
-PLAN = [
-    (d, int(n), color)
-    for d, n, color in re.findall(r"([RDLU]) (\d+) \(#([0-9a-fA-F]{6})\)", data)
-]
+PLAN = [(d, int(n), color) for d, n, color in re.findall(r"(\w) (\d+) \(#(.+)\)", data)]
 
 
 def shoelace_area(points):
