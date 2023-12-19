@@ -48,11 +48,11 @@ def solve_two(name, workflows, ranges):
             break
         check, nxt = w
         cat, symb, n = check[0], check[1], int(check[2:])
-        possible = range(n + 1, 4001) if symb == ">" else range(1, n)
+        possible = set(range(n + 1, 4001)) if symb == ">" else set(range(1, n))
         nranges = {}
         for k, v in left.items():
             if k == cat:
-                nranges[k] = set(x for x in possible if x in v)
+                nranges[k] = possible & v
                 v -= nranges[k]
             else:
                 nranges[k] = v
