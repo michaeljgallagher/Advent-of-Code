@@ -20,6 +20,17 @@ def step(q, pt2=False):
     return nq
 
 
+def nth_term(seq, n):
+    # https://www.radfordmathematics.com/algebra/sequences-series/difference-method-sequences/quadratic-sequences.html
+    d1, d2 = (b - a for a, b in pairwise(seq))
+    sd = d2 - d1
+    x, y, z = sd, d1, seq[0]
+    a = x >> 1
+    b = y - (3 * a)
+    c = z - b - a
+    return (a * n * n) + (b * n) + c
+
+
 def part_one():
     q = {START}
     for _ in range(64):
@@ -29,22 +40,14 @@ def part_one():
 
 def part_two():
     q = {START}
-    res = []
+    seq = []
     for i in count(1):
         q = step(q, pt2=True)
         if i % N == 26501365 % N:
-            res.append(len(q))
-            if len(res) == 3:
+            seq.append(len(q))
+            if len(seq) == 3:
                 break
-    # https://www.radfordmathematics.com/algebra/sequences-series/difference-method-sequences/quadratic-sequences.html
-    d1, d2 = (b - a for a, b in pairwise(res))
-    sd = d2 - d1
-    x, y, z = sd, d1, res[0]
-    a = x >> 1
-    b = y - (3 * a)
-    c = z - b - a
-    n = (26501365 // N) + 1
-    return (a * n * n) + (b * n) + c
+    return nth_term(seq, (26501365 // N) + 1)
 
 
 print(f"Part 1: {part_one()}")  # 3722
