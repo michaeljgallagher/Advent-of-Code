@@ -69,6 +69,7 @@ def part_two():
     # Find that machine, then find the machines that send to it
     # We use these to determine distinct subgraphs with their own periods
     # See: https://i.redd.it/x6u0v3t9ee7c1.png
+    # Another: https://i.redd.it/6kko113h8h7c1.png
     ff, cj, g = initial_state(MODULES)
     x = next(k for k, v in g.items() if "rx" in v)
     keys = [k for k, v in g.items() if x in v]
