@@ -30,9 +30,7 @@ def check_intersect(a, b):
         or (bvx < 0 and x > bpx)
     ):
         return False
-    if 2e14 <= x <= 4e14 and 2e14 <= y <= 4e14:
-        return True
-    return False
+    return 2e14 <= x <= 4e14 and 2e14 <= y <= 4e14
 
 
 def part_one():
