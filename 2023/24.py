@@ -48,7 +48,7 @@ def part_two():
         eqs.append(sympy.Eq(x + v_x * t, px + vx * t))
         eqs.append(sympy.Eq(y + v_y * t, py + vy * t))
         eqs.append(sympy.Eq(z + v_z * t, pz + vz * t))
-    res = sympy.solve(eqs)[0]
+    res = sympy.solve(eqs).pop()
     return sum(res[c] for c in (x, y, z))
 
 
