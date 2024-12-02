@@ -8,9 +8,9 @@ REPORTS = [[int(x) for x in row.split()] for row in data]
 
 
 def check(report):
-    return all(1 <= (b - a) <= 3 for a, b in pairwise(report)) or all(
-        1 <= (a - b) <= 3 for a, b in pairwise(report)
-    )
+    a, b = report[:2]
+    inc = (-1) ** (b < a)
+    return all(1 <= inc * (b - a) <= 3 for a, b in pairwise(report))
 
 
 def part_one():
