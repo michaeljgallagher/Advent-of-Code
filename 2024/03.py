@@ -11,16 +11,13 @@ def part_one(s):
 def part_two(s):
     res = 0
     do = True
-    i = j = 0
-    for match in re.finditer(r"mul\((\d+),(\d+)\)", s):
-        j = match.span()[0]
-        if "do()" in s[i:j]:
+    for match in re.finditer(r"mul\((\d+),(\d+)\)|do\(\)|don't\(\)", s):
+        if match.group(0) == "do()":
             do = True
-        if "don't()" in s[i:j]:
+        elif match.group(0) == "don't()":
             do = False
-        if do:
+        elif do:
             res += int(match.group(1)) * int(match.group(2))
-        i = j
     return res
 
 
