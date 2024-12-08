@@ -38,26 +38,23 @@ def calc_antinodes(u, v, pt2=False):
     return res
 
 
-def part_one():
+def solve(pt2=False):
     return len(
         {
             antinode
             for locs in ANTENNAS.values()
             for u, v in combinations(locs, 2)
-            for antinode in calc_antinodes(u, v)
+            for antinode in calc_antinodes(u, v, pt2)
         }
     )
+
+
+def part_one():
+    return solve()
 
 
 def part_two():
-    return len(
-        {
-            antinode
-            for locs in ANTENNAS.values()
-            for u, v in combinations(locs, 2)
-            for antinode in calc_antinodes(u, v, True)
-        }
-    )
+    return solve(pt2=True)
 
 
 print(f"Part 1: {part_one()}")
