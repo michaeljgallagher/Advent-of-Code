@@ -23,15 +23,11 @@ def calc_antinodes(u, v, pt2=False):
     di = ui - vi
     dj = uj - vj
     res = {(ui, uj), (vi, vj)} if pt2 else set()
-    while 0 <= ui + di < N and 0 <= uj + dj < M:
-        ui += di
-        uj += dj
+    while 0 <= (ui := ui + di) < N and 0 <= (uj := uj + dj) < M:
         res |= {(ui, uj)}
         if not pt2:
             break
-    while 0 <= vi - di < N and 0 <= vj - dj < M:
-        vi -= di
-        vj -= dj
+    while 0 <= (vi := vi - di) < N and 0 <= (vj := vj - dj) < M:
         res |= {(vi, vj)}
         if not pt2:
             break
