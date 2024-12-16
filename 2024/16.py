@@ -25,9 +25,9 @@ def solve(pt2=False):
     scores = defaultdict(lambda: math.inf)
     i, j = START
     di, dj = 0, 1
-    pq = [(0, i, j, di, dj, {(i, j)})]
+    pq = [(0, i, j, di, dj, [(i, j)])]
     res = math.inf
-    all_tiles = set()
+    all_tiles = []
     while pq:
         score, i, j, di, dj, tiles = heapq.heappop(pq)
         if (i, j) == END:
@@ -35,7 +35,7 @@ def solve(pt2=False):
                 return score
             res = min(res, score)
             if score == res:
-                all_tiles |= tiles
+                all_tiles.extend(tiles)
         for nscore, ni, nj, ndi, ndj in (
             (score + 1, i + di, j + dj, di, dj),
             (score + 1001, i - dj, j + di, -dj, di),
@@ -52,8 +52,8 @@ def solve(pt2=False):
                 )
             ):
                 scores[ni, nj, ndi, ndj] = nscore
-                heapq.heappush(pq, (nscore, ni, nj, ndi, ndj, tiles | {(ni, nj)}))
-    return len(all_tiles)
+                heapq.heappush(pq, (nscore, ni, nj, ndi, ndj, tiles + [(ni, nj)]))
+    return len(set(all_tiles))
 
 
 def part_one():
