@@ -78,14 +78,13 @@ class OpCode:
 
 
 def dfs(i, cur):
+    res = None
     for x in range(8):
         if OpCode(cur * 8 + x, 0, 0, PROGRAM).run() == PROGRAM[i:]:
             if i == 0:
                 return cur * 8 + x
-            res = dfs(i - 1, cur * 8 + x)
-            if res:
-                return res
-    return
+            res = res or dfs(i - 1, cur * 8 + x)
+    return res
 
 
 def part_one():
