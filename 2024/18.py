@@ -35,9 +35,14 @@ def part_one():
 
 
 def part_two():
-    for idx in range(1024, len(BYTES)):
-        if bfs(idx) == -1:
-            return ",".join(map(str, BYTES[idx - 1]))
+    l, r = 1025, len(BYTES) - 1
+    while l < r:
+        m = l + (r - l >> 1)
+        if bfs(m) == -1:
+            r = m
+        else:
+            l = m + 1
+    return ",".join(map(str, BYTES[l - 1]))
 
 
 print(f"Part 1: {part_one()}")
