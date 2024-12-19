@@ -13,8 +13,6 @@ PATTERNS, DESIGNS = parse_input()
 
 @cache
 def dp(s, i=0, pt2=False):
-    if i > len(s):
-        return 0
     if i == len(s):
         return 1
     res = 0
