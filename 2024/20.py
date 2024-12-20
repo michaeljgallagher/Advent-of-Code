@@ -45,14 +45,11 @@ def solve(cheat=2):
     path_length = len(PATH) - 1
     cost_start = {u: i for i, u in enumerate(PATH)}
     cost_end = {u: i for i, u in enumerate(reversed(PATH))}
-    res = 0
-    for u, v in combinations(PATH, 2):
-        dist = abs(u[0] - v[0]) + abs(u[1] - v[1])
-        if dist > cheat:
-            continue
-        if path_length - (cost_start[u] + cost_end[v] + dist) >= 100:
-            res += 1
-    return res
+    return sum(
+        path_length - (cost_start[u] + cost_end[v] + dist) >= 100
+        for u, v in combinations(PATH, 2)
+        if (dist := abs(u[0] - v[0]) + abs(u[1] - v[1])) <= cheat
+    )
 
 
 def part_one():
