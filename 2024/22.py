@@ -24,7 +24,7 @@ def part_one():
 
 
 def part_two():
-    freq = defaultdict(int)
+    bananas = defaultdict(int)
     for n in NUMS:
         steps = list(accumulate(range(2000), lambda acc, _: evolve(acc), initial=n))
         delta = [y % 10 - x % 10 for x, y in pairwise(steps)]
@@ -34,8 +34,8 @@ def part_two():
             if cur in seen:
                 continue
             seen.add(cur)
-            freq[cur] += steps[i + 4] % 10
-    return max(freq.values())
+            bananas[cur] += steps[i + 4] % 10
+    return max(bananas.values())
 
 
 print(f"Part 1: {part_one()}")
