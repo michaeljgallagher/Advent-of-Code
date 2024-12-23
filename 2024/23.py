@@ -16,9 +16,8 @@ G = parse_input()
 
 
 def part_one():
-    ts = filter(lambda x: x.startswith("t"), G.keys())
     res = set()
-    for u in ts:
+    for u in filter(lambda x: x.startswith("t"), G.keys()):
         for v in filter(lambda x: x != u, G[u]):
             for w in filter(lambda x: x not in [u, v], G[u]):
                 if w in G[v]:
