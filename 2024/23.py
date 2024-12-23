@@ -27,19 +27,19 @@ def part_one():
 
 
 def part_two():
-    def bron_kerbosh(r, p, x, cur):
+    def bron_kerbosch(r, p, x, cur):
         if not p and not x:
             return max(r, cur, key=len)
         pivot = next(iter(p | x))
         for v in list(p - set(G[pivot])):
             cur = max(
-                cur, bron_kerbosh(r | {v}, p & set(G[v]), x & set(G[v]), cur), key=len
+                cur, bron_kerbosch(r | {v}, p & set(G[v]), x & set(G[v]), cur), key=len
             )
             p -= {v}
             x |= {v}
         return cur
 
-    return ",".join(sorted(bron_kerbosh(set(), set(G.keys()), set(), set())))
+    return ",".join(sorted(bron_kerbosch(set(), set(G.keys()), set(), set())))
 
 
 print(f"Part 1: {part_one()}")
