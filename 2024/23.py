@@ -33,7 +33,9 @@ def part_two():
         pivot = next(iter(p | x))
         for v in list(p - set(G[pivot])):
             cur = max(
-                cur, bron_kerbosch(r | {v}, p & set(G[v]), x & set(G[v]), cur), key=len
+                cur,
+                bron_kerbosch(r | {v}, p & set(G[v]), x & set(G[v]), cur),
+                key=len,
             )
             p -= {v}
             x |= {v}
