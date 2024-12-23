@@ -27,25 +27,19 @@ def part_one():
 
 
 def part_two():
-    def clique(nodes, sz):
-        if sz == 0:
-            return []
-        for u in nodes:
-            nnodes = filter(lambda v: v in G[u], nodes)
-            res = clique(nnodes, sz - 1)
-            if res is not None:
-                return res + [u]
-        return
+    def bron_kerbosh(r, p, x, cur):
+        if not p and not x:
+            return max(r, cur, key=len)
+        pivot = next(iter(p | x))
+        for v in list(p - set(G[pivot])):
+            cur = max(
+                cur, bron_kerbosh(r | {v}, p & set(G[v]), x & set(G[v]), cur), key=len
+            )
+            p -= {v}
+            x |= {v}
+        return cur
 
-    nodes = G.keys()
-    l, r = 3, len(nodes)
-    while l < r:
-        m = l + (r - l >> 1)
-        if clique(nodes, m) is not None:
-            l = m + 1
-        else:
-            r = m - 1
-    return ",".join(sorted(clique(nodes, l)))
+    return ",".join(sorted(bron_kerbosh(set(), set(G.keys()), set(), set())))
 
 
 print(f"Part 1: {part_one()}")
