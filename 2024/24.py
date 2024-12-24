@@ -14,7 +14,7 @@ def parse_input():
 
 
 WIRES, GATES = parse_input()
-OP_MAP = {"AND": operator.and_, "OR": operator.or_, "XOR": operator.xor}
+OPS = {"AND": operator.and_, "OR": operator.or_, "XOR": operator.xor}
 
 
 def part_one():
@@ -23,10 +23,16 @@ def part_one():
         for wire in (a, b):
             if wire not in WIRES:
                 WIRES[wire] = evaluate(GATES[wire])
-        return OP_MAP[op](WIRES[a], WIRES[b])
+        return OPS[op](WIRES[a], WIRES[b])
 
-    zs = sorted(filter(lambda x: x.startswith("z"), GATES.keys()), reverse=True)
-    return int("".join(map(str, (evaluate(GATES[z]) for z in zs))), 2)
+    return int(
+        "".join(
+            str(evaluate(GATES[z]))
+            for z in sorted(GATES.keys(), reverse=True)
+            if z.startswith("z")
+        ),
+        2,
+    )
 
 
 def part_two():
