@@ -120,13 +120,6 @@ def match_ops(before, instr, after):
     return res
 
 
-def run(program, mapping):
-    reg = [0] * 4
-    for op, a, b, c in program:
-        OPS[mapping[op]](reg, a, b, c)
-    return reg
-
-
 def part_one():
     return sum(len(match_ops(*sample)) >= 3 for sample in SAMPLES)
 
@@ -139,14 +132,15 @@ def part_two():
         possible[op] &= matches
     mapping = {}
     while possible:
-        found = list(filter(lambda x: len(x[1]) == 1, possible.items()))
-        for op, s in found:
-            f = s.pop()
+        found = [(op, next(iter(fs))) for op, fs in possible.items() if len(fs) == 1]
+        for op, f in found:
             mapping[op] = f
             del possible[op]
             for fs in possible.values():
                 fs.discard(f)
-    reg = run(PROGRAM, mapping)
+    reg = [0] * 4
+    for op, a, b, c in PROGRAM:
+        OPS[mapping[op]](reg, a, b, c)
     return reg[0]
 
 
