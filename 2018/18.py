@@ -7,14 +7,11 @@ def parse_input():
     return list(map(list, data.strip().splitlines()))
 
 
-N, M = 50, 50
-
-
 def check_neis(grid, i, j):
     trees = yard = 0
     for di, dj in filter(any, product((-1, 0, 1), repeat=2)):
         ni, nj = i + di, j + dj
-        if not (0 <= ni < N and 0 <= nj < M):
+        if not (0 <= ni < 50 and 0 <= nj < 50):
             continue
         if grid[ni][nj] == "|":
             trees += 1
@@ -35,21 +32,19 @@ def change_acre(grid, i, j):
 
 
 def step(grid):
-    res = [[None] * M for _ in range(N)]
-    for i in range(N):
-        for j in range(M):
-            res[i][j] = change_acre(grid, i, j)
+    res = [[None] * 50 for _ in range(50)]
+    for i, j in product(range(50), repeat=2):
+        res[i][j] = change_acre(grid, i, j)
     return res
 
 
 def calc(grid):
     trees = yard = 0
-    for i in range(N):
-        for j in range(M):
-            if grid[i][j] == "|":
-                trees += 1
-            if grid[i][j] == "#":
-                yard += 1
+    for i, j in product(range(50), repeat=2):
+        if grid[i][j] == "|":
+            trees += 1
+        if grid[i][j] == "#":
+            yard += 1
     return trees * yard
 
 
