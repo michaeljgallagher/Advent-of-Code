@@ -24,14 +24,12 @@ def part_one():
 
 def part_two():
     term = [i for i, v in enumerate(OPS) if v != " "] + [len(OPS) + 1]
-    padded = [
-        [row[i : j - 1].replace(" ", "0") for i, j in pairwise(term)] for row in NUMS
-    ]
+    sliced = [[row[i : j - 1] for i, j in pairwise(term)] for row in NUMS]
     return sum(
         reduce(op, col)
         for op, col in zip(
             [{"*": mul, "+": add}[x] for x in OPS.split()],
-            [[int("".join(c).rstrip("0")) for c in zip(*col)] for col in zip(*padded)],
+            [[int("".join(c)) for c in zip(*col)] for col in zip(*sliced)],
         )
     )
 
