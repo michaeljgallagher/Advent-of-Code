@@ -6,19 +6,22 @@ from operator import or_
 from scipy.optimize import linprog
 
 
-def parse_input(test=False):
+def parse_input():
     with open("10.txt", "r") as f:
         data = f.read()
+    records = re.findall(r"\[([.#]+)\]\s+(\(.*?\))\s+\{([^}]*)\}", data)
     lights = [
-        int(x.replace(".", "0").replace("#", "1")[::-1], 2)
-        for x in re.findall(r"\[(.*)\]", data)
+        int(a.translate(str.maketrans({".": "0", "#": "1"}))[::-1], 2)
+        for a, _, _ in records
     ]
     buttons = [
-        [tuple(map(int, part.split(","))) for part in re.findall(r"\(([^)]*)\)", line)]
-        for line in re.findall(r"\] (\(.*\)) \{", data)
+        [
+            reduce(or_, (1 << int(n) for n in pair.split(",")), 0)
+            for pair in re.findall(r"\(([^)]*)\)", b)
+        ]
+        for _, b, _ in records
     ]
-    buttons = [[reduce(or_, (1 << x for x in y)) for y in button] for button in buttons]
-    joltages = [[int(x) for x in s.split(",")] for s in re.findall(r"\{(.*)\}", data)]
+    joltages = [[int(x) for x in c.split(",")] for _, _, c in records]
     return zip(lights, buttons, joltages)
 
 
@@ -41,7 +44,7 @@ def bfs(lights, buttons):
 
 def solve(buttons, joltages):
     A = [[(x >> i) & 1 for x in buttons] for i in range(len(joltages))]
-    return int(linprog([1] * len(buttons), A_eq=A, b_eq=joltages, integrality=True).fun)
+    return int(linprog([1] * len(buttons), A_eq=A, b_eq=joltages, integrality=1).fun)
 
 
 def part_one():
