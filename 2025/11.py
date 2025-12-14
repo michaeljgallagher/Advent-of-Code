@@ -1,7 +1,7 @@
 from functools import cache
 
 
-def parse_input(test=False):
+def parse_input():
     with open("11.txt", "r") as f:
         data = f.read()
     return {u: vs.split() for u, vs in (line.split(": ") for line in data.splitlines())}
